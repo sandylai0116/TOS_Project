@@ -25,9 +25,21 @@ public class Home extends ActionBarActivity {
 
         //database
         db = new DBHelper(getApplicationContext());
-        Card card = new Card(100,"red","human",99,1,1,1,10,10,10,null,null);
+        Card card1 = new Card(1,"blue","human",5,86,47,15,129,71,24,null,"b1.5");
+        Card card2 = new Card(2,"blue","human",15,216,118,36,364,200,68,null,"b1.5");
+        Card card3 = new Card(3,"blue","human",35,441,242,74,801,440,151,null,"b2");
+        Card card4 = new Card(4,"blue","human",99,846,465,141,1881,1035,364,null,"b2");
+        Card card5 = new Card(5,"red","human",5,91,51,13,136,76,21,null,"r1.5");
+        Card card6 = new Card(6,"red","human",15,228,127,32,384,214,60,null,"r1.5");
+        Card card7 = new Card(7,"red","human",35,464,259,66,842,470,135,null,"r2");
         // Inserting card in db
-        long id = db.createToCard(card);
+        long id = db.createToCard(card1);
+        id = db.createToCard(card2);
+        id = db.createToCard(card3);
+        id = db.createToCard(card4);
+        id = db.createToCard(card5);
+        id = db.createToCard(card6);
+        id = db.createToCard(card7);
 
         //get card
         view = (TextView)findViewById(R.id.testView);
