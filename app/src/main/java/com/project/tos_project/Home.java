@@ -4,14 +4,40 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.project.tos_project.model.Card;
+
+import java.util.List;
 
 
 public class Home extends ActionBarActivity {
+
+    // Database Helper
+    DBHelper db;
+
+    private TextView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //database
+        db = new DBHelper(getApplicationContext());
+        Card card = new Card(100,1,1,1,10,10,10,null,null);
+        // Inserting card in db
+        long id = db.createToCard(card);
+
+        //get card
+        view = (TextView)findViewById(R.id.testView);
+        List<Card> allCard = db.getCart(0);
+        for (Card c : allCard) {
+            view.append(" " + c.getId() );
+        }
+
+        //close db
+        db.closeDB();
     }
 
     @Override
