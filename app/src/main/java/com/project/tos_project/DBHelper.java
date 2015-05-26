@@ -20,20 +20,23 @@ public class DBHelper extends SQLiteOpenHelper {
     //entity class list
     public static abstract class CardEntity implements BaseColumns {
         public static final String TABLE_NAME = "CARD";
-        public static final String Card_ID = "Card_ID";
-        public static final String Level1_HP = "Level1_HP";
-        public static final String Level1_ATTACK = "Level1_ATTACK";
-        public static final String Level1_RECOVERY = "Level1_RECOVERY";
-        public static final String Level99_HP = "Level99_HP";
-        public static final String Level99_ATTACK = "Level99_ATTACK";
-        public static final String Level99_RECOVERY = "Level99_RECOVERY";
+        public static final String CARD_ID = "CARD_ID";
+        public static final String COLOR = "COLOR";
+        public static final String RACE = "RACE";
+        public static final String MAX_LEVEL = "MAX_LEVEL";
+        public static final String LEVEL_1_HP = "LEVEL_1_HP";
+        public static final String LEVEL_1_ATTACK = "LEVEL_1_ATTACK";
+        public static final String LEVEL_1_RECOVERY = "LEVEL_1_RECOVERY";
+        public static final String LEVEL_MAX_HP = "LEVEL_MAX_HP";
+        public static final String LEVEL_MAX_ATTACK = "LEVEL_MAX_ATTACK";
+        public static final String LEVEL_MAX_RECOVERY = "LEVEL_MAX_RECOVERY";
         public static final String SKILL = "SKILL";
         public static final String LEADER_SKILL = "LEADER_SKILL";
     }
 
     //database
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "database.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
@@ -45,17 +48,24 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_CARD_DATA =
             "CREATE TABLE " + CardEntity.TABLE_NAME + " (" +
                     CardEntity._ID + " INTEGER PRIMARY KEY," +
-                    CardEntity.Card_ID + INTEGER_TYPE + COMMA_SEP +
-                    CardEntity.Level1_HP + INTEGER_TYPE + COMMA_SEP +
-                    CardEntity.Level1_ATTACK + INTEGER_TYPE + COMMA_SEP +
-                    CardEntity.Level1_RECOVERY + INTEGER_TYPE + COMMA_SEP +
-                    CardEntity.Level99_HP + INTEGER_TYPE + COMMA_SEP +
-                    CardEntity.Level99_ATTACK + INTEGER_TYPE + COMMA_SEP +
-                    CardEntity.Level99_RECOVERY + INTEGER_TYPE + COMMA_SEP +
+                    CardEntity.CARD_ID + INTEGER_TYPE + COMMA_SEP +
+                    CardEntity.COLOR + TEXT_TYPE + COMMA_SEP +
+                    CardEntity.RACE + TEXT_TYPE + COMMA_SEP +
+                    CardEntity.MAX_LEVEL + INTEGER_TYPE + COMMA_SEP +
+                    CardEntity.LEVEL_1_HP + INTEGER_TYPE + COMMA_SEP +
+                    CardEntity.LEVEL_1_ATTACK + INTEGER_TYPE + COMMA_SEP +
+                    CardEntity.LEVEL_1_RECOVERY + INTEGER_TYPE + COMMA_SEP +
+                    CardEntity.LEVEL_MAX_HP + INTEGER_TYPE + COMMA_SEP +
+                    CardEntity.LEVEL_MAX_ATTACK + INTEGER_TYPE + COMMA_SEP +
+                    CardEntity.LEVEL_MAX_RECOVERY + INTEGER_TYPE + COMMA_SEP +
                     CardEntity.SKILL + TEXT_TYPE + COMMA_SEP +
                     CardEntity.LEADER_SKILL + TEXT_TYPE +
             " )";
 
+    //card entity id indexing
+    private static final String SQL_CARD_ID_INDEXING =
+            "CREATE INDEX idxCard ON " + CardEntity.TABLE_NAME + " (" + CardEntity.CARD_ID +
+            ")";
 
     private static final String SQL_DELETE_CARD_DATA =
             "DROP TABLE IF EXISTS " + CardEntity.TABLE_NAME;
@@ -66,6 +76,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_CARD_DATA);
+        db.execSQL(SQL_CARD_ID_INDEXING);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -75,6 +86,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
+    }
+
+    public void onOpen(SQLiteDatabase db) {
+        db.execSQL(SQL_DELETE_CARD_DATA);
+        db.execSQL(SQL_CREATE_CARD_DATA);
+        db.execSQL(SQL_CARD_ID_INDEXING);
     }
 
     public void closeDB() {
@@ -87,52 +104,65 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(CardEntity.Card_ID, card.getId());
-        values.put(CardEntity.Level1_HP, card.getLevel1HP());
-        values.put(CardEntity.Level1_ATTACK, card.getLevel1Attack());
-        values.put(CardEntity.Level1_RECOVERY, card.getLevel1Recovery());
-        values.put(CardEntity.Level99_HP, card.getLevel99HP());
-        values.put(CardEntity.Level99_ATTACK, card.getLevel99Attack());
-        values.put(CardEntity.Level99_RECOVERY, card.getLevel99Recovery());
+        values.put(CardEntity.CARD_ID, card.getId());
+        values.put(CardEntity.COLOR, card.getColor());
+        values.put(CardEntity.RACE, card.getRace());
+        values.put(CardEntity.MAX_LEVEL, card.getMaxLevel());
+        values.put(CardEntity.LEVEL_1_HP, card.getLevel1HP());
+        values.put(CardEntity.LEVEL_1_ATTACK, card.getLevel1Attack());
+        values.put(CardEntity.LEVEL_1_RECOVERY, card.getLevel1Recovery());
+        values.put(CardEntity.LEVEL_MAX_HP, card.getLevelMaxHP());
+        values.put(CardEntity.LEVEL_MAX_ATTACK, card.getLevelMaxAttack());
+        values.put(CardEntity.LEVEL_MAX_RECOVERY, card.getLevelMaxRecovery());
         values.put(CardEntity.SKILL, card.getSkill());
         values.put(CardEntity.LEADER_SKILL, card.getLeaderSkill());
-
         // insert row
-        long id = db.insert(CardEntity.TABLE_NAME, null, values);
-
-        return id;
+        return db.insert(CardEntity.TABLE_NAME, null, values);
     }
 
-    public List<Card> getCart(long id) {
+    public List<Card> getCard(long id) {
         List<Card> cards = new ArrayList<Card>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         //select statement
         String[] projection = {
-                CardEntity.Card_ID
+                CardEntity.CARD_ID
         };
         String sortOrder =
-                CardEntity.Card_ID + " DESC";
+                CardEntity.CARD_ID + " DESC";
         //query
         Cursor c = db.query(
                 CardEntity.TABLE_NAME,             // The table to query
                 projection,                               // The columns to return
-                null,                                // The columns for the WHERE clause
+                CardEntity.CARD_ID + " = " + id,          // The columns for the WHERE clause
                 null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
+                null,                                     // group by
+                null,                                     // having
+                sortOrder                                 // order by
         );
+
         //put to model
         if (c.moveToFirst()) {
             do {
                 Card card = new Card();
-                card.setId(c.getInt((c.getColumnIndex(CardEntity.Card_ID))));
+               card.setId(c.getLong(c.getColumnIndex(CardEntity.CARD_ID)));
+                //card.setColor(c.getString(c.getColumnIndex(CardEntity.COLOR)));
+                //card.setRace(c.getString(c.getColumnIndex(CardEntity.RACE)));
+                //card.setMaxLevel(c.getInt(c.getColumnIndex(CardEntity.MAX_LEVEL)));
+                //card.setLevel1HP(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_HP)));
+                //card.setLevel1Attack(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_ATTACK)));
+                //card.setLevel1Recovery(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_RECOVERY)));
+                //card.setLevelMaxHP(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_HP)));
+                //card.setLevelMaxAttack(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_ATTACK)));
+                //card.setLevelMaxRecovery(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_RECOVERY)));
+                //card.setSkill(c.getString(c.getColumnIndex(CardEntity.SKILL)));
+                //card.setLeaderSkill(c.getString(c.getColumnIndex(CardEntity.LEADER_SKILL)));
 
                 // adding to tags list
                 cards.add(card);
             } while (c.moveToNext());
         }
+        db.close();
         return cards;
     }
 }

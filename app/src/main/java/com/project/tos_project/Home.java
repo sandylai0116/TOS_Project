@@ -25,13 +25,13 @@ public class Home extends ActionBarActivity {
 
         //database
         db = new DBHelper(getApplicationContext());
-        Card card = new Card(100,1,1,1,10,10,10,null,null);
+        Card card = new Card(100,"red","human",99,1,1,1,10,10,10,null,null);
         // Inserting card in db
         long id = db.createToCard(card);
 
         //get card
         view = (TextView)findViewById(R.id.testView);
-        List<Card> allCard = db.getCart(0);
+        List<Card> allCard = db.getCard(100);
         for (Card c : allCard) {
             view.append(" " + c.getId() );
         }

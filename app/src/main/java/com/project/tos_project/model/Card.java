@@ -5,25 +5,32 @@ package com.project.tos_project.model;
  */
 public class Card {
     long id;
+    String color;
+    String race;
+    int maxLevel;
     int level1HP;
     int level1Attack;
     int level1Recovery;
-    int level99HP;
-    int level99Attack;
-    int level99Recovery;
+    int levelMaxHP;
+    int levelMaxAttack;
+    int levelMaxRecovery;
     String skill;
     String leaderSkill;
+    int currentLevel;
 
     public Card(){}
 
-    public Card(long id, int level1HP, int level1Attack, int level1Recovery, int level99HP, int level99Attack, int level99Recovery, String skill, String leaderSkill) {
+    public Card(long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
         this.id = id;
+        this.color = color;
+        this.race = race;
+        this.maxLevel = maxLevel;
         this.level1HP = level1HP;
         this.level1Attack = level1Attack;
         this.level1Recovery = level1Recovery;
-        this.level99HP = level99HP;
-        this.level99Attack = level99Attack;
-        this.level99Recovery = level99Recovery;
+        this.levelMaxHP = levelMaxHP;
+        this.levelMaxAttack = levelMaxAttack;
+        this.levelMaxRecovery = levelMaxRecovery;
         this.skill = skill;
         this.leaderSkill = leaderSkill;
     }
@@ -34,6 +41,30 @@ public class Card {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public int getMaxLevel() {
+        return maxLevel;
+    }
+
+    public void setMaxLevel(int maxLevel) {
+        this.maxLevel = maxLevel;
     }
 
     public int getLevel1HP() {
@@ -60,28 +91,28 @@ public class Card {
         this.level1Recovery = level1Recovery;
     }
 
-    public int getLevel99HP() {
-        return level99HP;
+    public int getLevelMaxHP() {
+        return levelMaxHP;
     }
 
-    public void setLevel99HP(int level99HP) {
-        this.level99HP = level99HP;
+    public void setLevelMaxHP(int levelMaxHP) {
+        this.levelMaxHP = levelMaxHP;
     }
 
-    public int getLevel99Attack() {
-        return level99Attack;
+    public int getLevelMaxAttack() {
+        return levelMaxAttack;
     }
 
-    public void setLevel99Attack(int level99Attack) {
-        this.level99Attack = level99Attack;
+    public void setLevelMaxAttack(int levelMaxAttack) {
+        this.levelMaxAttack = levelMaxAttack;
     }
 
-    public int getLevel99Recovery() {
-        return level99Recovery;
+    public int getLevelMaxRecovery() {
+        return levelMaxRecovery;
     }
 
-    public void setLevel99Recovery(int level99Recovery) {
-        this.level99Recovery = level99Recovery;
+    public void setLevelMaxRecovery(int levelMaxRecovery) {
+        this.levelMaxRecovery = levelMaxRecovery;
     }
 
     public String getSkill() {
@@ -98,5 +129,23 @@ public class Card {
 
     public void setLeaderSkill(String leaderSkill) {
         this.leaderSkill = leaderSkill;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public int getCurrentHP() {
+        return level1HP + (levelMaxHP - level1HP) / maxLevel * currentLevel;
+    }
+    public int getCurrentAttack() {
+        return level1Attack + (levelMaxAttack - level1Attack) / maxLevel * currentLevel;
+    }
+    public int getCurrentRecovery() {
+        return level1Recovery + (levelMaxRecovery - level1Recovery) / maxLevel * currentLevel;
     }
 }
