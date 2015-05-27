@@ -22,6 +22,15 @@ public class Home extends ActionBarActivity {
         return db.createToCard(card);
     }
 
+    public void colorAttackBonus(Card[] card,String color,Double factor){
+        for(int i=0;i<6;i++) {
+            if (card[i].getColor().equals(color)) {
+                int temp = (int) (card[i].getCalculatedAttack() * factor);
+                card[i].setCalculatedAttack(temp);
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,19 +45,39 @@ public class Home extends ActionBarActivity {
         insertCardToDB(db, 5, "red", "human", 5, 91, 51, 13, 136, 76, 21, null, "r1.5");
         insertCardToDB(db, 6, "red", "human", 15, 228, 127, 32, 384, 214, 60, null, "r1.5");
         insertCardToDB(db, 7, "red", "human", 35, 464, 259, 66, 842, 470, 135, null, "r2");
-        
+
         //create 6 card
         Card card[] = new Card[6];
+
+        //assume card NO is 1
+        //assume current level is 5
         for(int i=0;i<6;i++) {
-            card[i] = db.getCard(1); //assume card no is 1
-        }
-        //calculation
-        for(int i=0;i<6;i++) {
-            card[i].setCurrentLevel(5); //assume current level is 5
-            card[i].setCalculatedAttack( card[i].getCurrentAttack() );
+            card[i] = db.getCard(1);
+            card[i].setCurrentLevel(5);
         }
 
-        //calculated final attack
+        //assume combo is 3
+        int combo =3;
+
+        //calculate leader skill
+        for(int i=0;i<6;i=i+5) {
+            switch(card[i].getLeaderSkill()) {
+                case "b1.5":
+                    colorAttackBonus(card,"blue",1.5);
+                    break;
+                case "b2":
+                    colorAttackBonus(card,"blue",2.0);
+                    break;
+                case "r1.5":
+                    colorAttackBonus(card,"red",1.5);
+                    break;
+                case "r2":
+                    colorAttackBonus(card,"red",2.0);
+                    break;
+            }
+        }
+
+        //calculate final attack
         int finalAttack = 0;
         for(int i=0;i<6;i++) {
             finalAttack += card[i].getCalculatedAttack();
@@ -57,6 +86,8 @@ public class Home extends ActionBarActivity {
         //get card
         //view = (TextView)findViewById(R.id.testView);
         //view.append(" " + finalAttack );
+        System.out.println(card[0].getCalculatedAttack() + "," + card[1].getCalculatedAttack() + "," + card[2].getCalculatedAttack() + ","
+                + card[3].getCalculatedAttack() + "," + card[4].getCalculatedAttack() + "," + card[5].getCalculatedAttack());
         System.out.println(finalAttack);
 
 

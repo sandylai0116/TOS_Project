@@ -153,6 +153,9 @@ public class Card {
             setCurrentHP(level1HP + (levelMaxHP - level1HP) * currentLevel / maxLevel);
             setCurrentAttack(level1Attack + (levelMaxAttack - level1Attack) * currentLevel / maxLevel);
             setCurrentRecovery(level1Recovery + (levelMaxRecovery - level1Recovery) * currentLevel / maxLevel);
+            setCalculatedHP(getCurrentHP());
+            setCalculatedAttack(getCurrentAttack());
+            setCalculatedRecovery(getCurrentRecovery());
         }
     }
 
