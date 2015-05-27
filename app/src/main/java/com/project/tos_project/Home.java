@@ -41,10 +41,26 @@ public class Home extends ActionBarActivity {
         id = db.createToCard(card6);
         id = db.createToCard(card7);
 
+        //create 6 card
+        Card card[] = new Card[6];
+        for(int i=0;i<6;i++) {
+            card[i] = db.getCard(1); //assume card no is 1
+        }
+        //calculation
+        for(int i=0;i<6;i++) {
+            card[i].setCurrentLevel(5); //assume current level is 5
+            card[i].setCalculatedAttack( card[i].getCurrentAttack() );
+        }
+
+        //calculated final attack
+        int finalAttack = 0;
+        for(int i=0;i<6;i++) {
+            finalAttack += card[i].getCalculatedAttack();
+        }
+
         //get card
-        view = (TextView)findViewById(R.id.testView);
-        Card card = db.getCard(5);
-        view.append(" " + card.getId() );
+        //view = (TextView)findViewById(R.id.testView);
+        //view.append(" " + finalAttack );
 
 
         //close db

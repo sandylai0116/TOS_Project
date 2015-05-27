@@ -28,6 +28,10 @@ public class Card {
 
     public Card(){}
 
+    public Card(long id){
+        this.id = id;
+    }
+
     public Card(long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
         this.id = id;
         this.color = color;
@@ -146,9 +150,9 @@ public class Card {
     public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
         if(maxLevel != 0) {
-            setCurrentHP(level1HP + (levelMaxHP - level1HP) / maxLevel * currentLevel);
-            setCurrentAttack(level1Attack + (levelMaxAttack - level1Attack) / maxLevel * currentLevel);
-            setCurrentRecovery(level1Recovery + (levelMaxRecovery - level1Recovery) / maxLevel * currentLevel);
+            setCurrentHP(level1HP + (levelMaxHP - level1HP) * currentLevel / maxLevel);
+            setCurrentAttack(level1Attack + (levelMaxAttack - level1Attack) * currentLevel / maxLevel);
+            setCurrentRecovery(level1Recovery + (levelMaxRecovery - level1Recovery) * currentLevel / maxLevel);
         }
     }
 
