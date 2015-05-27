@@ -17,6 +17,14 @@ public class Card {
     String skill;
     String leaderSkill;
     int currentLevel;
+    int currentHP;
+    int currentAttack;
+    int currentRecovery;
+    Boolean enableSkill;
+    Boolean enableLeaderSkill;
+    int calculatedHP;
+    int calculatedAttack;
+    int calculatedRecovery;
 
     public Card(){}
 
@@ -147,5 +155,57 @@ public class Card {
     }
     public int getCurrentRecovery() {
         return level1Recovery + (levelMaxRecovery - level1Recovery) / maxLevel * currentLevel;
+    }
+
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = currentHP;
+    }
+
+    public void setCurrentAttack(int currentAttack) {
+        this.currentAttack = currentAttack;
+    }
+
+    public void setCurrentRecovery(int currentRecovery) {
+        this.currentRecovery = currentRecovery;
+    }
+
+    public Boolean getEnableSkill() {
+        return enableSkill;
+    }
+
+    public void setEnableSkill(Boolean enableSkill) {
+        this.enableSkill = enableSkill;
+    }
+
+    public Boolean getEnableLeaderSkill() {
+        return enableLeaderSkill;
+    }
+
+    public void setEnableLeaderSkill(Boolean enableLeaderSkill) {
+        this.enableLeaderSkill = enableLeaderSkill;
+    }
+
+    public int getCalculatedHP() {
+        return calculatedHP;
+    }
+
+    public void setCalculatedHP(int calculatedHP) {
+        this.calculatedHP = calculatedHP;
+    }
+
+    public int getCalculatedAttack() {
+        return calculatedAttack;
+    }
+
+    public void setCalculatedAttack(int calculatedAttack) {
+        this.calculatedAttack = calculatedAttack;
+    }
+
+    public int getCalculatedRecovery() {
+        return calculatedRecovery;
+    }
+
+    public void setCalculatedRecovery(int calculatedRecovery) {
+        this.calculatedRecovery = calculatedRecovery;
     }
 }
