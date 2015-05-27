@@ -145,16 +145,21 @@ public class Card {
 
     public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
+        setCurrentHP(level1HP + (levelMaxHP - level1HP) / maxLevel * currentLevel);
+        setCurrentAttack(level1Attack + (levelMaxAttack - level1Attack) / maxLevel * currentLevel);
+        setCurrentRecovery(level1Recovery + (levelMaxRecovery - level1Recovery) / maxLevel * currentLevel);
     }
 
     public int getCurrentHP() {
-        return level1HP + (levelMaxHP - level1HP) / maxLevel * currentLevel;
+        return currentHP;
     }
+
     public int getCurrentAttack() {
-        return level1Attack + (levelMaxAttack - level1Attack) / maxLevel * currentLevel;
+        return currentAttack;
     }
+
     public int getCurrentRecovery() {
-        return level1Recovery + (levelMaxRecovery - level1Recovery) / maxLevel * currentLevel;
+        return currentRecovery;
     }
 
     public void setCurrentHP(int currentHP) {
