@@ -120,49 +120,57 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert(CardEntity.TABLE_NAME, null, values);
     }
 
-    public List<Card> getCard(long id) {
-        List<Card> cards = new ArrayList<Card>();
+    public Card getCard(long id) {
+        Card card = new Card();
         SQLiteDatabase db = this.getReadableDatabase();
 
         //select statement
         String[] projection = {
-                CardEntity.CARD_ID
+            CardEntity.CARD_ID,
+            CardEntity.COLOR,
+            CardEntity.RACE,
+            CardEntity.MAX_LEVEL,
+            CardEntity.LEVEL_1_HP,
+            CardEntity.LEVEL_1_ATTACK,
+            CardEntity.LEVEL_1_RECOVERY,
+            CardEntity.LEVEL_MAX_HP,
+            CardEntity.LEVEL_MAX_ATTACK,
+            CardEntity.LEVEL_MAX_RECOVERY,
+            CardEntity.SKILL,
+            CardEntity.LEADER_SKILL
         };
         String sortOrder =
-                CardEntity.CARD_ID + " DESC";
+            CardEntity.CARD_ID + " DESC";
         //query
         Cursor c = db.query(
-                CardEntity.TABLE_NAME,             // The table to query
-                projection,                               // The columns to return
-                CardEntity.CARD_ID + " = " + id,          // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // group by
-                null,                                     // having
-                sortOrder                                 // order by
+            CardEntity.TABLE_NAME,               // The table to query
+            projection,                              // The columns to return
+            CardEntity.CARD_ID + " = " + id,        // The columns for the WHERE clause
+            null,                                     // The values for the WHERE clause
+            null,                                     // group by
+            null,                                     // having
+            sortOrder,                                 // order by
+            "1"                                        //limit
         );
 
         //put to model
         if (c.moveToFirst()) {
-            do {
-                Card card = new Card();
-               card.setId(c.getLong(c.getColumnIndex(CardEntity.CARD_ID)));
-                //card.setColor(c.getString(c.getColumnIndex(CardEntity.COLOR)));
-                //card.setRace(c.getString(c.getColumnIndex(CardEntity.RACE)));
-                //card.setMaxLevel(c.getInt(c.getColumnIndex(CardEntity.MAX_LEVEL)));
-                //card.setLevel1HP(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_HP)));
-                //card.setLevel1Attack(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_ATTACK)));
-                //card.setLevel1Recovery(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_RECOVERY)));
-                //card.setLevelMaxHP(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_HP)));
-                //card.setLevelMaxAttack(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_ATTACK)));
-                //card.setLevelMaxRecovery(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_RECOVERY)));
-                //card.setSkill(c.getString(c.getColumnIndex(CardEntity.SKILL)));
-                //card.setLeaderSkill(c.getString(c.getColumnIndex(CardEntity.LEADER_SKILL)));
-
-                // adding to tags list
-                cards.add(card);
-            } while (c.moveToNext());
+            //do
+                card.setId(c.getLong(c.getColumnIndex(CardEntity.CARD_ID)));
+                card.setColor(c.getString(c.getColumnIndex(CardEntity.COLOR)));
+                card.setRace(c.getString(c.getColumnIndex(CardEntity.RACE)));
+                card.setMaxLevel(c.getInt(c.getColumnIndex(CardEntity.MAX_LEVEL)));
+                card.setLevel1HP(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_HP)));
+                card.setLevel1Attack(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_ATTACK)));
+                card.setLevel1Recovery(c.getInt(c.getColumnIndex(CardEntity.LEVEL_1_RECOVERY)));
+                card.setLevelMaxHP(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_HP)));
+                card.setLevelMaxAttack(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_ATTACK)));
+                card.setLevelMaxRecovery(c.getInt(c.getColumnIndex(CardEntity.LEVEL_MAX_RECOVERY)));
+                card.setSkill(c.getString(c.getColumnIndex(CardEntity.SKILL)));
+                card.setLeaderSkill(c.getString(c.getColumnIndex(CardEntity.LEADER_SKILL)));
+            //} while (c.moveToNext());
         }
         db.close();
-        return cards;
+        return card;
     }
 }

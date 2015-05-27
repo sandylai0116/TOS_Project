@@ -43,10 +43,9 @@ public class Home extends ActionBarActivity {
 
         //get card
         view = (TextView)findViewById(R.id.testView);
-        List<Card> allCard = db.getCard(5);
-        for (Card c : allCard) {
-            view.append(" " + c.getId() );
-        }
+        Card card = db.getCard(5);
+        view.append(" " + card.getId() );
+
 
         //close db
         db.closeDB();
