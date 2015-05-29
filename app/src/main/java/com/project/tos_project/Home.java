@@ -53,22 +53,7 @@ public class Home extends ActionBarActivity {
         int combo =3;
 
         //calculate leader skill
-        for(int i=0;i<6;i=i+5) {
-            switch(card[i].getLeaderSkill()) {
-                case "b1.5":
-                    LeaderSkill.colorAttackBonus(card, "blue", 1.5);
-                    break;
-                case "b2":
-                    LeaderSkill.colorAttackBonus(card, "blue", 2.0);
-                    break;
-                case "r1.5":
-                    LeaderSkill.colorAttackBonus(card, "red", 1.5);
-                    break;
-                case "r2":
-                    LeaderSkill.colorAttackBonus(card, "red", 2.0);
-                    break;
-            }
-        }
+        LeaderSkill.processLeaderSkill(card);
 
         //calculate final attack
         int finalAttack = 0;
