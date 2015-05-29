@@ -25,6 +25,23 @@ public class DBHelper extends SQLiteOpenHelper {
         insertCardToDB(db, 5, "red", "human", 5, 91, 51, 13, 136, 76, 21, null, "r1.5");
         insertCardToDB(db, 6, "red", "human", 15, 228, 127, 32, 384, 214, 60, null, "r1.5");
         insertCardToDB(db, 7, "red", "human", 35, 464, 259, 66, 842, 470, 135, null, "r2");
+        insertCardToDB(db, 8, "red", "human", 99 ,891, 498, 126, 1980, 1107, 324, null, "r2");
+        insertCardToDB(db, 9, "green", "human", 5, 100, 44, 14, 149, 66, 23, null, "g1.5");
+        insertCardToDB(db, 10, "green", "human", 15, 250, 109, 34, 421, 184, 64, null, "g1.5");
+        insertCardToDB(db, 11, "green", "human", 35, 510, 223, 69, 925, 405, 141, null, "g2");
+        insertCardToDB(db, 12, "green", "human", 99 ,979, 429, 132, 2176, 953, 340, null, "g2");
+        insertCardToDB(db, 13, "yellow", "human", 5, 90, 44, 15, 134, 66, 25, null, "y1.5");
+        insertCardToDB(db, 14, "yellow", "human", 15, 226, 110, 37, 380, 186, 70, null, "y1.5");
+        insertCardToDB(db, 15, "yellow", "human", 35, 460, 226, 76, 834, 410, 156, null, "y2");
+        insertCardToDB(db, 16, "yellow", "human", 99 ,882, 433, 145, 1960, 963, 374, null, "y2");
+        insertCardToDB(db, 17, "purple", "human", 5, 84, 52, 14, 126, 78, 23, null, "p1.5");
+        insertCardToDB(db, 18, "purple", "human", 15, 212, 130, 34, 357, 220, 64, null, "p1.5");
+        insertCardToDB(db, 19, "purple", "human", 35, 432, 266, 68, 784, 483, 140, null, "p2");
+        insertCardToDB(db, 20, "purple", "human", 99 ,829, 511, 131, 1843, 1137, 337, null, "p2");
+        insertCardToDB(db, 21, "blue", "dragon", 10, 143, 52, 6, 309, 94, 7, null, "dragon2");
+        insertCardToDB(db, 22, "blue", "dragon", 15, 358, 134, 17, 616, 198, 18, null, "dragon2");
+        insertCardToDB(db, 23, "blue", "dragon", 35, 729, 276, 36, 1354, 431, 39, null, "dragon2");
+        insertCardToDB(db, 24, "blue", "dragon", 99, 1398, 532, 70, 3199, 979, 78, null, "dragon2.5");
     }
 
     //entity class list
