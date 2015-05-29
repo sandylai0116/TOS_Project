@@ -17,27 +17,11 @@ public class Home extends ActionBarActivity {
 
     private TextView view;
 
-    public long insertCardToDB( DBHelper db, long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill){
-        Card card = new Card(id, color, race, maxLevel, level1HP, level1Attack, level1Recovery, levelMaxHP, levelMaxAttack, levelMaxRecovery, skill, leaderSkill);
-        return db.createToCard(card);
-    }
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         db = new DBHelper(getApplicationContext());
-
-        //add data to database
-        insertCardToDB(db, 1, "blue", "human", 5, 86, 47, 15, 129, 71, 24, null, "b1.5");
-        insertCardToDB(db, 2, "blue", "human", 15, 216, 118, 36, 364, 200, 68, null, "b1.5");
-        insertCardToDB(db, 3, "blue", "human", 35, 441, 242, 74, 801, 440, 151, null, "b2");
-        insertCardToDB(db, 4, "blue", "human", 99, 846, 465, 141, 1881, 1035, 364, null, "b2");
-        insertCardToDB(db, 5, "red", "human", 5, 91, 51, 13, 136, 76, 21, null, "r1.5");
-        insertCardToDB(db, 6, "red", "human", 15, 228, 127, 32, 384, 214, 60, null, "r1.5");
-        insertCardToDB(db, 7, "red", "human", 35, 464, 259, 66, 842, 470, 135, null, "r2");
 
         //create 6 card
         Card card[] = new Card[6];
@@ -62,8 +46,6 @@ public class Home extends ActionBarActivity {
         }
 
         //get card
-        //view = (TextView)findViewById(R.id.testView);
-        //view.append(" " + finalAttack );
         System.out.println(card[0].getCalculatedAttack() + "," + card[1].getCalculatedAttack() + "," + card[2].getCalculatedAttack() + ","
                 + card[3].getCalculatedAttack() + "," + card[4].getCalculatedAttack() + "," + card[5].getCalculatedAttack());
         System.out.println(finalAttack);

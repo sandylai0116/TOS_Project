@@ -17,6 +17,20 @@ import java.util.List;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
+    public long insertCardToDB(SQLiteDatabase db, long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill){
+        Card card = new Card(id, color, race, maxLevel, level1HP, level1Attack, level1Recovery, levelMaxHP, levelMaxAttack, levelMaxRecovery, skill, leaderSkill);
+        return createToCard(db, card);
+    }
+    public void addData(SQLiteDatabase db){
+        insertCardToDB(db, 1, "blue", "human", 5, 86, 47, 15, 129, 71, 24, null, "b1.5");
+        insertCardToDB(db, 2, "blue", "human", 15, 216, 118, 36, 364, 200, 68, null, "b1.5");
+        insertCardToDB(db, 3, "blue", "human", 35, 441, 242, 74, 801, 440, 151, null, "b2");
+        insertCardToDB(db, 4, "blue", "human", 99, 846, 465, 141, 1881, 1035, 364, null, "b2");
+        insertCardToDB(db, 5, "red", "human", 5, 91, 51, 13, 136, 76, 21, null, "r1.5");
+        insertCardToDB(db, 6, "red", "human", 15, 228, 127, 32, 384, 214, 60, null, "r1.5");
+        insertCardToDB(db, 7, "red", "human", 35, 464, 259, 66, 842, 470, 135, null, "r2");
+    }
+
     //entity class list
     public static abstract class CardEntity implements BaseColumns {
         public static final String TABLE_NAME = "CARD";
@@ -45,7 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
 
     //create table
-    private static final String SQL_CREATE_CARD_DATA =
+    private static final String SQL_CREATE_CARD_ENTITY =
             "CREATE TABLE " + CardEntity.TABLE_NAME + " (" +
                     CardEntity._ID + " INTEGER PRIMARY KEY," +
                     CardEntity.CARD_ID + INTEGER_TYPE + COMMA_SEP +
@@ -67,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "CREATE INDEX idxCard ON " + CardEntity.TABLE_NAME + " (" + CardEntity.CARD_ID +
             ")";
 
-    private static final String SQL_DELETE_CARD_DATA =
+    private static final String SQL_DELETE_CARD_ENTITY =
             "DROP TABLE IF EXISTS " + CardEntity.TABLE_NAME;
 
    public DBHelper(Context context) {
@@ -75,12 +89,13 @@ public class DBHelper extends SQLiteOpenHelper {
    }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_CARD_DATA);
+        db.execSQL(SQL_CREATE_CARD_ENTITY);
+        addData(db);
         db.execSQL(SQL_CARD_ID_INDEXING);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_DELETE_CARD_DATA);
+        db.execSQL(SQL_DELETE_CARD_ENTITY);
         onCreate(db);
     }
 
@@ -89,8 +104,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void onOpen(SQLiteDatabase db) {
-        db.execSQL(SQL_DELETE_CARD_DATA);
-        db.execSQL(SQL_CREATE_CARD_DATA);
+        db.execSQL(SQL_DELETE_CARD_ENTITY);
+        db.execSQL(SQL_CREATE_CARD_ENTITY);
+        addData(db);
         db.execSQL(SQL_CARD_ID_INDEXING);
     }
 
@@ -100,9 +116,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.close();
     }
 
-    public long createToCard(Card card) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
+    public long createToCard(SQLiteDatabase db, Card card) {
         ContentValues values = new ContentValues();
         values.put(CardEntity.CARD_ID, card.getId());
         values.put(CardEntity.COLOR, card.getColor());
