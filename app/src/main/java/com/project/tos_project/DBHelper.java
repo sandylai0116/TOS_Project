@@ -17,10 +17,6 @@ import java.util.List;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
-    public long insertCardToDB(SQLiteDatabase db, long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill){
-        Card card = new Card(id, color, race, maxLevel, level1HP, level1Attack, level1Recovery, levelMaxHP, levelMaxAttack, levelMaxRecovery, skill, leaderSkill);
-        return createToCard(db, card);
-    }
     public void addData(SQLiteDatabase db){
         insertCardToDB(db, 1, "blue", "human", 5, 86, 47, 15, 129, 71, 24, null, "b1.5");
         insertCardToDB(db, 2, "blue", "human", 15, 216, 118, 36, 364, 200, 68, null, "b1.5");
@@ -116,8 +112,10 @@ public class DBHelper extends SQLiteOpenHelper {
             db.close();
     }
 
-    public long createToCard(SQLiteDatabase db, Card card) {
+    public long insertCardToDB(SQLiteDatabase db, long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
+        Card card = new Card(id, color, race, maxLevel, level1HP, level1Attack, level1Recovery, levelMaxHP, levelMaxAttack, levelMaxRecovery, skill, leaderSkill);
         ContentValues values = new ContentValues();
+
         values.put(CardEntity.CARD_ID, card.getId());
         values.put(CardEntity.COLOR, card.getColor());
         values.put(CardEntity.RACE, card.getRace());
