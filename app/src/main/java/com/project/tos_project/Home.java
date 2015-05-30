@@ -1,21 +1,28 @@
 package com.project.tos_project;
 
+
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.*;
+import android.view.View;
 
 import com.project.tos_project.model.Card;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
-public class Home extends ActionBarActivity {
+public class Home extends ActionBarActivity{
 
     // Database Helper
     DBHelper db;
 
     private TextView view;
+    private ImageButton card1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +30,32 @@ public class Home extends ActionBarActivity {
         setContentView(R.layout.activity_home);
         db = new DBHelper(getApplicationContext());
 
+        card1 =(ImageButton) findViewById(R.id.card1);
+
         //create 6 card
         Card card[] = new Card[6];
+
+
+        card1.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View v){
+                Toast.makeText(getApplicationContext(), "Hello ",
+                        Toast.LENGTH_SHORT).show();
+                try
+                {
+                    // get input stream
+                    InputStream ims = getAssets().open("card/card-1.png");
+                    // load image as Drawable
+                    Drawable d = Drawable.createFromStream(ims, null);
+                    // set image to ImageView
+                    card1.setImageDrawable(d);
+                }
+                catch(IOException ex)
+                {
+                    return;
+                }
+            }
+        });
+
 
         //assume card NO is 1
         //assume current level is 5
