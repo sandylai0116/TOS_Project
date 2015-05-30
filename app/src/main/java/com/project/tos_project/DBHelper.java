@@ -17,33 +17,6 @@ import java.util.List;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
-    public void addData(SQLiteDatabase db){
-        insertCardToDB(db, 1, "blue", "human", 5, 86, 47, 15, 129, 71, 24, null, "b1.5");
-        insertCardToDB(db, 2, "blue", "human", 15, 216, 118, 36, 364, 200, 68, null, "b1.5");
-        insertCardToDB(db, 3, "blue", "human", 35, 441, 242, 74, 801, 440, 151, null, "b2");
-        insertCardToDB(db, 4, "blue", "human", 99, 846, 465, 141, 1881, 1035, 364, null, "b2");
-        insertCardToDB(db, 5, "red", "human", 5, 91, 51, 13, 136, 76, 21, null, "r1.5");
-        insertCardToDB(db, 6, "red", "human", 15, 228, 127, 32, 384, 214, 60, null, "r1.5");
-        insertCardToDB(db, 7, "red", "human", 35, 464, 259, 66, 842, 470, 135, null, "r2");
-        insertCardToDB(db, 8, "red", "human", 99 ,891, 498, 126, 1980, 1107, 324, null, "r2");
-        insertCardToDB(db, 9, "green", "human", 5, 100, 44, 14, 149, 66, 23, null, "g1.5");
-        insertCardToDB(db, 10, "green", "human", 15, 250, 109, 34, 421, 184, 64, null, "g1.5");
-        insertCardToDB(db, 11, "green", "human", 35, 510, 223, 69, 925, 405, 141, null, "g2");
-        insertCardToDB(db, 12, "green", "human", 99 ,979, 429, 132, 2176, 953, 340, null, "g2");
-        insertCardToDB(db, 13, "yellow", "human", 5, 90, 44, 15, 134, 66, 25, null, "y1.5");
-        insertCardToDB(db, 14, "yellow", "human", 15, 226, 110, 37, 380, 186, 70, null, "y1.5");
-        insertCardToDB(db, 15, "yellow", "human", 35, 460, 226, 76, 834, 410, 156, null, "y2");
-        insertCardToDB(db, 16, "yellow", "human", 99 ,882, 433, 145, 1960, 963, 374, null, "y2");
-        insertCardToDB(db, 17, "purple", "human", 5, 84, 52, 14, 126, 78, 23, null, "p1.5");
-        insertCardToDB(db, 18, "purple", "human", 15, 212, 130, 34, 357, 220, 64, null, "p1.5");
-        insertCardToDB(db, 19, "purple", "human", 35, 432, 266, 68, 784, 483, 140, null, "p2");
-        insertCardToDB(db, 20, "purple", "human", 99 ,829, 511, 131, 1843, 1137, 337, null, "p2");
-        insertCardToDB(db, 21, "blue", "dragon", 10, 143, 52, 6, 309, 94, 7, null, "dragon2");
-        insertCardToDB(db, 22, "blue", "dragon", 15, 358, 134, 17, 616, 198, 18, null, "dragon2");
-        insertCardToDB(db, 23, "blue", "dragon", 35, 729, 276, 36, 1354, 431, 39, null, "dragon2");
-        insertCardToDB(db, 24, "blue", "dragon", 99, 1398, 532, 70, 3199, 979, 78, null, "dragon2.5");
-    }
-
     //entity class list
     public static abstract class CardEntity implements BaseColumns {
         public static final String TABLE_NAME = "CARD";
@@ -103,7 +76,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_CARD_ENTITY);
-        addData(db);
+        CardData.addData(db);
         db.execSQL(SQL_CARD_ID_INDEXING);
     }
 
@@ -119,7 +92,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db) {
         db.execSQL(SQL_DELETE_CARD_ENTITY);
         db.execSQL(SQL_CREATE_CARD_ENTITY);
-        addData(db);
+        CardData.addData(db);
         db.execSQL(SQL_CARD_ID_INDEXING);
     }
 
@@ -129,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.close();
     }
 
-    public long insertCardToDB(SQLiteDatabase db, long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
+    public static long insertCardToDB(SQLiteDatabase db, long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
         Card card = new Card(id, color, race, maxLevel, level1HP, level1Attack, level1Recovery, levelMaxHP, levelMaxAttack, levelMaxRecovery, skill, leaderSkill);
         ContentValues values = new ContentValues();
 
