@@ -1,6 +1,7 @@
 package com.project.tos_project;
 
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -35,11 +36,13 @@ public class Home extends ActionBarActivity{
         //create 6 card
         Card card[] = new Card[6];
 
-
-        card1.setOnClickListener(new View.OnClickListener() {
+   /*     card1.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
-                Toast.makeText(getApplicationContext(), "Hello ",
-                        Toast.LENGTH_SHORT).show();
+          //      Toast.makeText(getApplicationContext(), "Hello ",
+          //              Toast.LENGTH_SHORT).show();
+
+          //     startActivity(new Intent(getApplicationContext(), SelectCardActivity.class));
+
                 try
                 {
                     // get input stream
@@ -51,12 +54,11 @@ public class Home extends ActionBarActivity{
                 }
                 catch(IOException ex)
                 {
-                    return;
+                    Toast.makeText(getApplicationContext(), "Hello ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
+*/
         //assume card NO is 1
         //assume current level is 5
         for(int i=0;i<6;i++) {
@@ -84,6 +86,12 @@ public class Home extends ActionBarActivity{
 
         //close db
         db.closeDB();
+    }
+
+    public void selectCard(View view){
+        Intent intent = new Intent(this, SelectCardActivity.class);
+        intent.putExtra("Value1", "Value two from Activity1");
+        startActivity(intent);
     }
 
     @Override
