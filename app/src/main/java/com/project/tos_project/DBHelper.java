@@ -74,6 +74,11 @@ public class DBHelper extends SQLiteOpenHelper {
        super(context, DATABASE_NAME, null, DATABASE_VERSION);
    }
 
+    public Cursor query(SQLiteDatabase db, String query) {
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_CARD_ENTITY);
         CardData.addData(db);

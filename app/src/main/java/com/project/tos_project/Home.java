@@ -88,9 +88,13 @@ public class Home extends ActionBarActivity{
         db.closeDB();
     }
 
+    // selectCard will be running when image button clicked
     public void selectCard(View view){
+        //  set the target activity
         Intent intent = new Intent(this, SelectCardActivity.class);
+        // set the value
         intent.putExtra("Value1", "Value two from Activity1");
+        // go to another activity
         startActivity(intent);
     }
 
