@@ -334,6 +334,7 @@ public class LeaderSkill {
             for(String s : leaderSkills) {
                 switch(s) {
                     case "dragonRecoveryAddToAttack":
+                        raceAddRecoveryToAttack(card,"dragon",i);
                         break;
                 }
             }
@@ -489,14 +490,19 @@ public class LeaderSkill {
                         raceAttackBonus(card, "demon", 3.0);
                         break;
                     case "blueAttack2BlueBeastAttack3.5":
+                        colorAndRaceAttackBonus(card, "blue", "beast", 2.0, 3.5);
                         break;
                     case "redAttack2RedBeastAttack3.5":
+                        colorAndRaceAttackBonus(card, "red", "beast", 2.0, 3.5);
                         break;
                     case "greenAttack2GreenBeastAttack3.5":
+                        colorAndRaceAttackBonus(card, "green", "beast", 2.0, 3.5);
                         break;
                     case "yellowAttack2YellowBeastAttack3.5":
+                        colorAndRaceAttackBonus(card, "yellow", "beast", 2.0, 3.5);
                         break;
                     case "purpleAttack2PurpleBeastAttack3.5":
+                        colorAndRaceAttackBonus(card, "purple", "beast", 2.0, 3.5);
                         break;
                     case "increaseBlueAttackRed":
                         break;
@@ -763,6 +769,27 @@ public class LeaderSkill {
         for(int i=0;i<6;i++) {
             if (card[i].getRace().equals(race)) {
                 int temp = card[i].getCalculatedAttack() + point;
+                card[i].setCalculatedAttack(temp);
+            }
+        }
+    }
+    public static void raceAddRecoveryToAttack(Card[] card,String race,int target){
+        int temp = card[target].getCalculatedAttack() + card[target].getCalculatedRecovery();
+        card[target].setCalculatedAttack(temp);
+        for(int i=0;i<6;i++) {
+            if (card[i].getRace().equals(race)) {
+                card[i].setCalculatedRecovery(0);
+            }
+        }
+    }
+    public static void colorAndRaceAttackBonus(Card[] card,String color,String race,Double colorFactor,Double colorRaceFactor){
+        for(int i=0;i<6;i++) {
+            if (card[i].getColor().equals(color) && card[i].getRace().equals(race)) {
+                int temp = (int) (card[i].getCalculatedAttack() * colorRaceFactor);
+                card[i].setCalculatedAttack(temp);
+            }
+            else if(card[i].getColor().equals(color)){
+                int temp = (int) (card[i].getCalculatedAttack() * colorFactor);
                 card[i].setCalculatedAttack(temp);
             }
         }
