@@ -8,8 +8,9 @@ import android.util.Log;
  */
 public class CardData {
     public static void addData(SQLiteDatabase db){
-        Log.d("startDBTime","0");
-        long tStart = System.currentTimeMillis();
+        //optimize speed
+        db.beginTransaction();
+
         DBHelper.insertCardToDB(db, 1, "blue", "human", 5, 86, 47, 15, 129, 71, 24, null, "blueAttack1.5");
         DBHelper.insertCardToDB(db, 2, "blue", "human", 15, 216, 118, 36, 364, 200, 68, null, "blueAttack1.5");
         DBHelper.insertCardToDB(db, 3, "blue", "human", 35, 441, 242, 74, 801, 440, 151, null, "blueAttack2");
@@ -945,8 +946,9 @@ public class CardData {
         DBHelper.insertCardToDB(db, 9014, "purple", "demon", 99, 1133, 1070, 88, 2109, 1918, 386, null, "attack4WhenMoreTime");
         DBHelper.insertCardToDB(db, 9015, "green", "demon", 99, 949, 1043, 88, 1703, 1802, 373, null, "demonAttack2,demonRecovery1.5");
         DBHelper.insertCardToDB(db, 9016, "red", "demon", 99, 760, 1152, 83, 1364, 1990, 354, null, "greenAttack3WhenExistOnlyGreenElfBeastDemon");
-        long tEnd = System.currentTimeMillis();
-        long tDelta = tEnd - tStart;
-        Log.d("finishDBTime", String.valueOf(tDelta));
+
+        //optimize speed
+        db.setTransactionSuccessful();
+        db.endTransaction();
     }
 }
