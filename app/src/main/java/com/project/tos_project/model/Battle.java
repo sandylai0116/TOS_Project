@@ -16,11 +16,13 @@ public class Battle {
     private List<Integer> numOfGreen;
     private List<Integer> numOfYellow;
     private List<Integer> numOfPurple;
+    private List<Integer> numOfPink;
     private int numOfEnchantedRed;
     private int numOfEnchantedBlue;
     private int numOfEnchantedGreen;
     private int numOfEnchantedYellow;
     private int numOfEnchantedPurple;
+    private int numOfEnchantedPink;
 
     //Skills
     private double eachComboFactor;
@@ -54,6 +56,22 @@ public class Battle {
 
     public int getBossHP() {
         return bossHP;
+    }
+
+    public List<Integer> getNumOfPink() {
+        return numOfPink;
+    }
+
+    public void setNumOfPink(List<Integer> numOfPink) {
+        this.numOfPink = numOfPink;
+    }
+
+    public int getNumOfEnchantedPink() {
+        return numOfEnchantedPink;
+    }
+
+    public void setNumOfEnchantedPink(int numOfEnchantedPink) {
+        this.numOfEnchantedPink = numOfEnchantedPink;
     }
 
     public void setBossHP(int bossHP) {
