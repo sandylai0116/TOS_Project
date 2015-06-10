@@ -12,6 +12,7 @@ public class LeaderSkill {
     public static void processLeaderSkill(Card[] card){
         //priority1
         for(int i=0;i<6;i=i+5){
+            if(card[i].getLeaderSkill() == null) continue;
             String leaderSkills[] = card[i].getLeaderSkill().split(",");
             for(String s : leaderSkills) {
                 switch(s) {
@@ -33,6 +34,7 @@ public class LeaderSkill {
 
         //priority2
         for(int i=0;i<6;i=i+5){
+            if(card[i].getLeaderSkill() == null) continue;
             String leaderSkills[] = card[i].getLeaderSkill().split(",");
             for(String s : leaderSkills) {
                 switch(s) {
@@ -330,6 +332,7 @@ public class LeaderSkill {
 
         //priority3
         for(int i=0;i<6;i=i+5){
+            if(card[i].getLeaderSkill() == null) continue;
             String leaderSkills[] = card[i].getLeaderSkill().split(",");
             for(String s : leaderSkills) {
                 switch(s) {
@@ -342,6 +345,7 @@ public class LeaderSkill {
 
         //priority4
         for(int i=0;i<6;i=i+5) {
+            if(card[i].getLeaderSkill() == null) continue;
             String leaderSkills[] = card[i].getLeaderSkill().split(",");
             for(String s : leaderSkills) {
                 switch(s) {
