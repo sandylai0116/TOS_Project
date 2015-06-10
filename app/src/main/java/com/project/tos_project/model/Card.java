@@ -148,6 +148,7 @@ public class Card {
     }
 
     public void setCurrentLevel(int currentLevel) {
+        if(currentLevel>maxLevel)currentLevel=maxLevel;
         this.currentLevel = currentLevel;
         if(maxLevel-1 != 0) {
             setCurrentHP(level1HP + (levelMaxHP - level1HP) * (currentLevel-1) / (maxLevel-1));
