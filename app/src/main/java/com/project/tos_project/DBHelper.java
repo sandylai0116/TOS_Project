@@ -74,8 +74,8 @@ public class DBHelper extends SQLiteOpenHelper {
        super(context, DATABASE_NAME, null, DATABASE_VERSION);
    }
 
-    public Cursor query(SQLiteDatabase db, String query) {
-        Cursor cursor = db.rawQuery(query, null);
+    public Cursor query(SQLiteDatabase db, String query, String[] args) {
+        Cursor cursor = db.rawQuery(query, args);
         return cursor;
     }
 

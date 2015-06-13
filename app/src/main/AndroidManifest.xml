@@ -20,6 +20,10 @@
             android:name=".SelectCardActivity"
             android:label="@string/title_activity_select_card" >
         </activity>
+        <activity
+            android:name=".Test"
+            android:label="@string/title_activity_test" >
+        </activity>
     </application>
 
 </manifest>

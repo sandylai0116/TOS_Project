@@ -1,100 +1,159 @@
 package com.project.tos_project;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-import com.project.tos_project.model.Card;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by man on 31/5/2015.
- */
-public class SelectCardActivity extends Activity {
 
-    ImageButton b[];
-    LinearLayout ll;
+public class SelectCardActivity extends ActionBarActivity{
     SQLiteDatabase db;
-    EditText text1;
+    Bitmap bitmap;
     DBHelper dbHelper;
-
+    List<String> mThumbIds = new ArrayList<String>();
+    TextView text1;
+    Cursor cursor;
+    public final static int RESULT_CODE  = 2;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_card);
+        GridView gridview = (GridView) findViewById(R.id.gridview);
 
-        ll = (LinearLayout) findViewById(R.id.selectCardArea);// initialize linearlayout
-
-        dbHelper = new DBHelper(SelectCardActivity.this);
-        db = dbHelper.getWritableDatabase();
-     //   text1 = (EditText) findViewById(R.id.searchCardByName);
-     //   text1.setText(getIntent().getStringExtra("Value1"));
-        setresource();
-    }
-
-    public void setresource() {
-
-        Cursor cursor = dbHelper.query(db, "SELECT count(1) FROM CARD");
-        cursor.moveToFirst();
-
-       int totalRecordRow = Integer.parseInt(cursor.getString(0)) / 5;
-        int totalRecord = Integer.parseInt(cursor.getString(0));
-        int printCardNum = 0;
+        try {
+            // eg. 1 - RawQuery
+            dbHelper = new DBHelper(SelectCardActivity.this);
+            db = dbHelper.getWritableDatabase();
+            cursor = dbHelper.query(db, "SELECT CARD_ID as cardNo FROM CARD", null);
+            while (cursor.moveToNext()) {
+                String cardNo = cursor.getString(cursor.getColumnIndex("cardNo"));
+                mThumbIds.add("card/card-" + cardNo + ".png");
+            }
+        } catch (SQLiteException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
         db.close();
 
-     //   int totalRecordRow = 53 / 5;
-     //   int totalRecord = 12;
-        b = new ImageButton[totalRecordRow];
-        int currentCardNo = 1;
-        for (int i = 0 ; i < totalRecordRow; i++){
+        gridview.setAdapter(new ImageAdapter(this, mThumbIds));
 
-            LinearLayout supLL = new LinearLayout(this);
-            supLL.setWeightSum(5f);
-            supLL.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Toast.makeText(SelectCardActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+                createCardLevelDialogBox();
+                //        AlertDialog.Builder cardLV = new AlertDialog.Builder(SelectCardActivity.this);
+                //                .setTitle("請輸入等級").setIcon(android.R.drawable.ic_dialog_info).setView(new EditText(SelectCardActivity.this)).setPositiveButton("確定", null).setNegativeButton("取消", null).show();
+            }
+        });
+    }
 
-        //    supLL.setGravity(Gravity.CENTER);
-            if(totalRecord >= 5)
-                printCardNum = 5;
-            else
-                printCardNum = totalRecord;
+    public void createCardLevelDialogBox() {
+        AlertDialog.Builder cardLV = new AlertDialog.Builder(SelectCardActivity.this);
+        cardLV.setTitle("請輸入等級!");
+        final EditText LVText = new EditText(SelectCardActivity.this);
+        cardLV.setView(LVText);
+        //   cardLV.setIcon(R.drawable.ic_launcher);
+        cardLV.setCancelable(false);
 
-            for(int j=0; j < printCardNum; j++) {
-                totalRecord--;
-                currentCardNo++;
-                b[i] = new ImageButton(this); // initilize
-                b[i].setLayoutParams(new LinearLayout.LayoutParams(1 , LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-                b[i].setScaleType(ImageButton.ScaleType.CENTER);
-                b[i].setAdjustViewBounds(true);
-                b[i].setPadding(5,5,5,5);
 
-                try {
-                    InputStream ims = getAssets().open("card/card-"+currentCardNo+".png");
-                    // load image as Drawable
-                    Drawable d = Drawable.createFromStream(ims, null);
-                    // set image to ImageView
-                    b[i].setImageDrawable(d);
-                }
-                catch(IOException ex){
-                    b[i].setImageResource(R.drawable.card_unknow);
-                 //   Toast.makeText(getApplicationContext(), "Hello ", Toast.LENGTH_SHORT).show();
-                }
-
-                supLL.addView(b[i]);
+        cardLV.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
 
-            ll.addView(supLL);
+        });
+        cardLV.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent data = new Intent();
+                data.putExtra("returnCardLV", LVText.getText());
+                setResult(RESULT_CODE, data);
+                finish();
+            }
+        });
+
+   //     cardLV.create();
+        cardLV.show();
+    }
+
+    public class ImageAdapter extends BaseAdapter {
+        private Context mContext;
+        List<String> mThumbIds = new ArrayList<String>();
+        public ImageAdapter(Context c, List<String> mThumbIds) {
+            mContext = c;
+            this.mThumbIds = mThumbIds;
+        }
+
+        public int getCount() {
+            return mThumbIds.size();
+        }
+
+        public Object getItem(int position) {
+            return null;
+        }
+
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        // create a new ImageView for each item referenced by the Adapter
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageView imageView;
+
+            Resources r = Resources.getSystem();
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, r.getDisplayMetrics());
+
+            if (convertView == null) {  //if it's not recycled, initialize some 				attributes
+                imageView = new ImageView(mContext);
+                imageView.setLayoutParams(new
+                        GridView.LayoutParams((int) px, (int) px));
+                imageView.setScaleType(
+                        ImageView.ScaleType.CENTER_CROP);
+                //    imageView.setPadding(5, 5, 5, 5);
+            } else {
+                imageView = (ImageView) convertView;
+            }
+
+            try {
+                InputStream ims = getAssets().open(mThumbIds.get(position));
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                bitmap = BitmapFactory.decodeStream(ims, null, options);
+                ims.close();
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException ex) {
+                imageView.setImageResource(R.drawable.card_unknow);
+                //   Toast.makeText(getApplicationContext(), "Hello ", Toast.LENGTH_SHORT).show();
+            }
+            return imageView;
         }
     }
 
 }
+
+
+
+

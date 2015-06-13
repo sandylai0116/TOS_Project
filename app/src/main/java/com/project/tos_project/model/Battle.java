@@ -1,5 +1,8 @@
 package com.project.tos_project.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by LAI on 2015/6/9.
  */
@@ -8,16 +11,18 @@ public class Battle {
     private String bossColor;
     private int bossDefence;
     private int numOfCombo;
-    private int numOfRed[];
-    private int numOfBlue[];
-    private int numOfGreen[];
-    private int numOfYellow[];
-    private int numOfPurple[];
+    private List<Integer> numOfRed;
+    private List<Integer> numOfBlue;
+    private List<Integer> numOfGreen;
+    private List<Integer> numOfYellow;
+    private List<Integer> numOfPurple;
+    private List<Integer> numOfPink;
     private int numOfEnchantedRed;
     private int numOfEnchantedBlue;
     private int numOfEnchantedGreen;
     private int numOfEnchantedYellow;
     private int numOfEnchantedPurple;
+    private int numOfEnchantedPink;
 
     //Skills
     private double eachComboFactor;
@@ -42,18 +47,31 @@ public class Battle {
     public Battle() {
         eachComboFactor = 0.25;
         colorSuppressionFactor = 1.5;
-    }
-
-    public int[] getNumOfBlue() {
-        return numOfBlue;
-    }
-
-    public void setNumOfBlue(int[] numOfBlue) {
-        this.numOfBlue = numOfBlue;
+        numOfRed = new ArrayList<>();
+        numOfBlue = new ArrayList<>();
+        numOfGreen = new ArrayList<>();
+        numOfYellow = new ArrayList<>();
+        numOfPurple = new ArrayList<>();
     }
 
     public int getBossHP() {
         return bossHP;
+    }
+
+    public List<Integer> getNumOfPink() {
+        return numOfPink;
+    }
+
+    public void setNumOfPink(List<Integer> numOfPink) {
+        this.numOfPink = numOfPink;
+    }
+
+    public int getNumOfEnchantedPink() {
+        return numOfEnchantedPink;
+    }
+
+    public void setNumOfEnchantedPink(int numOfEnchantedPink) {
+        this.numOfEnchantedPink = numOfEnchantedPink;
     }
 
     public void setBossHP(int bossHP) {
@@ -84,35 +102,43 @@ public class Battle {
         this.numOfCombo = numOfCombo;
     }
 
-    public int[] getNumOfRed() {
+    public List<Integer> getNumOfRed() {
         return numOfRed;
     }
 
-    public void setNumOfRed(int[] numOfRed) {
+    public void setNumOfRed(List<Integer> numOfRed) {
         this.numOfRed = numOfRed;
     }
 
-    public int[] getNumOfGreen() {
+    public List<Integer> getNumOfBlue() {
+        return numOfBlue;
+    }
+
+    public void setNumOfBlue(List<Integer> numOfBlue) {
+        this.numOfBlue = numOfBlue;
+    }
+
+    public List<Integer> getNumOfGreen() {
         return numOfGreen;
     }
 
-    public void setNumOfGreen(int[] numOfGreen) {
+    public void setNumOfGreen(List<Integer> numOfGreen) {
         this.numOfGreen = numOfGreen;
     }
 
-    public int[] getNumOfYellow() {
+    public List<Integer> getNumOfYellow() {
         return numOfYellow;
     }
 
-    public void setNumOfYellow(int[] numOfYellow) {
+    public void setNumOfYellow(List<Integer> numOfYellow) {
         this.numOfYellow = numOfYellow;
     }
 
-    public int[] getNumOfPurple() {
+    public List<Integer> getNumOfPurple() {
         return numOfPurple;
     }
 
-    public void setNumOfPurple(int[] numOfPurple) {
+    public void setNumOfPurple(List<Integer> numOfPurple) {
         this.numOfPurple = numOfPurple;
     }
 
