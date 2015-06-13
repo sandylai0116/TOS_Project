@@ -25,7 +25,6 @@ public class Home extends ActionBarActivity{
     private TextView view;
     private ImageButton card1;
     private final static int REQUEST_CODE = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,33 +33,8 @@ public class Home extends ActionBarActivity{
 
         card1 =(ImageButton) findViewById(R.id.card1);
 
-        //create 6 card
-        Card card[] = new Card[6];
-
-        //assume card NO is 1
-        //assume current level is 5
-        for(int i=0;i<6;i++) {
-            card[i] = db.getCard(1);
-            card[i].setCurrentLevel(5);
-        }
-
-        //assume combo is 3
-        int combo =3;
-
-        //calculate leader skill
-        LeaderSkill.processLeaderSkill(card);
-
-        //calculate final attack
-        int finalAttack = 0;
-        for(int i=0;i<6;i++) {
-            finalAttack += card[i].getCalculatedAttack();
-        }
-
-        //get card
-        System.out.println(card[0].getCalculatedAttack() + "," + card[1].getCalculatedAttack() + "," + card[2].getCalculatedAttack() + ","
-                + card[3].getCalculatedAttack() + "," + card[4].getCalculatedAttack() + "," + card[5].getCalculatedAttack());
-        System.out.println(finalAttack);
-
+        //test
+        Computation.testFinalAttack(db);
 
         //close db
         db.closeDB();
@@ -76,7 +50,6 @@ public class Home extends ActionBarActivity{
             }
         }
     }
-
 
     // selectCard will be running when image button clicked
     public void selectCard(View view){
