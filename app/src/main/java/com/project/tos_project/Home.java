@@ -24,6 +24,7 @@ public class Home extends ActionBarActivity{
 
     private TextView view;
     private ImageButton card1;
+    private final static int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,29 +37,6 @@ public class Home extends ActionBarActivity{
         //create 6 card
         Card card[] = new Card[6];
 
-   /*     card1.setOnClickListener(new View.OnClickListener() {
-            public void onClick (View v){
-          //      Toast.makeText(getApplicationContext(), "Hello ",
-          //              Toast.LENGTH_SHORT).show();
-
-          //     startActivity(new Intent(getApplicationContext(), SelectCardActivity.class));
-
-                try
-                {
-                    // get input stream
-                    InputStream ims = getAssets().open("card/card-1.png");
-                    // load image as Drawable
-                    Drawable d = Drawable.createFromStream(ims, null);
-                    // set image to ImageView
-                    card1.setImageDrawable(d);
-                }
-                catch(IOException ex)
-                {
-                    Toast.makeText(getApplicationContext(), "Hello ", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-*/
         //assume card NO is 1
         //assume current level is 5
         for(int i=0;i<6;i++) {
@@ -87,6 +65,18 @@ public class Home extends ActionBarActivity{
         //close db
         db.closeDB();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == SelectCardActivity.RESULT_CODE) {
+            if (data.hasExtra("returnCardLV")) {
+                EditText tv = (EditText) findViewById(R.id.monsterDefense);
+                tv.setText(data.getExtras().getString("returnCardLV"));
+            }
+        }
+    }
+
 
     // selectCard will be running when image button clicked
     public void selectCard(View view){
