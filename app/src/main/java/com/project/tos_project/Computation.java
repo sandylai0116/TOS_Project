@@ -21,13 +21,11 @@ public class Computation {
 
             double colorSuppressionFactor = battle.getSpecialSuppressionFactor();
 
-            if(card[i].getColor() == null) continue;
             switch (card[i].getColor()) {
                 case "red":
                     numOfStones = battle.getNumOfRed();
                     numOfEnchantedStone = battle.getNumOfEnchantedRed();
                     //Suppression
-                    if(battle.getBossColor() == null) break;
                     if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getRedSuppressRedFactor();
                     else if(battle.getBossColor().equals("green")) colorSuppressionFactor = battle.getRedSuppressGreenFactor();
                     break;
@@ -35,7 +33,6 @@ public class Computation {
                     numOfStones = battle.getNumOfBlue();
                     numOfEnchantedStone = battle.getNumOfEnchantedBlue();
                     //Suppression
-                    if(battle.getBossColor() == null) break;
                     if(battle.getBossColor().equals("purple")) colorSuppressionFactor = battle.getBlueSuppressPurpleFactor();
                     else if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getBlueSuppressRedFactor();
                     break;
@@ -43,7 +40,6 @@ public class Computation {
                     numOfStones = battle.getNumOfGreen();
                     numOfEnchantedStone = battle.getNumOfEnchantedGreen();
                     //Suppression
-                    if(battle.getBossColor() == null) break;
                     if(battle.getBossColor().equals("yellow")) colorSuppressionFactor = battle.getGreenSuppressYellowFactor();
                     else if(battle.getBossColor().equals("blue")) colorSuppressionFactor = battle.getGreenSuppressBlueFactor();
                     break;
@@ -51,7 +47,6 @@ public class Computation {
                     numOfStones = battle.getNumOfYellow();
                     numOfEnchantedStone = battle.getNumOfEnchantedYellow();
                     //Suppression
-                    if(battle.getBossColor() == null) break;
                     if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getYellowSuppressRedFactor();
                     else if(battle.getBossColor().equals("purple")) colorSuppressionFactor = battle.getYellowSuppressPurpleFactor();
                     break;
@@ -59,7 +54,6 @@ public class Computation {
                     numOfStones = battle.getNumOfPurple();
                     numOfEnchantedStone = battle.getNumOfEnchantedPurple();
                     //Suppression
-                    if(battle.getBossColor() == null) break;
                     if(battle.getBossColor().equals("green")) colorSuppressionFactor = battle.getPurpleSuppressGreenFactor();
                     else if(battle.getBossColor().equals("yellow")) colorSuppressionFactor = battle.getPurpleSuppressYellowFactor();
                     break;

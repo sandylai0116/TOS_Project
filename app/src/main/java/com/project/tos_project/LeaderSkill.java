@@ -565,12 +565,17 @@ public class LeaderSkill {
                         battle.setSpecialSuppressionFactor(1.5);
                         break;
                     case "combo25%":
+                        battle.setEachComboFactor(battle.getEachComboFactor()+0.25);
                         break;
                     case "combo75%":
+                        battle.setEachComboFactor(battle.getEachComboFactor()+0.75);
                         break;
                     case "combo125%":
+                        battle.setEachComboFactor(battle.getEachComboFactor()+1.25);
                         break;
                     case "combo125%WhenOnlyDragon":
+                        for(Card c: card) if( !(c.getRace().equals("dragon") || c.getRace().equals("")) ) break;
+                        battle.setEachComboFactor(battle.getEachComboFactor()+1.25);
                         break;
                     case "attack2.5WhenHPBelow20%":
                         break;

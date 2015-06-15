@@ -26,10 +26,19 @@ public class Card {
     int calculatedAttack;
     int calculatedRecovery;
 
-    public Card(){}
+    public Card(){
+        color = "";
+        race = "";
+        skill = "";
+        leaderSkill = "";
+    }
 
     public Card(long id){
         this.id = id;
+        color = "";
+        race = "";
+        skill = "";
+        leaderSkill = "";
     }
 
     public Card(long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
@@ -45,6 +54,10 @@ public class Card {
         this.levelMaxRecovery = levelMaxRecovery;
         this.skill = skill;
         this.leaderSkill = leaderSkill;
+        color = "";
+        race = "";
+        skill = "";
+        leaderSkill = "";
     }
 
     public long getId() {

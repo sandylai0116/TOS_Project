@@ -73,6 +73,7 @@ public class Battle {
         numOfGreen = new ArrayList<>();
         numOfYellow = new ArrayList<>();
         numOfPurple = new ArrayList<>();
+        bossColor = "";
     }
 
     public int getBossHP() {
