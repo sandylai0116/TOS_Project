@@ -26,7 +26,18 @@ public class Battle {
 
     //Skills
     private double eachComboFactor;
-    private double colorSuppressionFactor;
+
+    private double specialSuppressionFactor;
+    private double blueSuppressRedFactor;
+    private double redSuppressGreenFactor;
+    private double greenSuppressBlueFactor;
+    private double yellowSuppressPurpleFactor;
+    private double purpleSuppressYellowFactor;
+    private double blueSuppressPurpleFactor;
+    private double redSuppressRedFactor;
+    private double greenSuppressYellowFactor;
+    private double yellowSuppressRedFactor;
+    private double purpleSuppressGreenFactor;
 
     private Boolean enablePinkPossessRed;
     private double pinkPossessRedFactor;
@@ -46,7 +57,17 @@ public class Battle {
 
     public Battle() {
         eachComboFactor = 0.25;
-        colorSuppressionFactor = 1.5;
+        specialSuppressionFactor = 1.0;
+        blueSuppressRedFactor = 1.5;
+        redSuppressGreenFactor = 1.5;
+        greenSuppressBlueFactor = 1.5;
+        yellowSuppressPurpleFactor = 1.5;
+        purpleSuppressYellowFactor = 1.5;
+        blueSuppressPurpleFactor = 1.5;
+        redSuppressRedFactor = 1.5;
+        greenSuppressYellowFactor = 1.5;
+        yellowSuppressRedFactor = 1.5;
+        purpleSuppressGreenFactor = 1.5;
         numOfRed = new ArrayList<>();
         numOfBlue = new ArrayList<>();
         numOfGreen = new ArrayList<>();
@@ -64,6 +85,14 @@ public class Battle {
 
     public void setNumOfPink(List<Integer> numOfPink) {
         this.numOfPink = numOfPink;
+    }
+
+    public double getSpecialSuppressionFactor() {
+        return specialSuppressionFactor;
+    }
+
+    public void setSpecialSuppressionFactor(double specialSuppressionFactor) {
+        this.specialSuppressionFactor = specialSuppressionFactor;
     }
 
     public int getNumOfEnchantedPink() {
@@ -190,12 +219,86 @@ public class Battle {
         this.eachComboFactor = eachComboFactor;
     }
 
-    public double getColorSuppressionFactor() {
-        return colorSuppressionFactor;
+
+
+    public double getBlueSuppressRedFactor() {
+        return blueSuppressRedFactor;
     }
 
-    public void setColorSuppressionFactor(double colorSuppressionFactor) {
-        this.colorSuppressionFactor = colorSuppressionFactor;
+    public void setBlueSuppressRedFactor(double blueSuppressRedFactor) {
+        this.blueSuppressRedFactor = blueSuppressRedFactor;
+    }
+
+    public double getRedSuppressGreenFactor() {
+        return redSuppressGreenFactor;
+    }
+
+    public void setRedSuppressGreenFactor(double redSuppressGreenFactor) {
+        this.redSuppressGreenFactor = redSuppressGreenFactor;
+    }
+
+    public double getGreenSuppressBlueFactor() {
+        return greenSuppressBlueFactor;
+    }
+
+    public void setGreenSuppressBlueFactor(double greenSuppressBlueFactor) {
+        this.greenSuppressBlueFactor = greenSuppressBlueFactor;
+    }
+
+    public double getYellowSuppressPurpleFactor() {
+        return yellowSuppressPurpleFactor;
+    }
+
+    public void setYellowSuppressPurpleFactor(double yellowSuppressPurpleFactor) {
+        this.yellowSuppressPurpleFactor = yellowSuppressPurpleFactor;
+    }
+
+    public double getPurpleSuppressYellowFactor() {
+        return purpleSuppressYellowFactor;
+    }
+
+    public void setPurpleSuppressYellowFactor(double purpleSuppressYellowFactor) {
+        this.purpleSuppressYellowFactor = purpleSuppressYellowFactor;
+    }
+
+    public double getBlueSuppressPurpleFactor() {
+        return blueSuppressPurpleFactor;
+    }
+
+    public void setBlueSuppressPurpleFactor(double blueSuppressPurpleFactor) {
+        this.blueSuppressPurpleFactor = blueSuppressPurpleFactor;
+    }
+
+    public double getRedSuppressRedFactor() {
+        return redSuppressRedFactor;
+    }
+
+    public void setRedSuppressRedFactor(double redSuppressRedFactor) {
+        this.redSuppressRedFactor = redSuppressRedFactor;
+    }
+
+    public double getGreenSuppressYellowFactor() {
+        return greenSuppressYellowFactor;
+    }
+
+    public void setGreenSuppressYellowFactor(double greenSuppressYellowFactor) {
+        this.greenSuppressYellowFactor = greenSuppressYellowFactor;
+    }
+
+    public double getYellowSuppressRedFactor() {
+        return yellowSuppressRedFactor;
+    }
+
+    public void setYellowSuppressRedFactor(double yellowSuppressRedFactor) {
+        this.yellowSuppressRedFactor = yellowSuppressRedFactor;
+    }
+
+    public double getPurpleSuppressGreenFactor() {
+        return purpleSuppressGreenFactor;
+    }
+
+    public void setPurpleSuppressGreenFactor(double purpleSuppressGreenFactor) {
+        this.purpleSuppressGreenFactor = purpleSuppressGreenFactor;
     }
 
     public Boolean getEnablePinkPossessRed() {

@@ -12,39 +12,56 @@ import java.util.List;
 public class Computation {
     public static void finalAttack(Battle battle, Card card[]){
         //calculate leader skill
-        LeaderSkill.processLeaderSkill(card);
+        LeaderSkill.processLeaderSkill(battle, card);
 
         //other calculation
         for(int i=0;i<6;i++) {
             List<Integer> numOfStones;
             int numOfEnchantedStone = 0;
-            String suppressedColor = "";
+
+            double colorSuppressionFactor = battle.getSpecialSuppressionFactor();
+
             if(card[i].getColor() == null) continue;
             switch (card[i].getColor()) {
                 case "red":
                     numOfStones = battle.getNumOfRed();
                     numOfEnchantedStone = battle.getNumOfEnchantedRed();
-                    suppressedColor = "green";
+                    //Suppression
+                    if(battle.getBossColor() == null) break;
+                    if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getRedSuppressRedFactor();
+                    else if(battle.getBossColor().equals("green")) colorSuppressionFactor = battle.getRedSuppressGreenFactor();
                     break;
                 case "blue":
                     numOfStones = battle.getNumOfBlue();
                     numOfEnchantedStone = battle.getNumOfEnchantedBlue();
-                    suppressedColor = "red";
+                    //Suppression
+                    if(battle.getBossColor() == null) break;
+                    if(battle.getBossColor().equals("purple")) colorSuppressionFactor = battle.getBlueSuppressPurpleFactor();
+                    else if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getBlueSuppressRedFactor();
                     break;
                 case "green":
                     numOfStones = battle.getNumOfGreen();
                     numOfEnchantedStone = battle.getNumOfEnchantedGreen();
-                    suppressedColor = "blue";
+                    //Suppression
+                    if(battle.getBossColor() == null) break;
+                    if(battle.getBossColor().equals("yellow")) colorSuppressionFactor = battle.getGreenSuppressYellowFactor();
+                    else if(battle.getBossColor().equals("blue")) colorSuppressionFactor = battle.getGreenSuppressBlueFactor();
                     break;
                 case "yellow":
                     numOfStones = battle.getNumOfYellow();
                     numOfEnchantedStone = battle.getNumOfEnchantedYellow();
-                    suppressedColor = "purple";
+                    //Suppression
+                    if(battle.getBossColor() == null) break;
+                    if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getYellowSuppressRedFactor();
+                    else if(battle.getBossColor().equals("purple")) colorSuppressionFactor = battle.getYellowSuppressPurpleFactor();
                     break;
                 case "purple":
                     numOfStones = battle.getNumOfPurple();
                     numOfEnchantedStone = battle.getNumOfEnchantedPurple();
-                    suppressedColor = "yellow";
+                    //Suppression
+                    if(battle.getBossColor() == null) break;
+                    if(battle.getBossColor().equals("green")) colorSuppressionFactor = battle.getPurpleSuppressGreenFactor();
+                    else if(battle.getBossColor().equals("yellow")) colorSuppressionFactor = battle.getPurpleSuppressYellowFactor();
                     break;
                 default:
                     numOfStones = new ArrayList<>();
@@ -64,8 +81,7 @@ public class Computation {
             output *= 1 + (battle.getNumOfCombo() - 1) * battle.getEachComboFactor();
 
             //calculate color suppression
-            if (battle.getBossColor()!= null && battle.getBossColor().equals(suppressedColor))
-                output *= battle.getColorSuppressionFactor();
+            output *= colorSuppressionFactor;
 
             //save
             card[i].setCalculatedAttack((int) output);

@@ -1,5 +1,6 @@
 package com.project.tos_project;
 
+import com.project.tos_project.model.Battle;
 import com.project.tos_project.model.Card;
 
 import java.util.StringTokenizer;
@@ -9,7 +10,7 @@ import java.util.StringTokenizer;
  */
 public class LeaderSkill {
 
-    public static void processLeaderSkill(Card[] card){
+    public static void processLeaderSkill(Battle battle,Card[] card){
         //priority1
         for(int i=0;i<6;i=i+5){
             if(card[i].getLeaderSkill() == null) continue;
@@ -509,34 +510,59 @@ public class LeaderSkill {
                         colorAndRaceAttackBonus(card, "purple", "beast", 2.0, 3.5);
                         break;
                     case "increaseBlueAttackRed":
+                        blueSuppressRedFactor(battle, 2.5);
                         break;
                     case "increaseRedAttackGreen":
+                        redSuppressGreenFactor(battle, 2.5);
                         break;
                     case "increaseGreenAttackBlue":
+                        greenSuppressBlueFactor(battle, 2.5);
                         break;
                     case "increaseYellowAttackPurple":
+                        yellowSuppressPurpleFactor(battle, 2.5);
                         break;
                     case "increasePurpleAttackYellow":
+                        purpleSuppressYellowFactor(battle, 2.5);
                         break;
-                    case "greatlyIncreaseBlueAttackRed":
+                    case "greatlyIncreaseBlueAttackBlue":
+                        blueSuppressRedFactor(battle, 3.0);
                         break;
-                    case "greatlyIncreaseRedAttackGreen":
+                    case "greatlyIncreaseRedAttackRed":
+                        redSuppressGreenFactor(battle, 3.0);
                         break;
-                    case "greatlyIncreaseGreenAttackBlue":
+                    case "greatlyIncreaseGreenAttackGreen":
+                        greenSuppressBlueFactor(battle, 3.0);
                         break;
-                    case "greatlyIncreaseYellowAttackPurple":
+                    case "greatlyIncreaseYellowAttackYellow":
+                        yellowSuppressPurpleFactor(battle, 3.0);
                         break;
-                    case "greatlyIncreasePurpleAttackYellow":
+                    case "greatlyIncreasePurpleAttackPurple":
+                        purpleSuppressYellowFactor(battle, 3.0);
                         break;
                     case "greatlyIncreaseBlueAttackRedAndPurpleAndIncreaseOthers":
+                        blueSuppressRedFactor(battle, 3.5);
+                        blueSuppressPurpleFactor(battle, 3.5);
+                        battle.setSpecialSuppressionFactor(1.5);
                         break;
                     case "greatlyIncreaseRedAttackRedAndGreenAndIncreaseOthers":
+                        redSuppressGreenFactor(battle, 3.5);
+                        redSuppressRedFactor(battle, 3.5);
+                        battle.setSpecialSuppressionFactor(1.5);
                         break;
                     case "greatlyIncreaseGreenAttackBlueAndYellowAndIncreaseOthers":
+                        greenSuppressBlueFactor(battle, 3.5);
+                        greenSuppressYellowFactor(battle, 3.5);
+                        battle.setSpecialSuppressionFactor(1.5);
                         break;
                     case "greatlyIncreaseYellowAttackRedAndPurpleAndIncreaseOthers":
+                        yellowSuppressPurpleFactor(battle, 3.5);
+                        yellowSuppressRedFactor(battle, 3.5);
+                        battle.setSpecialSuppressionFactor(1.5);
                         break;
                     case "greatlyIncreasePurpleAttackGreenAndYellowAndIncreaseOthers":
+                        purpleSuppressYellowFactor(battle, 3.5);
+                        purpleSuppressGreenFactor(battle, 3.5);
+                        battle.setSpecialSuppressionFactor(1.5);
                         break;
                     case "combo25%":
                         break;
@@ -797,5 +823,57 @@ public class LeaderSkill {
                 card[i].setCalculatedAttack(temp);
             }
         }
+    }
+    public static void blueSuppressRedFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getBlueSuppressRedFactor(),1.5) == 0)
+            battle.setBlueSuppressRedFactor(factor);
+        else battle.setBlueSuppressRedFactor(battle.getBlueSuppressRedFactor() * factor);
+    }
+    public static void redSuppressGreenFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getRedSuppressGreenFactor(),1.5) == 0)
+            battle.setRedSuppressGreenFactor(factor);
+        else battle.setRedSuppressGreenFactor(battle.getRedSuppressGreenFactor() * factor);
+    }
+    public static void greenSuppressBlueFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getGreenSuppressBlueFactor(),1.5) == 0)
+            battle.setGreenSuppressBlueFactor(factor);
+        else battle.setGreenSuppressBlueFactor(battle.getGreenSuppressBlueFactor() * factor);
+    }
+    public static void yellowSuppressPurpleFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getYellowSuppressPurpleFactor(),1.5) == 0)
+            battle.setYellowSuppressPurpleFactor(factor);
+        else battle.setYellowSuppressPurpleFactor(battle.getYellowSuppressPurpleFactor() * factor);
+    }
+    public static void purpleSuppressYellowFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getPurpleSuppressYellowFactor(),1.5) == 0)
+            battle.setPurpleSuppressYellowFactor(factor);
+        else battle.setPurpleSuppressYellowFactor(battle.getPurpleSuppressYellowFactor() * factor);
+    }
+
+    public static void blueSuppressPurpleFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getBlueSuppressPurpleFactor(),1.5) == 0)
+            battle.setBlueSuppressPurpleFactor(factor);
+        else battle.setBlueSuppressPurpleFactor(battle.getBlueSuppressPurpleFactor() * factor);
+    }
+    public static void redSuppressRedFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getRedSuppressRedFactor(),1.5) == 0)
+            battle.setRedSuppressRedFactor(factor);
+        else battle.setRedSuppressRedFactor(battle.getRedSuppressRedFactor() * factor);
+    }
+    public static void greenSuppressYellowFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getGreenSuppressYellowFactor(),1.5) == 0)
+            battle.setGreenSuppressYellowFactor(factor);
+        else battle.setGreenSuppressYellowFactor(battle.getGreenSuppressYellowFactor() * factor);
+    }
+    public static void yellowSuppressRedFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getYellowSuppressRedFactor(),1.5) == 0)
+            battle.setYellowSuppressRedFactor(factor);
+        else battle.setYellowSuppressRedFactor(battle.getYellowSuppressRedFactor() * factor);
+    }
+
+    public static void purpleSuppressGreenFactor(Battle battle,Double factor){
+        if(Double.compare(battle.getPurpleSuppressGreenFactor(),1.5) == 0)
+            battle.setPurpleSuppressGreenFactor(factor);
+        else battle.setPurpleSuppressGreenFactor(battle.getPurpleSuppressGreenFactor() * factor);
     }
 }
