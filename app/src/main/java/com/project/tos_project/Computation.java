@@ -85,38 +85,38 @@ public class Computation {
     public static void testFinalAttack(DBHelper db){
         Battle battle = new Battle();
         List<Integer> numOfStones = new ArrayList<>();
-        numOfStones.add(3); //set dissolve stone
+        numOfStones.add(4); //set dissolve stone
         battle.setNumOfBlue(numOfStones);
         numOfStones.clear();
-        numOfStones.add(3); //set dissolve stone
         battle.setNumOfRed(numOfStones);
         numOfStones.clear();
-        numOfStones.add(4); //set dissolve stone
+        numOfStones.add(3); //set dissolve stone
         battle.setNumOfGreen(numOfStones);
         numOfStones.clear();
+        numOfStones.add(4); //set dissolve stone
         battle.setNumOfYellow(numOfStones);
         numOfStones.clear();
-        numOfStones.add(4); //set dissolve stone
+        numOfStones.add(3); //set dissolve stone
         battle.setNumOfPurple(numOfStones);
-        battle.setNumOfEnchantedBlue(0); //set enchanted stone
+        battle.setNumOfEnchantedBlue(1); //set enchanted stone
         battle.setNumOfEnchantedRed(0); //set enchanted stone
         battle.setNumOfEnchantedGreen(0); //set enchanted stone
         battle.setNumOfEnchantedYellow(0); //set enchanted stone
         battle.setNumOfEnchantedPurple(0); //set enchanted stone
-        battle.setNumOfCombo(5);
+        battle.setNumOfCombo(6);
 
         Card card[] = new Card[6];
-        card[0] = db.getCard(515);  //set card ID
+        card[0] = db.getCard(510);  //set card ID
         card[0].setCurrentLevel(99); //set card level
-        card[1] = db.getCard(190);  //set card ID
+        card[1] = db.getCard(0);  //set card ID
         card[1].setCurrentLevel(99); //set card level
-        card[2] = db.getCard(289);  //set card ID
+        card[2] = db.getCard(0);  //set card ID
         card[2].setCurrentLevel(99); //set card level
-        card[3] = db.getCard(349);  //set card ID
+        card[3] = db.getCard(0);  //set card ID
         card[3].setCurrentLevel(99); //set card level
-        card[4] = db.getCard(412);  //set card ID
+        card[4] = db.getCard(0);  //set card ID
         card[4].setCurrentLevel(99); //set card level
-        card[5] = db.getCard(515);  //set card ID
+        card[5] = db.getCard(595);  //set card ID
         card[5].setCurrentLevel(99); //set card level
 
         //calculate attack
@@ -133,5 +133,36 @@ public class Computation {
                 + card[3].getCalculatedAttack() + "," + card[4].getCalculatedAttack() + "," + card[5].getCalculatedAttack());
         System.out.println(finalAttack);
         
+    }
+
+    public static int calculateCurrentLevelAbility(String race, int maxLevel, int currentLevel,int lv1Ability, int lvMaxAbility){
+        if(race == null || maxLevel <= 1)return -1;
+        if(currentLevel == maxLevel) return lvMaxAbility;
+        if(currentLevel == 1) return lv1Ability;
+        //compute
+        double raceFactor=0.0;
+        switch(race){
+            case "human":
+                raceFactor = 1;
+                break;
+            case "dragon":
+                raceFactor = 1;
+                break;
+            case "demon":
+                raceFactor = 1;
+                break;
+            case "god":
+                raceFactor = 3/2.0;
+                break;
+            case "elf":
+                raceFactor = 3/2.0;
+                break;
+            case "beast":
+                raceFactor = 2/3.0;
+                break;
+        }
+        int lv0Ability = (int)((lv1Ability - lvMaxAbility / Math.pow(maxLevel,raceFactor))/(1-1/ Math.pow(maxLevel,raceFactor))+1);
+
+        return (int)(lv0Ability +(lvMaxAbility - lv0Ability)*Math.pow((double)currentLevel/maxLevel,raceFactor));
     }
 }

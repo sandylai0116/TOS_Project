@@ -1,5 +1,7 @@
 package com.project.tos_project.model;
 
+import com.project.tos_project.Computation;
+
 /**
  * Created by LAI on 2015/5/26.
  */
@@ -161,16 +163,16 @@ public class Card {
     }
 
     public void setCurrentLevel(int currentLevel) {
-        if(currentLevel>maxLevel)currentLevel=maxLevel;
+        if(currentLevel>maxLevel) currentLevel=maxLevel;
         this.currentLevel = currentLevel;
-        if(maxLevel-1 != 0) {
-            setCurrentHP(level1HP + (levelMaxHP - level1HP) * (currentLevel-1) / (maxLevel-1));
-            setCurrentAttack(level1Attack + (levelMaxAttack - level1Attack) * (currentLevel-1) / (maxLevel-1));
-            setCurrentRecovery(level1Recovery + (levelMaxRecovery - level1Recovery) * (currentLevel-1) / (maxLevel-1));
-            setCalculatedHP(getCurrentHP());
-            setCalculatedAttack(getCurrentAttack());
-            setCalculatedRecovery(getCurrentRecovery());
-        }
+
+        setCurrentHP(Computation.calculateCurrentLevelAbility(race, maxLevel, currentLevel, level1HP, levelMaxHP));
+        setCurrentAttack(Computation.calculateCurrentLevelAbility(race,maxLevel,currentLevel,level1Attack,levelMaxAttack));
+        setCurrentRecovery(Computation.calculateCurrentLevelAbility(race,maxLevel,currentLevel,level1Recovery,levelMaxRecovery));
+
+        setCalculatedHP(getCurrentHP());
+        setCalculatedAttack(getCurrentAttack());
+        setCalculatedRecovery(getCurrentRecovery());
     }
 
     public int getCurrentHP() {
