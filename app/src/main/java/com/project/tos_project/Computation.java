@@ -11,6 +11,9 @@ import java.util.List;
  */
 public class Computation {
     public static void finalAttack(Battle battle, Card card[]){
+        //calculate passive skill
+        PassiveSkill.processPassiveSkill(battle,card);
+
         //calculate leader skill
         LeaderSkill.processLeaderSkill(battle, card);
 
@@ -78,7 +81,7 @@ public class Computation {
             output *= colorSuppressionFactor;
 
             //save
-            card[i].setCalculatedAttack((int) output);
+            card[i].setCalculatedAttack(output);
         }
     }
     

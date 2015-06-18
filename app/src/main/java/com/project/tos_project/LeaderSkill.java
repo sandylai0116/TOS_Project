@@ -718,30 +718,26 @@ public class LeaderSkill {
 
     public static void attackBonus(Card[] card, Double factor){
         for(int i=0;i<6;i++) {
-            int temp = (int) (card[i].getCalculatedAttack() * factor);
-            card[i].setCalculatedAttack(temp);
+            card[i].setCalculatedAttack(card[i].getCalculatedAttack() * factor);
         }
     }
 
     public static void hpBonus(Card[] card, Double factor){
         for(int i=0;i<6;i++) {
-            int temp = (int) (card[i].getCalculatedHP() * factor);
-            card[i].setCalculatedHP(temp);
+            card[i].setCalculatedHP(card[i].getCalculatedHP() * factor);
         }
     }
 
     public static void recoveryBonus(Card[] card, Double factor){
         for(int i=0;i<6;i++) {
-            int temp = (int) (card[i].getCalculatedRecovery() * factor);
-            card[i].setCalculatedRecovery(temp);
+            card[i].setCalculatedRecovery(card[i].getCalculatedRecovery() * factor);
         }
     }
 
     public static void colorAttackBonus(Card[] card,String color,Double factor){
         for(int i=0;i<6;i++) {
             if (card[i].getColor().equals(color)) {
-                int temp = (int) (card[i].getCalculatedAttack() * factor);
-                card[i].setCalculatedAttack(temp);
+                card[i].setCalculatedAttack(card[i].getCalculatedAttack() * factor);
             }
         }
     }
@@ -749,8 +745,7 @@ public class LeaderSkill {
     public static void colorHPBonus(Card[] card,String color,Double factor){
         for(int i=0;i<6;i++) {
             if (card[i].getColor().equals(color)) {
-                int temp = (int) (card[i].getCalculatedHP() * factor);
-                card[i].setCalculatedHP(temp);
+                card[i].setCalculatedHP(card[i].getCalculatedHP() * factor);
             }
         }
     }
@@ -758,8 +753,7 @@ public class LeaderSkill {
     public static void colorRecoveryBonus(Card[] card,String color,Double factor){
         for(int i=0;i<6;i++) {
             if (card[i].getColor().equals(color)) {
-                int temp = (int) (card[i].getCalculatedRecovery() * factor);
-                card[i].setCalculatedRecovery(temp);
+                card[i].setCalculatedRecovery(card[i].getCalculatedRecovery() * factor);
             }
         }
     }
@@ -767,8 +761,7 @@ public class LeaderSkill {
     public static void raceAttackBonus(Card[] card,String race,Double factor){
         for(int i=0;i<6;i++) {
             if (card[i].getRace().equals(race)) {
-                int temp = (int) (card[i].getCalculatedAttack() * factor);
-                card[i].setCalculatedAttack(temp);
+                card[i].setCalculatedAttack(card[i].getCalculatedAttack() * factor);
             }
         }
     }
@@ -776,8 +769,7 @@ public class LeaderSkill {
     public static void raceHPBonus(Card[] card,String race,Double factor){
         for(int i=0;i<6;i++) {
             if (card[i].getRace().equals(race)) {
-                int temp = (int) (card[i].getCalculatedHP() * factor);
-                card[i].setCalculatedHP(temp);
+                card[i].setCalculatedHP(card[i].getCalculatedHP() * factor);
             }
         }
     }
@@ -785,8 +777,7 @@ public class LeaderSkill {
     public static void raceRecoveryBonus(Card[] card,String race,Double factor){
         for(int i=0;i<6;i++) {
             if (card[i].getRace().equals(race)) {
-                int temp = (int) (card[i].getCalculatedRecovery() * factor);
-                card[i].setCalculatedRecovery(temp);
+                card[i].setCalculatedRecovery(card[i].getCalculatedRecovery() * factor);
             }
         }
     }
@@ -794,8 +785,7 @@ public class LeaderSkill {
     public static void raceRecoveryPoint(Card[] card,String race,int point){
         for(int i=0;i<6;i++) {
             if (card[i].getRace().equals(race)) {
-                int temp = card[i].getCalculatedRecovery() + point;
-                card[i].setCalculatedRecovery(temp);
+                card[i].setCalculatedRecovery(card[i].getCalculatedRecovery() + point);
             }
         }
     }
@@ -803,14 +793,12 @@ public class LeaderSkill {
     public static void raceAttackPoint(Card[] card,String race,int point){
         for(int i=0;i<6;i++) {
             if (card[i].getRace().equals(race)) {
-                int temp = card[i].getCalculatedAttack() + point;
-                card[i].setCalculatedAttack(temp);
+                card[i].setCalculatedAttack(card[i].getCalculatedAttack() + point);
             }
         }
     }
     public static void raceAddRecoveryToAttack(Card[] card,String race,int target){
-        int temp = card[target].getCalculatedAttack() + card[target].getCalculatedRecovery();
-        card[target].setCalculatedAttack(temp);
+        card[target].setCalculatedAttack(card[target].getCalculatedAttack() + card[target].getCalculatedRecovery());
         for(int i=0;i<6;i++) {
             if (card[i].getRace().equals(race)) {
                 card[i].setCalculatedRecovery(0);
@@ -820,12 +808,10 @@ public class LeaderSkill {
     public static void colorAndRaceAttackBonus(Card[] card,String color,String race,Double colorFactor,Double colorRaceFactor){
         for(int i=0;i<6;i++) {
             if (card[i].getColor().equals(color) && card[i].getRace().equals(race)) {
-                int temp = (int) (card[i].getCalculatedAttack() * colorRaceFactor);
-                card[i].setCalculatedAttack(temp);
+                card[i].setCalculatedAttack(card[i].getCalculatedAttack() * colorRaceFactor);
             }
             else if(card[i].getColor().equals(color)){
-                int temp = (int) (card[i].getCalculatedAttack() * colorFactor);
-                card[i].setCalculatedAttack(temp);
+                card[i].setCalculatedAttack(card[i].getCalculatedAttack() * colorFactor);
             }
         }
     }

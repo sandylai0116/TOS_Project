@@ -107,7 +107,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.close();
     }
 
-    public static long insertCardToDB(SQLiteDatabase db, long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
+    public static long insertCardToDB(SQLiteDatabase db, int id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
         Card card = new Card(id, color, race, maxLevel, level1HP, level1Attack, level1Recovery, levelMaxHP, levelMaxAttack, levelMaxRecovery, skill, leaderSkill);
         ContentValues values = new ContentValues();
 
@@ -163,7 +163,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //put to model
         if (c.moveToFirst()) {
             //do
-                card.setId(c.getLong(c.getColumnIndex(CardEntity.CARD_ID)));
+                card.setId(c.getInt(c.getColumnIndex(CardEntity.CARD_ID)));
                 card.setColor(c.getString(c.getColumnIndex(CardEntity.COLOR)));
                 card.setRace(c.getString(c.getColumnIndex(CardEntity.RACE)));
                 card.setMaxLevel(c.getInt(c.getColumnIndex(CardEntity.MAX_LEVEL)));

@@ -6,7 +6,7 @@ import com.project.tos_project.Computation;
  * Created by LAI on 2015/5/26.
  */
 public class Card {
-    long id;
+    int id;
     String color;
     String race;
     int maxLevel;
@@ -24,9 +24,9 @@ public class Card {
     int currentRecovery;
     Boolean enableSkill;
     Boolean enableLeaderSkill;
-    int calculatedHP;
-    int calculatedAttack;
-    int calculatedRecovery;
+    double calculatedHP;
+    double calculatedAttack;
+    double calculatedRecovery;
 
     public Card(){
         color = "";
@@ -35,7 +35,7 @@ public class Card {
         leaderSkill = "";
     }
 
-    public Card(long id){
+    public Card(int id){
         this.id = id;
         color = "";
         race = "";
@@ -43,7 +43,7 @@ public class Card {
         leaderSkill = "";
     }
 
-    public Card(long id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
+    public Card(int id, String color, String race, int maxLevel, int level1HP, int level1Attack, int level1Recovery, int levelMaxHP, int levelMaxAttack, int levelMaxRecovery, String skill, String leaderSkill) {
         this.id = id;
         this.color = color;
         this.race = race;
@@ -62,11 +62,11 @@ public class Card {
         leaderSkill = "";
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -215,27 +215,27 @@ public class Card {
         this.enableLeaderSkill = enableLeaderSkill;
     }
 
-    public int getCalculatedHP() {
+    public double getCalculatedHP() {
         return calculatedHP;
     }
 
-    public void setCalculatedHP(int calculatedHP) {
+    public void setCalculatedHP(double calculatedHP) {
         this.calculatedHP = calculatedHP;
     }
 
-    public int getCalculatedAttack() {
+    public double getCalculatedAttack() {
         return calculatedAttack;
     }
 
-    public void setCalculatedAttack(int calculatedAttack) {
+    public void setCalculatedAttack(double calculatedAttack) {
         this.calculatedAttack = calculatedAttack;
     }
 
-    public int getCalculatedRecovery() {
+    public double getCalculatedRecovery() {
         return calculatedRecovery;
     }
 
-    public void setCalculatedRecovery(int calculatedRecovery) {
+    public void setCalculatedRecovery(double calculatedRecovery) {
         this.calculatedRecovery = calculatedRecovery;
     }
 }
