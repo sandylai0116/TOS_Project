@@ -109,7 +109,7 @@ public class Computation {
         battle.setNumOfCombo(6);
 
         Card card[] = new Card[6];
-        card[0] = db.getCard(510);  //set card ID
+        card[0] = db.getCard(595);  //set card ID
         card[0].setCurrentLevel(99); //set card level
         card[1] = db.getCard(0);  //set card ID
         card[1].setCurrentLevel(99); //set card level

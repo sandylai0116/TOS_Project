@@ -39,21 +39,23 @@ public class Battle {
     private double yellowSuppressRedFactor;
     private double purpleSuppressGreenFactor;
 
-    private Boolean enablePinkPossessRed;
+    private boolean enablePinkPossessRed;
     private double pinkPossessRedFactor;
-    private Boolean enablePinkPossessBlue;
+    private boolean enablePinkPossessBlue;
     private double pinkPossessBlueFactor;
-    private Boolean enablePinkPossessGreen;
+    private boolean enablePinkPossessGreen;
     private double pinkPossessGreenFactor;
-    private Boolean enablePinkPossessYellow;
+    private boolean enablePinkPossessYellow;
     private double pinkPossessYellowFactor;
-    private Boolean enablePinkPossessPurple;
+    private boolean enablePinkPossessPurple;
     private double pinkPossessPurpleFactor;
 
-    private Boolean enable2Red;
-    private Boolean enable2Green;
-    private Boolean enable2Pink;
+    private boolean enable2Red;
+    private boolean enable2Green;
+    private boolean enable2Pink;
 
+    //passive skills
+    private boolean enableCombo25;
 
     public Battle() {
         eachComboFactor = 0.25;
@@ -302,11 +304,11 @@ public class Battle {
         this.purpleSuppressGreenFactor = purpleSuppressGreenFactor;
     }
 
-    public Boolean getEnablePinkPossessRed() {
+    public boolean getEnablePinkPossessRed() {
         return enablePinkPossessRed;
     }
 
-    public void setEnablePinkPossessRed(Boolean enablePinkPossessRed) {
+    public void setEnablePinkPossessRed(boolean enablePinkPossessRed) {
         this.enablePinkPossessRed = enablePinkPossessRed;
     }
 
@@ -318,11 +320,11 @@ public class Battle {
         this.pinkPossessRedFactor = pinkPossessRedFactor;
     }
 
-    public Boolean getEnablePinkPossessBlue() {
+    public boolean getEnablePinkPossessBlue() {
         return enablePinkPossessBlue;
     }
 
-    public void setEnablePinkPossessBlue(Boolean enablePinkPossessBlue) {
+    public void setEnablePinkPossessBlue(boolean enablePinkPossessBlue) {
         this.enablePinkPossessBlue = enablePinkPossessBlue;
     }
 
@@ -334,11 +336,11 @@ public class Battle {
         this.pinkPossessBlueFactor = pinkPossessBlueFactor;
     }
 
-    public Boolean getEnablePinkPossessGreen() {
+    public boolean getEnablePinkPossessGreen() {
         return enablePinkPossessGreen;
     }
 
-    public void setEnablePinkPossessGreen(Boolean enablePinkPossessGreen) {
+    public void setEnablePinkPossessGreen(boolean enablePinkPossessGreen) {
         this.enablePinkPossessGreen = enablePinkPossessGreen;
     }
 
@@ -350,11 +352,11 @@ public class Battle {
         this.pinkPossessGreenFactor = pinkPossessGreenFactor;
     }
 
-    public Boolean getEnablePinkPossessYellow() {
+    public boolean getEnablePinkPossessYellow() {
         return enablePinkPossessYellow;
     }
 
-    public void setEnablePinkPossessYellow(Boolean enablePinkPossessYellow) {
+    public void setEnablePinkPossessYellow(boolean enablePinkPossessYellow) {
         this.enablePinkPossessYellow = enablePinkPossessYellow;
     }
 
@@ -366,11 +368,11 @@ public class Battle {
         this.pinkPossessYellowFactor = pinkPossessYellowFactor;
     }
 
-    public Boolean getEnablePinkPossessPurple() {
+    public boolean getEnablePinkPossessPurple() {
         return enablePinkPossessPurple;
     }
 
-    public void setEnablePinkPossessPurple(Boolean enablePinkPossessPurple) {
+    public void setEnablePinkPossessPurple(boolean enablePinkPossessPurple) {
         this.enablePinkPossessPurple = enablePinkPossessPurple;
     }
 
@@ -382,27 +384,67 @@ public class Battle {
         this.pinkPossessPurpleFactor = pinkPossessPurpleFactor;
     }
 
-    public Boolean getEnable2Red() {
+    public boolean getEnable2Red() {
         return enable2Red;
     }
 
-    public void setEnable2Red(Boolean enable2Red) {
+    public void setEnable2Red(boolean enable2Red) {
         this.enable2Red = enable2Red;
     }
 
-    public Boolean getEnable2Green() {
+    public boolean getEnable2Green() {
         return enable2Green;
     }
 
-    public void setEnable2Green(Boolean enable2Green) {
+    public void setEnable2Green(boolean enable2Green) {
         this.enable2Green = enable2Green;
     }
 
-    public Boolean getEnable2Pink() {
+    public boolean getEnable2Pink() {
         return enable2Pink;
     }
 
-    public void setEnable2Pink(Boolean enable2Pink) {
+    public void setEnable2Pink(boolean enable2Pink) {
         this.enable2Pink = enable2Pink;
+    }
+
+    public boolean isEnablePinkPossessRed() {
+        return enablePinkPossessRed;
+    }
+
+    public boolean isEnablePinkPossessBlue() {
+        return enablePinkPossessBlue;
+    }
+
+    public boolean isEnablePinkPossessGreen() {
+        return enablePinkPossessGreen;
+    }
+
+    public boolean isEnablePinkPossessYellow() {
+        return enablePinkPossessYellow;
+    }
+
+    public boolean isEnablePinkPossessPurple() {
+        return enablePinkPossessPurple;
+    }
+
+    public boolean isEnable2Red() {
+        return enable2Red;
+    }
+
+    public boolean isEnable2Green() {
+        return enable2Green;
+    }
+
+    public boolean isEnable2Pink() {
+        return enable2Pink;
+    }
+
+    public boolean isEnableCombo25() {
+        return enableCombo25;
+    }
+
+    public void setEnableCombo25(boolean enableCombo25) {
+        this.enableCombo25 = enableCombo25;
     }
 }
