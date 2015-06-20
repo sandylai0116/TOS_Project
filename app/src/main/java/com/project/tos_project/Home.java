@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
@@ -27,10 +28,14 @@ public class Home extends ActionBarActivity{
     private TextView view;
     private ImageButton card1, card2, card3, card4, card5, card6;
     private final static int REQUEST_CODE = 1;
+    private EditText md;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        md = (EditText)findViewById(R.id.monsterDefense);
+
         db = new DBHelper(getApplicationContext());
 
         card1 =(ImageButton) findViewById(R.id.card1);
@@ -166,7 +171,7 @@ public class Home extends ActionBarActivity{
 //                card1.setImageResource(R.drawable.card_unknow);
 
               //  tv.setText(data.getExtras().getString("returnCardLV"));
-                tv.setText(data.getExtras().getString("cardNo"));
+       //         tv.setText(data.getExtras().getString("cardNo"));
             }
         }
     }

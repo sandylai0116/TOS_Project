@@ -2,14 +2,22 @@
     android:orientation="vertical" android:layout_width="fill_parent" android:weightSum="100"
     android:layout_height="fill_parent">
 
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg"
+        android:layout_weight="40">
 
     <RelativeLayout android:orientation="horizontal"  android:id="@+id/monsterArea"
         android:layout_width="fill_parent" android:layout_height="0dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_weight="30">
 
         <EditText
             android:id="@+id/monsterDefense"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:layout_centerInParent="true"
             android:layout_width="200dp"
             android:hint="敵人防禦力"
@@ -20,6 +28,7 @@
 
     <LinearLayout android:orientation="horizontal"  android:weightSum="6" android:id="@+id/cardArea"
         android:layout_width="fill_parent" android:layout_height="0dp"
+        android:background="@drawable/a"
         android:layout_weight="13">
         <ImageButton android:layout_weight="1"
             android:id="@+id/card1"
@@ -64,36 +73,39 @@
             android:padding="0dp"
             android:scaleType="fitCenter" />
     </LinearLayout>
+        </LinearLayout>
 
     <LinearLayout android:orientation="horizontal"  android:id="@+id/HPArea"
         android:layout_width="fill_parent" android:layout_height="0dp"
+        android:background="@drawable/hp"
         android:layout_weight="5">
 
-        <TextView android:text="生命回復" android:layout_height="wrap_content" android:id="@+id/recovery"
+        <TextView android:text="+0" android:layout_height="wrap_content" android:id="@+id/recovery"
             android:layout_width="fill_parent" android:padding="3dip"
-            android:textSize="12sp" android:gravity="center_horizontal"
+            android:textColor="@android:color/holo_green_light"
+            android:textStyle="bold"
+            android:textSize="16sp" android:gravity="center_horizontal"
             />
 
     </LinearLayout>
 
-    <LinearLayout android:orientation="vertical" android:id="@+id/diamondArea"
-        android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:layout_weight="52">
+    <GridView
+            android:id="@+id/gridview"
+            android:layout_weight="52"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:numColumns="6"
+            android:columnWidth="90dip"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            >
+    </GridView>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical" android:layout_width="fill_parent" android:weightSum="100"
-            android:layout_height="fill_parent">
-
-
-        </LinearLayout>
-
->
-    </LinearLayout>
-
+<!--
     <Button android:text="Calculate" android:id="@+id/calculateBtn"
         android:layout_width="fill_parent" android:layout_height="wrap_content"
         android:onClick="clickHandler">
     </Button>
-
+-->
 </LinearLayout>
 
