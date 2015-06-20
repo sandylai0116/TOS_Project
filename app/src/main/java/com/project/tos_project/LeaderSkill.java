@@ -709,8 +709,6 @@ public class LeaderSkill {
                         break;
                     case "no824":
                         break;
-                    default:
-                        System.out.println("No leader skill found"); //for testing only
                 }
             }
         }
