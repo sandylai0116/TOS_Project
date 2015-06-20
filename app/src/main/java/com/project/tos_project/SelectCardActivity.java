@@ -20,7 +20,6 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -34,7 +33,6 @@ public class SelectCardActivity extends ActionBarActivity{
     Bitmap bitmap;
     DBHelper dbHelper;
     List<String> mThumbIds = new ArrayList<String>();
-    TextView text1;
     Cursor cursor;
     public final static int RESULT_CODE  = 2;
     @Override
@@ -62,15 +60,14 @@ public class SelectCardActivity extends ActionBarActivity{
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Toast.makeText(SelectCardActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-                createCardLevelDialogBox();
-                //        AlertDialog.Builder cardLV = new AlertDialog.Builder(SelectCardActivity.this);
-                //                .setTitle("請輸入等級").setIcon(android.R.drawable.ic_dialog_info).setView(new EditText(SelectCardActivity.this)).setPositiveButton("確定", null).setNegativeButton("取消", null).show();
+                createCardLevelDialogBox(mThumbIds.get(position));
             }
         });
     }
 
-    public void createCardLevelDialogBox() {
+    public void createCardLevelDialogBox(String cN) {
         AlertDialog.Builder cardLV = new AlertDialog.Builder(SelectCardActivity.this);
+        final String cardNumber = cN;
         cardLV.setTitle("請輸入等級!");
         final EditText LVText = new EditText(SelectCardActivity.this);
         cardLV.setView(LVText);
@@ -89,7 +86,9 @@ public class SelectCardActivity extends ActionBarActivity{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent data = new Intent();
-                data.putExtra("returnCardLV", LVText.getText());
+                data.putExtra("btnNo", getIntent().getStringExtra("btnNo"));
+                data.putExtra("returnCardLV", LVText.getText().toString());
+                data.putExtra("cardNo", cardNumber);
                 setResult(RESULT_CODE, data);
                 finish();
             }
