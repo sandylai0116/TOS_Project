@@ -93,13 +93,15 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-
+    
+    /*
     public void onOpen(SQLiteDatabase db) {
         db.execSQL(SQL_DELETE_CARD_ENTITY);
         db.execSQL(SQL_CREATE_CARD_ENTITY);
         CardData.addData(db);
         db.execSQL(SQL_CARD_ID_INDEXING);
     }
+    */
 
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();
