@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.*;
 import android.view.View;
 
+import com.project.tos_project.model.Battle;
 import com.project.tos_project.model.Card;
 
 import java.io.IOException;
@@ -28,15 +29,21 @@ public class Home extends ActionBarActivity{
     private TextView view;
     private ImageButton card1, card2, card3, card4, card5, card6;
     private final static int REQUEST_CODE = 1;
-    private EditText md;
+    private EditText tv;
+    private Button calBtn;
+    Battle battle;
+    Card card[] = new Card[6];
+    int[] selectedCard = {0,0,0,0,0,0};
+    int[] cardLevel = {0,0,0,0,0,0};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        md = (EditText)findViewById(R.id.monsterDefense);
+       tv = (EditText) findViewById(R.id.monsterDefense);
 
         db = new DBHelper(getApplicationContext());
+        battle = new Battle();
 
         card1 =(ImageButton) findViewById(R.id.card1);
         card2 =(ImageButton) findViewById(R.id.card2);
@@ -44,6 +51,19 @@ public class Home extends ActionBarActivity{
         card4 =(ImageButton) findViewById(R.id.card4);
         card5 =(ImageButton) findViewById(R.id.card5);
         card6 =(ImageButton) findViewById(R.id.card6);
+
+        calBtn =(Button)findViewById(R.id.calculateBtn);
+
+        calBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+               for(int i=0; i<card.length; i++){
+                   card[i] = db.getCard(selectedCard[i]);
+                   card[i].setCurrentLevel(cardLevel[i]);
+               }
+          //      tv.setText(Integer.toString(0));
+                Computation.finalAttack(battle, card);
+            }
+        });
 
        card1.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -106,63 +126,78 @@ public class Home extends ActionBarActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == SelectCardActivity.RESULT_CODE) {
             if (data.hasExtra("returnCardLV")) {
-                EditText tv = (EditText) findViewById(R.id.monsterDefense);
-                String cardNo = data.getExtras().getString("cardNo");
+        //        EditText tv = (EditText) findViewById(R.id.monsterDefense);
+                String cardImage = data.getExtras().getString("cardNo");
+                String cardLv = data.getExtras().getString("returnCardLV");
+                String[] cardNo = cardImage.split("-");
+                String cardNum = cardNo[1].substring(0, cardNo[1].length() - 4);
                 String btnNo = data.getExtras().getString("btnNo");
                 switch (btnNo) {
                     case "card1":
                         try {
-                            InputStream ims = getAssets().open(cardNo);
+                            InputStream ims = getAssets().open(cardImage);
                             Drawable d = Drawable.createFromStream(ims, null);
                             card1.setImageDrawable(d);
                         }catch(Exception e){
                             card1.setImageResource(R.drawable.card_unknow);
                         }
+                        selectedCard[0] = Integer.parseInt(cardNum);
+                        cardLevel[0] = Integer.parseInt(cardLv);
                         break;
                     case "card2":
                         try {
-                            InputStream ims = getAssets().open(cardNo);
+                            InputStream ims = getAssets().open(cardImage);
                             Drawable d = Drawable.createFromStream(ims, null);
                             card2.setImageDrawable(d);
                         }catch(Exception e){
                             card2.setImageResource(R.drawable.card_unknow);
                         }
+                        selectedCard[1] = Integer.parseInt(cardNum);
+                        cardLevel[1] = Integer.parseInt(cardLv);
                         break;
                     case "card3":
                         try {
-                            InputStream ims = getAssets().open(cardNo);
+                            InputStream ims = getAssets().open(cardImage);
                             Drawable d = Drawable.createFromStream(ims, null);
                             card3.setImageDrawable(d);
                         }catch(Exception e){
                             card3.setImageResource(R.drawable.card_unknow);
                         }
+                        selectedCard[2] = Integer.parseInt(cardNum);
+                        cardLevel[2] = Integer.parseInt(cardLv);;
                         break;
                     case "card4":
                         try {
-                            InputStream ims = getAssets().open(cardNo);
+                            InputStream ims = getAssets().open(cardImage);
                             Drawable d = Drawable.createFromStream(ims, null);
                             card4.setImageDrawable(d);
                         }catch(Exception e){
                             card4.setImageResource(R.drawable.card_unknow);
                         }
+                        selectedCard[3] = Integer.parseInt(cardNum);
+                        cardLevel[3] = Integer.parseInt(cardLv);;
                         break;
                     case "card5":
                         try {
-                            InputStream ims = getAssets().open(cardNo);
+                            InputStream ims = getAssets().open(cardImage);
                             Drawable d = Drawable.createFromStream(ims, null);
                             card5.setImageDrawable(d);
                         }catch(Exception e){
                             card5.setImageResource(R.drawable.card_unknow);
                         }
+                        selectedCard[4] = Integer.parseInt(cardNum);
+                        cardLevel[4] = Integer.parseInt(cardLv);
                         break;
                     case "card6":
                         try {
-                            InputStream ims = getAssets().open(cardNo);
+                            InputStream ims = getAssets().open(cardImage);
                             Drawable d = Drawable.createFromStream(ims, null);
                             card6.setImageDrawable(d);
                         }catch(Exception e){
                             card6.setImageResource(R.drawable.card_unknow);
                         }
+                        selectedCard[5] = Integer.parseInt(cardNum);
+                        cardLevel[5] = Integer.parseInt(cardLv);
                         break;
                     default:
                         break;
@@ -171,7 +206,7 @@ public class Home extends ActionBarActivity{
 //                card1.setImageResource(R.drawable.card_unknow);
 
               //  tv.setText(data.getExtras().getString("returnCardLV"));
-       //         tv.setText(data.getExtras().getString("cardNo"));
+                tv.setText(cardNum);
             }
         }
     }
@@ -207,4 +242,5 @@ public class Home extends ActionBarActivity{
 
         return super.onOptionsItemSelected(item);
     }
+
 }

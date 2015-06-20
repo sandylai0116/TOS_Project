@@ -28,7 +28,6 @@
 
     <LinearLayout android:orientation="horizontal"  android:weightSum="6" android:id="@+id/cardArea"
         android:layout_width="fill_parent" android:layout_height="0dp"
-        android:background="@drawable/a"
         android:layout_weight="13">
         <ImageButton android:layout_weight="1"
             android:id="@+id/card1"
@@ -91,7 +90,7 @@
 
     <GridView
             android:id="@+id/gridview"
-            android:layout_weight="52"
+            android:layout_weight="55"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:numColumns="6"
@@ -101,11 +100,11 @@
             >
     </GridView>
 
-<!--
+
     <Button android:text="Calculate" android:id="@+id/calculateBtn"
         android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:onClick="clickHandler">
+        >
     </Button>
--->
+
 </LinearLayout>
 
