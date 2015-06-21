@@ -123,7 +123,7 @@ public class Home extends ActionBarActivity{
         });
 
         //test
-        Computation.testFinalAttack(db);
+        //Computation.testFinalAttack(db);
 
         //close db
         db.closeDB();

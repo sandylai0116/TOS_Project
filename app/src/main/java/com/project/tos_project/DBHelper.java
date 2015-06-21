@@ -179,6 +179,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 card.setLeaderSkill(c.getString(c.getColumnIndex(CardEntity.LEADER_SKILL)));
             //} while (c.moveToNext());
         }
+        closeDB();
         return card;
     }
 }
