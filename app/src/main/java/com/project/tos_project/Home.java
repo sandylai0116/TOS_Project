@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
@@ -54,12 +55,19 @@ public class Home extends ActionBarActivity{
 
         calBtn =(Button)findViewById(R.id.calculateBtn);
 
+        for(int i=0; i<card.length; i++){
+            if(card[i] == null){
+                card[i] = db.getCard(0);
+                card[i].setCurrentLevel(0);
+            }
+        }
+
         calBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               for(int i=0; i<card.length; i++){
-                   card[i] = db.getCard(selectedCard[i]);
-                   card[i].setCurrentLevel(cardLevel[i]);
-               }
+        //       for(int i=0; i<card.length; i++){
+        //           card[i] = db.getCard(selectedCard[i]);
+        //           card[i].setCurrentLevel(cardLevel[i]);
+        //       }
           //      tv.setText(Integer.toString(0));
                 Computation.finalAttack(battle, card);
             }
@@ -126,7 +134,6 @@ public class Home extends ActionBarActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == SelectCardActivity.RESULT_CODE) {
             if (data.hasExtra("returnCardLV")) {
-        //        EditText tv = (EditText) findViewById(R.id.monsterDefense);
                 String cardImage = data.getExtras().getString("cardNo");
                 String cardLv = data.getExtras().getString("returnCardLV");
                 String[] cardNo = cardImage.split("-");
@@ -141,8 +148,8 @@ public class Home extends ActionBarActivity{
                         }catch(Exception e){
                             card1.setImageResource(R.drawable.card_unknow);
                         }
-                        selectedCard[0] = Integer.parseInt(cardNum);
-                        cardLevel[0] = Integer.parseInt(cardLv);
+                        card[0] =  db.getCard(Integer.parseInt(cardNum));
+                        card[0].setCurrentLevel(Integer.parseInt(cardLv));
                         break;
                     case "card2":
                         try {
@@ -152,8 +159,9 @@ public class Home extends ActionBarActivity{
                         }catch(Exception e){
                             card2.setImageResource(R.drawable.card_unknow);
                         }
-                        selectedCard[1] = Integer.parseInt(cardNum);
-                        cardLevel[1] = Integer.parseInt(cardLv);
+                        Log.d("test1", String.valueOf(selectedCard));
+                        card[1] =  db.getCard(Integer.parseInt(cardNum));
+                        card[1].setCurrentLevel(Integer.parseInt(cardLv));
                         break;
                     case "card3":
                         try {
@@ -163,8 +171,9 @@ public class Home extends ActionBarActivity{
                         }catch(Exception e){
                             card3.setImageResource(R.drawable.card_unknow);
                         }
-                        selectedCard[2] = Integer.parseInt(cardNum);
-                        cardLevel[2] = Integer.parseInt(cardLv);;
+                        Log.d("test2", String.valueOf(selectedCard));
+                        card[2] =  db.getCard(Integer.parseInt(cardNum));
+                        card[2].setCurrentLevel(Integer.parseInt(cardLv));
                         break;
                     case "card4":
                         try {
@@ -174,8 +183,8 @@ public class Home extends ActionBarActivity{
                         }catch(Exception e){
                             card4.setImageResource(R.drawable.card_unknow);
                         }
-                        selectedCard[3] = Integer.parseInt(cardNum);
-                        cardLevel[3] = Integer.parseInt(cardLv);;
+                        card[3] =  db.getCard(Integer.parseInt(cardNum));
+                        card[3].setCurrentLevel(Integer.parseInt(cardLv));
                         break;
                     case "card5":
                         try {
@@ -185,8 +194,8 @@ public class Home extends ActionBarActivity{
                         }catch(Exception e){
                             card5.setImageResource(R.drawable.card_unknow);
                         }
-                        selectedCard[4] = Integer.parseInt(cardNum);
-                        cardLevel[4] = Integer.parseInt(cardLv);
+                        card[4] =  db.getCard(Integer.parseInt(cardNum));
+                        card[4].setCurrentLevel(Integer.parseInt(cardLv));
                         break;
                     case "card6":
                         try {
@@ -196,8 +205,8 @@ public class Home extends ActionBarActivity{
                         }catch(Exception e){
                             card6.setImageResource(R.drawable.card_unknow);
                         }
-                        selectedCard[5] = Integer.parseInt(cardNum);
-                        cardLevel[5] = Integer.parseInt(cardLv);
+                        card[5] =  db.getCard(Integer.parseInt(cardNum));
+                        card[5].setCurrentLevel(Integer.parseInt(cardLv));
                         break;
                     default:
                         break;
