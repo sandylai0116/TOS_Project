@@ -22,6 +22,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.project.tos_project.model.Card;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class SelectCardActivity extends ActionBarActivity{
     SQLiteDatabase db;
     Bitmap bitmap;
     DBHelper dbHelper;
+    int[] card, cardLVSel;
     List<String> mThumbIds = new ArrayList<String>();
     Cursor cursor;
     public final static int RESULT_CODE  = 2;
@@ -40,7 +43,8 @@ public class SelectCardActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_card);
         GridView gridview = (GridView) findViewById(R.id.gridview);
-
+        card = getIntent().getIntArrayExtra("cardSelData");
+        cardLVSel = getIntent().getIntArrayExtra("cardLVData");
         try {
             // eg. 1 - RawQuery
             dbHelper = new DBHelper(SelectCardActivity.this);
@@ -85,10 +89,23 @@ public class SelectCardActivity extends ActionBarActivity{
         cardLV.setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                int btnNo = getIntent().getIntExtra("btnNo", 0);
+                //    String cardLv = data.getExtras().getString("returnCardLV");
+                String[] cardNum = cardNumber.split("-");
+                String cardID = cardNum[1].substring(0, cardNum[1].length() - 4);
+
+                card[btnNo] = Integer.parseInt(cardID);
+                cardLVSel[btnNo] = Integer.parseInt(LVText.getText().toString());
+
                 Intent data = new Intent();
-                data.putExtra("btnNo", getIntent().getStringExtra("btnNo"));
-                data.putExtra("returnCardLV", LVText.getText().toString());
-                data.putExtra("cardNo", cardNumber);
+                data.putExtra("card", card);
+                data.putExtra("cardLVSel", cardLVSel);
+                data.putExtra("selectIndex", btnNo);
+        //        data.putExtra("btnNo", getIntent().getStringExtra("btnNo"));
+        //        data.putExtra("returnCardLV", LVText.getText().toString());
+               data.putExtra("cardNo", cardID);
+
+        //        data.putExtra("returnCardData", card);
                 setResult(RESULT_CODE, data);
                 finish();
             }

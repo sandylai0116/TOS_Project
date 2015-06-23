@@ -1,11 +1,13 @@
 package com.project.tos_project.model;
 
+
 import com.project.tos_project.Computation;
+
 
 /**
  * Created by LAI on 2015/5/26.
  */
-public class Card {
+public class Card{
     int id;
     String color;
     String race;

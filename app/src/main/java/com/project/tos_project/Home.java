@@ -28,7 +28,7 @@ public class Home extends ActionBarActivity{
     DBHelper db;
 
     private TextView view;
-    private ImageButton card1, card2, card3, card4, card5, card6;
+    private ImageButton cardButton[] = new ImageButton[6];
     private final static int REQUEST_CODE = 1;
     private EditText tv;
     private Button calBtn;
@@ -36,6 +36,7 @@ public class Home extends ActionBarActivity{
     Card card[] = new Card[6];
     int[] selectedCard = {0,0,0,0,0,0};
     int[] cardLevel = {0,0,0,0,0,0};
+    public final static String SER_KEY = "com.project.tos_project.model.ser";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +47,12 @@ public class Home extends ActionBarActivity{
         db = new DBHelper(getApplicationContext());
         battle = new Battle();
 
-        card1 =(ImageButton) findViewById(R.id.card1);
-        card2 =(ImageButton) findViewById(R.id.card2);
-        card3 =(ImageButton) findViewById(R.id.card3);
-        card4 =(ImageButton) findViewById(R.id.card4);
-        card5 =(ImageButton) findViewById(R.id.card5);
-        card6 =(ImageButton) findViewById(R.id.card6);
+        cardButton[0] =(ImageButton) findViewById(R.id.card1);
+        cardButton[1] =(ImageButton) findViewById(R.id.card2);
+        cardButton[2] =(ImageButton) findViewById(R.id.card3);
+        cardButton[3] =(ImageButton) findViewById(R.id.card4);
+        cardButton[4] =(ImageButton) findViewById(R.id.card5);
+        cardButton[5] =(ImageButton) findViewById(R.id.card6);
 
         calBtn =(Button)findViewById(R.id.calculateBtn);
 
@@ -73,52 +74,45 @@ public class Home extends ActionBarActivity{
             }
         });
 
-       card1.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               selectCard("card1");
-           }
-       });
-
-        card1.setOnClickListener(new View.OnClickListener() {
+        cardButton[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard("card1");
+                selectCard(0, selectedCard, cardLevel);
             }
         });
 
-        card2.setOnClickListener(new View.OnClickListener() {
+        cardButton[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard("card2");
+                selectCard(1, selectedCard, cardLevel);
             }
         });
 
-        card3.setOnClickListener(new View.OnClickListener() {
+        cardButton[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard("card3");
+                selectCard(2, selectedCard, cardLevel);
             }
         });
 
-        card4.setOnClickListener(new View.OnClickListener() {
+        cardButton[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard("card4");
+                selectCard(3, selectedCard, cardLevel);
             }
         });
 
-        card5.setOnClickListener(new View.OnClickListener() {
+        cardButton[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard("card5");
+                selectCard(4, selectedCard, cardLevel);
             }
         });
 
-        card6.setOnClickListener(new View.OnClickListener() {
+        cardButton[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard("card6");
+                selectCard(5, selectedCard, cardLevel);
             }
         });
 
@@ -133,13 +127,24 @@ public class Home extends ActionBarActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == SelectCardActivity.RESULT_CODE) {
-            if (data.hasExtra("returnCardLV")) {
-                String cardImage = data.getExtras().getString("cardNo");
-                String cardLv = data.getExtras().getString("returnCardLV");
-                String[] cardNo = cardImage.split("-");
-                String cardNum = cardNo[1].substring(0, cardNo[1].length() - 4);
-                String btnNo = data.getExtras().getString("btnNo");
-                switch (btnNo) {
+            if (data.hasExtra("card")) {
+                String cardNum = data.getExtras().getString("cardNo");
+                int index = data.getExtras().getInt("selectIndex");
+                selectedCard = data.getExtras().getIntArray("card");
+                cardLevel = data.getExtras().getIntArray("cardLVSel");
+                        try {
+                            InputStream ims = getAssets().open("card/card-" + cardNum + ".png");
+                            Drawable d = Drawable.createFromStream(ims, null);
+                            cardButton[index].setImageDrawable(d);
+                        } catch (Exception e) {
+                            cardButton[index].setImageResource(R.drawable.card_unknow);
+                        }
+            //    String cardLv = data.getExtras().getString("returnCardLV");
+            //    String[] cardNo = cardImage.split("-");
+            //    String cardNum = cardNo[1].substring(0, cardNo[1].length() - 4);
+                //    String btnNo = data.getExtras().getString("btnNo");
+            //    Card c = (Card) data.getExtras().getSerializable("returnCardData");
+            /*    switch (btnNo) {
                     case "card1":
                         try {
                             InputStream ims = getAssets().open(cardImage);
@@ -159,7 +164,7 @@ public class Home extends ActionBarActivity{
                         }catch(Exception e){
                             card2.setImageResource(R.drawable.card_unknow);
                         }
-                        Log.d("test1", String.valueOf(selectedCard));
+                        Log.d("test1", String.valueOf(card));
                         card[1] =  db.getCard(Integer.parseInt(cardNum));
                         card[1].setCurrentLevel(Integer.parseInt(cardLv));
                         break;
@@ -171,7 +176,7 @@ public class Home extends ActionBarActivity{
                         }catch(Exception e){
                             card3.setImageResource(R.drawable.card_unknow);
                         }
-                        Log.d("test2", String.valueOf(selectedCard));
+                        Log.d("test2", String.valueOf(card));
                         card[2] =  db.getCard(Integer.parseInt(cardNum));
                         card[2].setCurrentLevel(Integer.parseInt(cardLv));
                         break;
@@ -211,7 +216,7 @@ public class Home extends ActionBarActivity{
                     default:
                         break;
                 }
-
+    */
 //                card1.setImageResource(R.drawable.card_unknow);
 
               //  tv.setText(data.getExtras().getString("returnCardLV"));
@@ -221,10 +226,14 @@ public class Home extends ActionBarActivity{
     }
 
     // selectCard will be running when image button clicked
-    public void selectCard(String btnNo){
+    public void selectCard(int btnNo, int selCard[],  int selCardLv[]){
         //  set the target activity
         Intent intent = new Intent(this, SelectCardActivity.class);
         // set the value
+        Bundle mBundle = new Bundle();
+        intent.putExtra("cardSelData", selCard);
+        intent.putExtra("cardLVData", selCardLv);
+    //    intent.putExtra("cardData", mBundle);
         intent.putExtra("btnNo", btnNo);
         // go to another activity
         startActivityForResult(intent, REQUEST_CODE);
