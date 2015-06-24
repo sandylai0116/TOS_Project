@@ -65,10 +65,10 @@ public class Home extends ActionBarActivity{
 
         calBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-        //       for(int i=0; i<card.length; i++){
-        //           card[i] = db.getCard(selectedCard[i]);
-        //           card[i].setCurrentLevel(cardLevel[i]);
-        //       }
+              for(int i=0; i<card.length; i++){
+                   card[i] = db.getCard(selectedCard[i]);
+                   card[i].setCurrentLevel(cardLevel[i]);
+               }
           //      tv.setText(Integer.toString(0));
                 Computation.finalAttack(battle, card);
             }
@@ -132,94 +132,19 @@ public class Home extends ActionBarActivity{
                 int index = data.getExtras().getInt("selectIndex");
                 selectedCard = data.getExtras().getIntArray("card");
                 cardLevel = data.getExtras().getIntArray("cardLVSel");
+                battle = (Battle) data.getExtras().getParcelable("battle");
+                for(int i=0; i<selectedCard.length; i++) {
+                    if(selectedCard[i] != 0) {
                         try {
-                            InputStream ims = getAssets().open("card/card-" + cardNum + ".png");
+                            InputStream ims = getAssets().open("card/card-" + selectedCard[i] + ".png");
                             Drawable d = Drawable.createFromStream(ims, null);
-                            cardButton[index].setImageDrawable(d);
+                            cardButton[i].setImageDrawable(d);
                         } catch (Exception e) {
-                            cardButton[index].setImageResource(R.drawable.card_unknow);
+                            cardButton[i].setImageResource(R.drawable.card_unknow);
                         }
-            //    String cardLv = data.getExtras().getString("returnCardLV");
-            //    String[] cardNo = cardImage.split("-");
-            //    String cardNum = cardNo[1].substring(0, cardNo[1].length() - 4);
-                //    String btnNo = data.getExtras().getString("btnNo");
-            //    Card c = (Card) data.getExtras().getSerializable("returnCardData");
-            /*    switch (btnNo) {
-                    case "card1":
-                        try {
-                            InputStream ims = getAssets().open(cardImage);
-                            Drawable d = Drawable.createFromStream(ims, null);
-                            card1.setImageDrawable(d);
-                        }catch(Exception e){
-                            card1.setImageResource(R.drawable.card_unknow);
-                        }
-                        card[0] =  db.getCard(Integer.parseInt(cardNum));
-                        card[0].setCurrentLevel(Integer.parseInt(cardLv));
-                        break;
-                    case "card2":
-                        try {
-                            InputStream ims = getAssets().open(cardImage);
-                            Drawable d = Drawable.createFromStream(ims, null);
-                            card2.setImageDrawable(d);
-                        }catch(Exception e){
-                            card2.setImageResource(R.drawable.card_unknow);
-                        }
-                        Log.d("test1", String.valueOf(card));
-                        card[1] =  db.getCard(Integer.parseInt(cardNum));
-                        card[1].setCurrentLevel(Integer.parseInt(cardLv));
-                        break;
-                    case "card3":
-                        try {
-                            InputStream ims = getAssets().open(cardImage);
-                            Drawable d = Drawable.createFromStream(ims, null);
-                            card3.setImageDrawable(d);
-                        }catch(Exception e){
-                            card3.setImageResource(R.drawable.card_unknow);
-                        }
-                        Log.d("test2", String.valueOf(card));
-                        card[2] =  db.getCard(Integer.parseInt(cardNum));
-                        card[2].setCurrentLevel(Integer.parseInt(cardLv));
-                        break;
-                    case "card4":
-                        try {
-                            InputStream ims = getAssets().open(cardImage);
-                            Drawable d = Drawable.createFromStream(ims, null);
-                            card4.setImageDrawable(d);
-                        }catch(Exception e){
-                            card4.setImageResource(R.drawable.card_unknow);
-                        }
-                        card[3] =  db.getCard(Integer.parseInt(cardNum));
-                        card[3].setCurrentLevel(Integer.parseInt(cardLv));
-                        break;
-                    case "card5":
-                        try {
-                            InputStream ims = getAssets().open(cardImage);
-                            Drawable d = Drawable.createFromStream(ims, null);
-                            card5.setImageDrawable(d);
-                        }catch(Exception e){
-                            card5.setImageResource(R.drawable.card_unknow);
-                        }
-                        card[4] =  db.getCard(Integer.parseInt(cardNum));
-                        card[4].setCurrentLevel(Integer.parseInt(cardLv));
-                        break;
-                    case "card6":
-                        try {
-                            InputStream ims = getAssets().open(cardImage);
-                            Drawable d = Drawable.createFromStream(ims, null);
-                            card6.setImageDrawable(d);
-                        }catch(Exception e){
-                            card6.setImageResource(R.drawable.card_unknow);
-                        }
-                        card[5] =  db.getCard(Integer.parseInt(cardNum));
-                        card[5].setCurrentLevel(Integer.parseInt(cardLv));
-                        break;
-                    default:
-                        break;
+                    }
                 }
-    */
-//                card1.setImageResource(R.drawable.card_unknow);
 
-              //  tv.setText(data.getExtras().getString("returnCardLV"));
                 tv.setText(cardNum);
             }
         }
@@ -233,8 +158,11 @@ public class Home extends ActionBarActivity{
         Bundle mBundle = new Bundle();
         intent.putExtra("cardSelData", selCard);
         intent.putExtra("cardLVData", selCardLv);
-    //    intent.putExtra("cardData", mBundle);
+        mBundle.putParcelable(SER_KEY, battle);
+        //    intent.putExtra("cardData", mBundle);
         intent.putExtra("btnNo", btnNo);
+        intent.putExtras(mBundle);
+
         // go to another activity
         startActivityForResult(intent, REQUEST_CODE);
     }

@@ -1,12 +1,15 @@
 package com.project.tos_project.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by LAI on 2015/6/9.
  */
-public class Battle {
+public class Battle implements Parcelable {
     private int bossHP;
     private String bossColor;
     private int bossDefence;
@@ -76,6 +79,60 @@ public class Battle {
         numOfYellow = new ArrayList<>();
         numOfPurple = new ArrayList<>();
         bossColor = "";
+    }
+
+    public Battle (Parcel parcel) {
+        this.eachComboFactor = parcel.readDouble();
+        this.specialSuppressionFactor = parcel.readDouble();
+        this.blueSuppressRedFactor = parcel.readDouble();
+        this.redSuppressGreenFactor = parcel.readDouble();
+        this.greenSuppressBlueFactor = parcel.readDouble();
+        this.yellowSuppressPurpleFactor = parcel.readDouble();
+        this.purpleSuppressYellowFactor = parcel.readDouble();
+        this.blueSuppressPurpleFactor = parcel.readDouble();
+        this.redSuppressRedFactor = parcel.readDouble();
+        this.greenSuppressYellowFactor = parcel.readDouble();
+        this.yellowSuppressRedFactor = parcel.readDouble();
+        this.purpleSuppressGreenFactor = parcel.readDouble();
+        this.numOfRed = parcel.readArrayList(null);
+        this.numOfBlue = parcel.readArrayList(null);
+        this.numOfGreen = parcel.readArrayList(null);
+        this.numOfYellow = parcel.readArrayList(null);
+        this.numOfPurple = parcel.readArrayList(null);
+        this.bossColor = parcel.readString();
+    }
+
+    public static final Parcelable.Creator<Battle> CREATOR = new Creator<Battle>() {
+        public Battle createFromParcel(Parcel source) {
+            return new Battle(source);
+        }
+        public Battle[] newArray(int size) {
+            return new Battle[size];
+        }
+    };
+
+    public int describeContents() {
+        return 0;
+    }
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeDouble(eachComboFactor);
+        parcel.writeDouble(specialSuppressionFactor);
+        parcel.writeDouble(blueSuppressRedFactor);
+        parcel.writeDouble(redSuppressGreenFactor);
+        parcel.writeDouble(greenSuppressBlueFactor);
+        parcel.writeDouble(yellowSuppressPurpleFactor);
+        parcel.writeDouble(purpleSuppressYellowFactor);
+        parcel.writeDouble(blueSuppressPurpleFactor);
+        parcel.writeDouble(redSuppressRedFactor);
+        parcel.writeDouble(greenSuppressYellowFactor);
+        parcel.writeDouble(yellowSuppressRedFactor);
+        parcel.writeDouble(purpleSuppressGreenFactor);
+        parcel.writeList(numOfRed);
+        parcel.writeList(numOfBlue);
+        parcel.writeList(numOfGreen);
+        parcel.writeList(numOfYellow);
+        parcel.writeList(numOfPurple);
+        parcel.writeString(bossColor);
     }
 
     public int getBossHP() {

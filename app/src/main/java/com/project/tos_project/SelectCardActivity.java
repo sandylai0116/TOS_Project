@@ -22,6 +22,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.project.tos_project.model.Battle;
 import com.project.tos_project.model.Card;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class SelectCardActivity extends ActionBarActivity{
     SQLiteDatabase db;
     Bitmap bitmap;
     DBHelper dbHelper;
+    Battle battle;
     int[] card, cardLVSel;
     List<String> mThumbIds = new ArrayList<String>();
     Cursor cursor;
@@ -45,6 +47,7 @@ public class SelectCardActivity extends ActionBarActivity{
         GridView gridview = (GridView) findViewById(R.id.gridview);
         card = getIntent().getIntArrayExtra("cardSelData");
         cardLVSel = getIntent().getIntArrayExtra("cardLVData");
+        battle = (Battle)getIntent().getParcelableExtra(Home.SER_KEY);
         try {
             // eg. 1 - RawQuery
             dbHelper = new DBHelper(SelectCardActivity.this);
@@ -101,6 +104,7 @@ public class SelectCardActivity extends ActionBarActivity{
                 data.putExtra("card", card);
                 data.putExtra("cardLVSel", cardLVSel);
                 data.putExtra("selectIndex", btnNo);
+                data.putExtra("battle", battle);
         //        data.putExtra("btnNo", getIntent().getStringExtra("btnNo"));
         //        data.putExtra("returnCardLV", LVText.getText().toString());
                data.putExtra("cardNo", cardID);
