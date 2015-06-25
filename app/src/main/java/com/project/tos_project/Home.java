@@ -28,7 +28,7 @@ public class Home extends ActionBarActivity{
     DBHelper db;
 
     private TextView view;
-    private ImageButton cardButton[] = new ImageButton[6];
+    private ImageView cardButton[] = new ImageView[6];
     private final static int REQUEST_CODE = 1;
     private EditText tv;
     private Button calBtn;
@@ -58,12 +58,14 @@ public class Home extends ActionBarActivity{
         battle = new Battle();
         Computation.testPreSetBattle(battle); // the line should be deleted after some works are done
 
-        cardButton[0] =(ImageButton) findViewById(R.id.card1);
-        cardButton[1] =(ImageButton) findViewById(R.id.card2);
-        cardButton[2] =(ImageButton) findViewById(R.id.card3);
-        cardButton[3] =(ImageButton) findViewById(R.id.card4);
-        cardButton[4] =(ImageButton) findViewById(R.id.card5);
-        cardButton[5] =(ImageButton) findViewById(R.id.card6);
+        LinearLayout cardArea = (LinearLayout)findViewById(R.id.cardArea);
+
+        cardButton[0] =(ImageView) findViewById(R.id.card1);
+        cardButton[1] =(ImageView) findViewById(R.id.card2);
+        cardButton[2] =(ImageView) findViewById(R.id.card3);
+        cardButton[3] =(ImageView) findViewById(R.id.card4);
+        cardButton[4] =(ImageView) findViewById(R.id.card5);
+        cardButton[5] =(ImageView) findViewById(R.id.card6);
 
         calBtn =(Button)findViewById(R.id.calculateBtn);
 
@@ -82,11 +84,11 @@ public class Home extends ActionBarActivity{
 
         calBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-              for(int i=0; i<card.length; i++){
-                   card[i] = db.getCard(selectedCard[i]);
-                   card[i].setCurrentLevel(cardLevel[i]);
-               }
-          //      tv.setText(Integer.toString(0));
+                for (int i = 0; i < card.length; i++) {
+                    card[i] = db.getCard(selectedCard[i]);
+                    card[i].setCurrentLevel(cardLevel[i]);
+                }
+                //      tv.setText(Integer.toString(0));
                 Computation.finalAttack(battle, card);
             }
         });
