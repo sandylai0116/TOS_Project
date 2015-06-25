@@ -37,6 +37,15 @@ public class Home extends ActionBarActivity{
     int[] selectedCard = {0,0,0,0,0,0};
     int[] cardLevel = {0,0,0,0,0,0};
     public final static String SER_KEY = "com.project.tos_project.model.ser";
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putIntArray("selectedCard", selectedCard);
+        outState.putIntArray("cardLevel", cardLevel);
+        outState.putParcelable("battle", battle);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,12 @@ public class Home extends ActionBarActivity{
                 card[i] = db.getCard(0);
                 card[i].setCurrentLevel(0);
             }
+        }
+
+        if( savedInstanceState != null ) {
+            selectedCard = savedInstanceState.getIntArray("selectedCard");
+            cardLevel = savedInstanceState.getIntArray("cardLevel");
+            battle = savedInstanceState.getParcelable("battle");
         }
 
         calBtn.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +159,6 @@ public class Home extends ActionBarActivity{
                         }
                     }
                 }
-
                 tv.setText(cardNum);
             }
         }
