@@ -10,9 +10,10 @@ import java.util.List;
  * Created by LAI on 2015/6/9.
  */
 public class Battle implements Parcelable {
-    private int bossHP;
     private String bossColor;
     private int bossDefence;
+    private int maxHP;
+    private int currentHP;
     private int numOfCombo;
     private List<Integer> numOfRed;
     private List<Integer> numOfBlue;
@@ -135,8 +136,16 @@ public class Battle implements Parcelable {
         parcel.writeString(bossColor);
     }
 
-    public int getBossHP() {
-        return bossHP;
+    public int getCurrentHP() {
+        return currentHP;
+    }
+
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = currentHP;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
     }
 
     public List<Integer> getNumOfPink() {
@@ -163,8 +172,8 @@ public class Battle implements Parcelable {
         this.numOfEnchantedPink = numOfEnchantedPink;
     }
 
-    public void setBossHP(int bossHP) {
-        this.bossHP = bossHP;
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
     }
 
     public String getBossColor() {

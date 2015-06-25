@@ -578,12 +578,15 @@ public class LeaderSkill {
                         battle.setEachComboFactor(battle.getEachComboFactor()+1.25);
                         break;
                     case "attack2.5WhenHPBelow20%":
+                        if((double)battle.getCurrentHP()/battle.getMaxHP()<0.2) attackBonus(card,2.5);
                         break;
                     case "attack3WhenHPBelow20%":
+                        if((double)battle.getCurrentHP()/battle.getMaxHP()<0.2) attackBonus(card,3.0);
                         break;
                     case "attack2.5WhenLowHP":
                         break;
                     case "attack3WhenLowHP":
+                        attack3WhenLowHP(battle,card);
                         break;
                     case "attack3.5WhenLowHP":
                         break;
@@ -864,5 +867,19 @@ public class LeaderSkill {
         if(Double.compare(battle.getPurpleSuppressGreenFactor(),1.5) == 0)
             battle.setPurpleSuppressGreenFactor(factor);
         else battle.setPurpleSuppressGreenFactor(battle.getPurpleSuppressGreenFactor() * factor);
+    }
+
+    public static void attack3WhenLowHP(Battle battle, Card[] card){
+        /*
+        attack factor
+        >50     1+detainedHP%*2
+        20-50   detainedHP%*4
+        <20     3
+        */
+        double currentHPPercent = (double)battle.getCurrentHP()/battle.getMaxHP();
+        double detainedHPPercent = 1.0 - currentHPPercent;
+        if(currentHPPercent >50) attackBonus(card,1+detainedHPPercent*2);
+        else if(currentHPPercent <20) attackBonus(card,3.0);
+        else attackBonus(card,detainedHPPercent*4);
     }
 }
