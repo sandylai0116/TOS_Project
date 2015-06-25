@@ -82,6 +82,18 @@ public class Home extends ActionBarActivity{
             battle = savedInstanceState.getParcelable("battle");
         }
 
+        for(int i=0; i<selectedCard.length; i++) {
+            if(selectedCard[i] != 0) {
+                try {
+                    InputStream ims = getAssets().open("card/card-" + selectedCard[i] + ".png");
+                    Drawable d = Drawable.createFromStream(ims, null);
+                    cardButton[i].setImageDrawable(d);
+                } catch (Exception e) {
+                    cardButton[i].setImageResource(R.drawable.card_unknow);
+                }
+            }
+        }
+
         calBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 for (int i = 0; i < card.length; i++) {
