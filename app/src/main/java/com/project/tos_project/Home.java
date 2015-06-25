@@ -54,7 +54,9 @@ public class Home extends ActionBarActivity{
        tv = (EditText) findViewById(R.id.monsterDefense);
 
         db = new DBHelper(getApplicationContext());
+
         battle = new Battle();
+        Computation.testPreSetBattle(battle); // the line should be deleted after some works are done
 
         cardButton[0] =(ImageButton) findViewById(R.id.card1);
         cardButton[1] =(ImageButton) findViewById(R.id.card2);
@@ -130,9 +132,6 @@ public class Home extends ActionBarActivity{
                 selectCard(5, selectedCard, cardLevel);
             }
         });
-
-        //test
-        //Computation.testFinalAttack(db);
 
         //close db
         db.closeDB();

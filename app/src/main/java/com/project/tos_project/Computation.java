@@ -83,6 +83,36 @@ public class Computation {
             //save
             card[i].setCalculatedAttack(output);
         }
+
+        //get card
+        // the line should be deleted after some works are done
+        System.out.println(card[0].getCalculatedAttack() + "," + card[1].getCalculatedAttack() + "," + card[2].getCalculatedAttack() + ","
+                + card[3].getCalculatedAttack() + "," + card[4].getCalculatedAttack() + "," + card[5].getCalculatedAttack());
+    }
+
+    public static void testPreSetBattle(Battle battle){
+        //test only
+        List<Integer> numOfStones = new ArrayList<>();
+        numOfStones.add(3); //set dissolve stone
+        battle.setNumOfBlue(numOfStones);
+        numOfStones.clear();
+        numOfStones.add(3); //set dissolve stone
+        battle.setNumOfRed(numOfStones);
+        numOfStones.clear();
+        numOfStones.add(3); //set dissolve stone
+        battle.setNumOfGreen(numOfStones);
+        numOfStones.clear();
+        numOfStones.add(3); //set dissolve stone
+        battle.setNumOfYellow(numOfStones);
+        numOfStones.clear();
+        numOfStones.add(3); //set dissolve stone
+        battle.setNumOfPurple(numOfStones);
+        battle.setNumOfEnchantedBlue(0); //set enchanted stone
+        battle.setNumOfEnchantedRed(0); //set enchanted stone
+        battle.setNumOfEnchantedGreen(0); //set enchanted stone
+        battle.setNumOfEnchantedYellow(0); //set enchanted stone
+        battle.setNumOfEnchantedPurple(0); //set enchanted stone
+        battle.setNumOfCombo(5);
     }
     
     public static void testFinalAttack(DBHelper db){
