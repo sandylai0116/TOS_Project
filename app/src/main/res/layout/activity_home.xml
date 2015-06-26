@@ -40,42 +40,37 @@
             android:id="@+id/card2"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:adjustViewBounds="true"
             android:background="#80C0C0C0"
             android:layout_margin="3dip"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY" />
         <ImageView android:layout_weight="1"
             android:id="@+id/card3"
             android:layout_width="0dp"
             android:background="#80C0C0C0"
             android:layout_height="fill_parent"
-            android:adjustViewBounds="true"
             android:layout_margin="3dip"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY" />
         <ImageView android:layout_weight="1"
             android:id="@+id/card4"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:adjustViewBounds="true"
             android:background="#80C0C0C0"
             android:layout_margin="3dip"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY" />
         <ImageView android:layout_weight="1"
             android:id="@+id/card5"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:background="#80C0C0C0"
-            android:adjustViewBounds="true"
             android:layout_margin="3dip"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY" />
         <ImageView android:layout_weight="1"
             android:id="@+id/card6"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:background="#80C0C0C0"
-            android:adjustViewBounds="true"
             android:layout_margin="3dip"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitXY" />
     </LinearLayout>
         </LinearLayout>
 
