@@ -16,6 +16,14 @@ import java.util.List;
  * Created by LAI on 2015/5/26.
  */
 public class DBHelper extends SQLiteOpenHelper {
+    // If you change the database schema, you must increment the database version.
+    public static final int DATABASE_VERSION = 3;
+    public static final String DATABASE_NAME = "database.db";
+    private static final String TEXT_TYPE = " TEXT";
+    private static final String INTEGER_TYPE = " INTEGER";
+    private static final String REAL_TYPE = " REAL";
+    private static final String BLOB_TYPE = " BLOB";
+    private static final String COMMA_SEP = ",";
 
     //entity class list
     public static abstract class CardEntity implements BaseColumns {
@@ -33,16 +41,6 @@ public class DBHelper extends SQLiteOpenHelper {
         public static final String SKILL = "SKILL";
         public static final String LEADER_SKILL = "LEADER_SKILL";
     }
-
-    //database
-    // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
-    public static final String DATABASE_NAME = "database.db";
-    private static final String TEXT_TYPE = " TEXT";
-    private static final String INTEGER_TYPE = " INTEGER";
-    private static final String REAL_TYPE = " REAL";
-    private static final String BLOB_TYPE = " BLOB";
-    private static final String COMMA_SEP = ",";
 
     //create table
     private static final String SQL_CREATE_CARD_ENTITY =
