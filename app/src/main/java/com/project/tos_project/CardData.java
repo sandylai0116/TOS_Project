@@ -753,7 +753,7 @@ public class CardData {
         DBHelper.insertCardToDB(db, 740, "yellow", "god", 99, 1232, 726, 206, 2565, 1314, 458, null, "yellowAttack2.5,pinkPossess50%Yellow");
         DBHelper.insertCardToDB(db, 741, "red", "evolveElements", 1, 1200, 800, 300, 1200, 800, 300, null, null);
         DBHelper.insertCardToDB(db, 742, "red", "elf", 99, 1454, 777, 454, 2775, 1483, 1027, null, null);
-        DBHelper.insertCardToDB(db, 743, "yellow", "god", 99, 1716, 836, 230, 2616, 1189, 403, null, "highAttackWhenMoreAttribute");
+        DBHelper.insertCardToDB(db, 743, "yellow", "god", 99, 1716, 836, 230, 2616, 1189, 403, null, "highAttackWhenMoreBeastAttribute");
         DBHelper.insertCardToDB(db, 744, "blue", "beast", 30, 550, 242, 24, 912, 379, 46, null, "beastAttack1.5");
         DBHelper.insertCardToDB(db, 746, "blue", "human", 50, 603, 412, 113, 1238, 752, 247, null, "attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone");
         DBHelper.insertCardToDB(db, 747, "blue", "human", 99, 1141, 780, 214, 2405, 1462, 481, null, "attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone");

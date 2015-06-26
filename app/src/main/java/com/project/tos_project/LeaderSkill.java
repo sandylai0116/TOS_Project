@@ -584,17 +584,29 @@ public class LeaderSkill {
                         if((double)battle.getCurrentHP()/battle.getMaxHP()<0.2) attackBonus(card,3.0);
                         break;
                     case "attack2.5WhenLowHP":
+                        attack2p5WhenLowHP(battle, card);
                         break;
                     case "attack3WhenLowHP":
-                        attack3WhenLowHP(battle,card);
+                        attack3WhenLowHP(battle, card);
                         break;
                     case "attack3.5WhenLowHP":
+                        attack3p5WhenLowHP(battle, card);
                         break;
                     case "attack3WhenBelow10Round":
                         break;
                     case "highAttackWhenMoreAttribute":
+                        highAttackWhenMoreAttribute(card, null);
+                        break;
+                    case "highAttackWhenMoreBeastAttribute":
+                        highAttackWhenMoreAttribute(card,"beast");
                         break;
                     case "attack2.5WhenOnlyGod":
+                        for(Card c: card) if( !(c.getRace().equals("god") || c.getRace().equals("")) ) break;
+                        attackBonus(card,2.5);
+                        break;
+                    case "attack3WhenOnlyDemonDragon":
+                        break;
+                    case "attack2.25WhenOnlyGodDragon":
                         break;
                     case "attack3Recovery2WhenOnly2Red":
                         break;
@@ -629,10 +641,6 @@ public class LeaderSkill {
                     case "yellowAttack2MaxYellowAttack3.5WhenMoreHuman":
                         break;
                     case "redGreenPurpleAttack3WhenExistRedGreenPurpleAndDissolve3AttributeStone":
-                        break;
-                    case "attack3WhenOnlyDemonDragon":
-                        break;
-                    case "attack2.25WhenOnlyGodDragon":
                         break;
                     case "attack2.5WhenFullHP":
                         break;
@@ -878,8 +886,69 @@ public class LeaderSkill {
         */
         double currentHPPercent = (double)battle.getCurrentHP()/battle.getMaxHP();
         double detainedHPPercent = 1.0 - currentHPPercent;
-        if(currentHPPercent >50) attackBonus(card,1+detainedHPPercent*2);
+        if(currentHPPercent >50) attackBonus(card, 1 + detainedHPPercent * 2);
         else if(currentHPPercent <20) attackBonus(card,3.0);
         else attackBonus(card,detainedHPPercent*4);
+    }
+
+    public static void attack2p5WhenLowHP(Battle battle, Card[] card){
+        /*
+        attack factor
+        >50     1+detainedHP%*2
+        20-50   7/6+detainedHP%*(5/3)
+        <20     2.5
+        */
+        double currentHPPercent = (double)battle.getCurrentHP()/battle.getMaxHP();
+        double detainedHPPercent = 1.0 - currentHPPercent;
+        if(currentHPPercent >50) attackBonus(card,1+detainedHPPercent*2);
+        else if(currentHPPercent <20) attackBonus(card,2.5);
+        else attackBonus(card,(7/6.0)+detainedHPPercent*(5/3.0));
+    }
+
+    public static void attack3p5WhenLowHP(Battle battle, Card[] card){
+        /*
+        attack factor
+        >=15     1+detainedHP%*2.94
+        <15     3.5
+        */
+        double currentHPPercent = (double)battle.getCurrentHP()/battle.getMaxHP();
+        double detainedHPPercent = 1.0 - currentHPPercent;
+        if(currentHPPercent <50) attackBonus(card,3.5);
+        else attackBonus(card,1+detainedHPPercent*2.94);
+    }
+
+    public static void highAttackWhenMoreAttribute(Card[] card,String race) {
+        /*
+        傷害倍數 = 1 + 擁有屬性數量 × 0.5
+        max 3.5
+        */
+        int blue=0;
+        int red=0;
+        int green=0;
+        int yellow=0;
+        int purple=0;
+        for(Card c:card){
+            if( race == null || c.getRace().equals(race) ) {
+                switch (c.getColor()) {
+                    case "blue":
+                        blue = 1;
+                        break;
+                    case "red":
+                        red = 1;
+                        break;
+                    case "green":
+                        green = 1;
+                        break;
+                    case "yellow":
+                        yellow = 1;
+                        break;
+                    case "purple":
+                        purple = 1;
+                        break;
+                }
+            }
+        }
+        int total=blue+red+green+yellow+purple;
+        attackBonus(card,1+total*0.5);
     }
 }
