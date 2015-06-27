@@ -605,34 +605,49 @@ public class LeaderSkill {
                         attackBonus(card,2.5);
                         break;
                     case "attack3WhenOnlyDemonDragon":
+                        attackBonusWhenOnly2Race(card,"demon","dragon",3.0);
                         break;
-                    case "attack2.25WhenOnlyGodDragon":
+                    case "attack2.5WhenOnlyGodDragon":
+                        attackBonusWhenOnly2Race(card,"god","dragon",2.5);
                         break;
                     case "attack3Recovery2WhenOnly2Red":
+                        attackBonusRecoveryBonusWhenOnlyNumbersOfColor(card,"red",2,3.0,2.0);
                         break;
                     case "attack5WhenComboIsEven":
+                        if(battle.getNumOfCombo()%2 == 0) attackBonus(card,5.0);
                         break;
                     case "humanAttack3DragonAttack1.5WhenExistHumanAnd2Dragon":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "dragon", null, 3.0, 1.5, null);
                         break;
                     case "humanAttack3beastAttack2ElfAttack2WhenExistHumanAnd2BeastOrElf":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "beast", "elf", 3.0, 2.0, 2.0);
                         break;
                     case "humanAttack3DemonAttack2ElfAttack2WhenExistHumanAnd2DemonOrElf":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "demon", "elf", 3.0, 2.0, 2.0);
                         break;
-                    case "humanAttack3GodAttack1.5ElfAttack2WhenExistHumanAnd2God":
+                    case "humanAttack3GodAttack1.5WhenExistHumanAnd2God":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "god", null, 3.0, 1.5, null);
                         break;
                     case "humanAttack3.5GodAttack2WhenExistHumanAnd2God":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "god", null, 3.5, 2.0, null);
                         break;
                     case "humanAttack3.5DragonAttack2WhenExistHumanAnd2Dragon":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "dragon", null, 3.5, 2.0, null);
                         break;
-                    case "humanAttack3.5BeastAttack2.5WhenExistHumanAnd2BeastOrElf":
+                    case "humanAttack3.5BeastAttack2.5ElfAttack2.5WhenExistHumanAnd2BeastOrElf":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "beast", "elf", 3.5, 2.5, 2.5);
                         break;
                     case "humanAttack3.5DemonAttack2.5ElfAttack2.5WhenExistHumanAnd2DemonOrElf":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "demon", "elf", 3.5, 2.5, 2.5);
                         break;
                     case "humanAttack3.5DragonAttack2WhenExistHumanAnd1Dragon":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",1 , "dragon", null, 3.5, 2.0, null);
                         break;
                     case "humanAttack3.5beastAttack2.5ElfAttack2.5WhenExistHumanAnd1BeastOrElf":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",1 , "beast", "elf", 3.5, 2.5, 2.5);
                         break;
                     case "humanAttack3.5DemonAttack2.5ElfAttack2.5WhenExistHumanAnd1DemonOrElf":
+                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",1 , "demon", "elf", 3.5, 2.5, 2.5);
                         break;
                     case "attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone":
                         break;
@@ -643,6 +658,7 @@ public class LeaderSkill {
                     case "redGreenPurpleAttack3WhenExistRedGreenPurpleAndDissolve3AttributeStone":
                         break;
                     case "attack2.5WhenFullHP":
+                        if(battle.getCurrentHP() == battle.getMaxHP()) attackBonus(card,2.5);
                         break;
                     case "attack4WhenMoreTime":
                         break;
@@ -950,5 +966,49 @@ public class LeaderSkill {
         }
         int total=blue+red+green+yellow+purple;
         attackBonus(card,1+total*0.5);
+    }
+
+    public static void attackBonusWhenOnly2Race(Card[] card, String race1, String race2, Double factor){
+        boolean isRace1 = false;
+        boolean isRace2 = false;
+
+        for(Card c:card){
+            if(c.getRace().equals(race1)) isRace1=true;
+            else if(c.getRace().equals(race2)) isRace2=true;
+        }
+        if(isRace1 == true && isRace2 == true) attackBonus(card,factor);
+    }
+
+    public static void attackBonusRecoveryBonusWhenOnlyNumbersOfColor(Card[] card,String color,int numColor,Double attackFactor, Double recoveryFactor){
+        int currentColorCount=0;
+        for(Card c:card){
+            if(c.getColor().equals(color)) currentColorCount++;
+        }
+        if(currentColorCount == numColor){
+            attackBonus(card,attackFactor);
+            recoveryBonus(card,recoveryFactor);
+        }
+    }
+
+    public static void threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(Card[] card,String race1,int numOfRace,String race2a, String race2b,Double race1Ack,Double race2aAck,Double race2bAck){
+        int currentNumOfRace=0;
+        boolean otherRace = false;
+        for(Card c:card){
+            //check contain other race
+            if( !(c.getRace().equals(race1) || c.getRace().equals(race2a) || c.getRace().equals(race2b)) ){
+                otherRace=true;
+                break;
+            }
+            //check race should equal or above num
+            if(race2b!=null)
+                if(c.getRace().equals(race2a) || c.getRace().equals(race2b))numOfRace++;
+            else
+                if(c.getRace().equals(race2a))currentNumOfRace++;
+        }
+        if( !(currentNumOfRace<numOfRace || otherRace == true) ){
+            raceAttackBonus(card,race1,race1Ack);
+            raceAttackBonus(card,race2a,race2aAck);
+            if(race2b!=null && race2bAck!=null) raceAttackBonus(card,race2b,race2bAck);
+        }
     }
 }

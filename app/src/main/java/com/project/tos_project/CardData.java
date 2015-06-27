@@ -610,8 +610,8 @@ public class CardData {
         DBHelper.insertCardToDB(db, 597, "blue", "human", 99, 1620, 703, 130, 2595, 1267, 342, null, "humanAttack3.5DragonAttack2WhenExistHumanAnd2Dragon");
         DBHelper.insertCardToDB(db, 598, "red", "human", 50, 898, 397, 61, 1405, 697, 156, null, "humanAttack3.5DragonAttack2WhenExistHumanAnd2Dragon");
         DBHelper.insertCardToDB(db, 599, "red", "human", 99, 1705, 753, 115, 2731, 1355, 304, null, "humanAttack3.5DragonAttack2WhenExistHumanAnd2Dragon");
-        DBHelper.insertCardToDB(db, 600, "green", "human", 50, 987, 342, 65, 1544, 600, 164, null, "humanAttack3.5BeastAttack2.5WhenExistHumanAnd2BeastOrElf");
-        DBHelper.insertCardToDB(db, 601, "green", "human", 99, 1874, 648, 122, 3001, 1167, 320, null, "humanAttack3.5BeastAttack2.5WhenExistHumanAnd2BeastOrElf");
+        DBHelper.insertCardToDB(db, 600, "green", "human", 50, 987, 342, 65, 1544, 600, 164, null, "humanAttack3.5BeastAttack2.5ElfAttack2.5WhenExistHumanAnd2BeastOrElf");
+        DBHelper.insertCardToDB(db, 601, "green", "human", 99, 1874, 648, 122, 3001, 1167, 320, null, "humanAttack3.5BeastAttack2.5ElfAttack2.5WhenExistHumanAnd2BeastOrElf");
         DBHelper.insertCardToDB(db, 602, "yellow", "human", 50, 889, 345, 71, 1392, 607, 180, null, "humanAttack3.5DemonAttack2.5ElfAttack2.5WhenExistHumanAnd2DemonOrElf");
         DBHelper.insertCardToDB(db, 603, "yellow", "human", 99, 1688, 655, 134, 2704, 1179, 352, null, "humanAttack3.5DemonAttack2.5ElfAttack2.5WhenExistHumanAnd2DemonOrElf");
         DBHelper.insertCardToDB(db, 604, "purple", "human", 50, 835, 408, 64, 1308, 717, 162, null, "humanAttack3.5GodAttack2WhenExistHumanAnd2God");
@@ -665,7 +665,7 @@ public class CardData {
         DBHelper.insertCardToDB(db, 652, "red", "dragon", 99, 1580, 612, 22, 3616, 1125, 25, null, "humanAttack3DragonAttack1.5WhenExistHumanAnd2Dragon");
         DBHelper.insertCardToDB(db, 653, "green", "beast", 99, 1496, 525, 53, 3303, 1066, 141, null, "humanAttack3beastAttack2ElfAttack2WhenExistHumanAnd2BeastOrElf");
         DBHelper.insertCardToDB(db, 654, "yellow", "demon", 99, 589, 830, 78, 1233, 1665, 411, null, "humanAttack3DemonAttack2ElfAttack2WhenExistHumanAnd2DemonOrElf");
-        DBHelper.insertCardToDB(db, 655, "purple", "god", 99, 978, 598, 115, 2198, 1244, 303, null, "humanAttack3GodAttack1.5ElfAttack2WhenExistHumanAnd2God");
+        DBHelper.insertCardToDB(db, 655, "purple", "god", 99, 978, 598, 115, 2198, 1244, 303, null, "humanAttack3GodAttack1.5WhenExistHumanAnd2God");
         DBHelper.insertCardToDB(db, 656, "blue", "human", 99, 4827, 2356, 556, 6359, 3104, 838, null, "humanAttack3.5DragonAttack2WhenExistHumanAnd1Dragon");
         DBHelper.insertCardToDB(db, 657, "red", "human", 99, 4933, 2448, 480, 6499, 3225, 724, null, "humanAttack3.5DragonAttack2WhenExistHumanAnd1Dragon");
         DBHelper.insertCardToDB(db, 658, "green", "human", 99, 5422, 2108, 505, 7143, 2777, 762, null, "humanAttack3.5beastAttack2.5ElfAttack2.5WhenExistHumanAnd1BeastOrElf");
@@ -803,8 +803,8 @@ public class CardData {
         DBHelper.insertCardToDB(db, 791, "blue", "dragon", 99, 1912, 728, 36, 3853, 1210, 40, null, "no791");
         DBHelper.insertCardToDB(db, 792, "red", "dragon", 50, 1125, 434, 16, 2204, 706, 18, null, "attack3WhenOnlyDemonDragon");
         DBHelper.insertCardToDB(db, 793, "red", "dragon", 99, 2011, 779, 32, 4053, 1294, 36, null, "attack3WhenOnlyDemonDragon");
-        DBHelper.insertCardToDB(db, 794, "green", "dragon", 50, 1236, 373, 17, 2422, 608, 19, null, "attack2.25WhenOnlyGodDragon");
-        DBHelper.insertCardToDB(db, 795, "green", "dragon", 99, 2210, 671, 33, 4454, 1114, 37, null, "attack2.25WhenOnlyGodDragon");
+        DBHelper.insertCardToDB(db, 794, "green", "dragon", 50, 1236, 373, 17, 2422, 608, 19, null, "attack2.5WhenOnlyGodDragon");
+        DBHelper.insertCardToDB(db, 795, "green", "dragon", 99, 2210, 671, 33, 4454, 1114, 37, null, "attack2.5WhenOnlyGodDragon");
         DBHelper.insertCardToDB(db, 796, "yellow", "dragon", 50, 1113, 377, 18, 2182, 614, 20, null, "yellowAttack2.5");
         DBHelper.insertCardToDB(db, 797, "yellow", "dragon", 99, 1991, 678, 37, 4013, 1126, 41, null, "yellowAttack2.5");
         DBHelper.insertCardToDB(db, 798, "purple", "dragon", 50, 1046, 446, 17, 2051, 726, 19, null, "combo125%WhenOnlyDragon");
