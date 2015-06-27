@@ -15,7 +15,6 @@
 
         </TextView>
 
-
         <ImageButton android:layout_weight="1"
             android:id="@+id/searchCard"
             android:layout_width="50dp"
@@ -29,9 +28,12 @@
 
     </RelativeLayout>
 
+
+    <LinearLayout android:orientation="horizontal"  android:weightSum="6" android:id="@+id/cardArea"
+        android:layout_width="fill_parent" android:layout_height="0dp"
+        android:layout_weight="90">
         <GridView
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_weight="90"
             android:id="@+id/gridview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -41,6 +43,6 @@
             android:horizontalSpacing="10dp"
             android:gravity="center"
             android:stretchMode="columnWidth" />
-
+</LinearLayout>
 </LinearLayout>
 

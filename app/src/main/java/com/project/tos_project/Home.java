@@ -4,6 +4,7 @@ package com.project.tos_project;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -36,6 +37,8 @@ public class Home extends ActionBarActivity{
     Card card[] = new Card[6];
     int[] selectedCard = {0,0,0,0,0,0};
     int[] cardLevel = {0,0,0,0,0,0};
+    int[] disbaleCard = {-1,-1,-1,-1,-1,-1};
+    int[] combinCard = {1,2,5};
     public final static String SER_KEY = "com.project.tos_project.model.ser";
 
     @Override
@@ -108,42 +111,42 @@ public class Home extends ActionBarActivity{
         cardButton[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(0, selectedCard, cardLevel);
+                selectCard(0, selectedCard, cardLevel, disbaleCard);
             }
         });
 
         cardButton[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(1, selectedCard, cardLevel);
+                selectCard(1, selectedCard, cardLevel, disbaleCard);
             }
         });
 
         cardButton[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(2, selectedCard, cardLevel);
+                selectCard(2, selectedCard, cardLevel, disbaleCard);
             }
         });
 
         cardButton[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(3, selectedCard, cardLevel);
+                selectCard(3, selectedCard, cardLevel, disbaleCard);
             }
         });
 
         cardButton[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(4, selectedCard, cardLevel);
+                selectCard(4, selectedCard, cardLevel, disbaleCard);
             }
         });
 
         cardButton[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(5, selectedCard, cardLevel);
+                selectCard(5, selectedCard, cardLevel, disbaleCard);
             }
         });
 
@@ -161,6 +164,16 @@ public class Home extends ActionBarActivity{
                 selectedCard = data.getExtras().getIntArray("card");
                 cardLevel = data.getExtras().getIntArray("cardLVSel");
                 battle = (Battle) data.getExtras().getParcelable("battle");
+                disbaleCard = data.getExtras().getIntArray("disableData");
+
+                for(int i=0; i<combinCard.length; i++){
+                    if(combinCard[i] == Integer.parseInt(cardNum)){
+                        disbaleCard[index+1] = 0;
+                        selectedCard[index+1] = 0;
+                        cardLevel[index+1] = 0;
+                    }
+                }
+
                 for(int i=0; i<selectedCard.length; i++) {
                     if(selectedCard[i] != 0) {
                         try {
@@ -171,6 +184,11 @@ public class Home extends ActionBarActivity{
                             cardButton[i].setImageResource(R.drawable.card_unknow);
                         }
                     }
+                    else{
+                      //  cardButton[i].setBackgroundColor(Color.parseColor("#80C0C0C0"));
+                        cardButton[i].setImageResource(0);
+                        cardButton[i].setImageDrawable(null);
+                    }
                 }
                 tv.setText(cardNum);
             }
@@ -178,13 +196,19 @@ public class Home extends ActionBarActivity{
     }
 
     // selectCard will be running when image button clicked
-    public void selectCard(int btnNo, int selCard[],  int selCardLv[]){
+    public void selectCard(int btnNo, int selCard[],  int selCardLv[], int disable[]){
+
+        if(disable[btnNo] == 0){
+            Toast.makeText(getApplicationContext(), "已選擇合體卡 ", Toast.LENGTH_SHORT).show();
+            return;
+        }
         //  set the target activity
         Intent intent = new Intent(this, SelectCardActivity.class);
         // set the value
         Bundle mBundle = new Bundle();
         intent.putExtra("cardSelData", selCard);
         intent.putExtra("cardLVData", selCardLv);
+        intent.putExtra("disableData", disbaleCard);
         mBundle.putParcelable(SER_KEY, battle);
         //    intent.putExtra("cardData", mBundle);
         intent.putExtra("btnNo", btnNo);

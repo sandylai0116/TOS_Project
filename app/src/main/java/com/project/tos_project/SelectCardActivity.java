@@ -36,9 +36,11 @@ public class SelectCardActivity extends ActionBarActivity{
     Bitmap bitmap;
     DBHelper dbHelper;
     Battle battle;
-    int[] card, cardLVSel;
+    int[] card, cardLVSel, disbaleCard;
     List<String> mThumbIds = new ArrayList<String>();
     Cursor cursor;
+    Home h = new Home();
+    int[] combinCard = h.combinCard;
     public final static int RESULT_CODE  = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class SelectCardActivity extends ActionBarActivity{
         GridView gridview = (GridView) findViewById(R.id.gridview);
         card = getIntent().getIntArrayExtra("cardSelData");
         cardLVSel = getIntent().getIntArrayExtra("cardLVData");
+        disbaleCard = getIntent().getIntArrayExtra("disableData");
+
         battle = (Battle)getIntent().getParcelableExtra(Home.SER_KEY);
         try {
             // eg. 1 - RawQuery
@@ -93,6 +97,7 @@ public class SelectCardActivity extends ActionBarActivity{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int btnNo = getIntent().getIntExtra("btnNo", 0);
+
                 //    String cardLv = data.getExtras().getString("returnCardLV");
                 String[] cardNum = cardNumber.split("-");
                 String cardID = cardNum[1].substring(0, cardNum[1].length() - 4);
@@ -100,16 +105,27 @@ public class SelectCardActivity extends ActionBarActivity{
                 card[btnNo] = Integer.parseInt(cardID);
                 cardLVSel[btnNo] = Integer.parseInt(LVText.getText().toString());
 
+                for (int i = 0; i < combinCard.length; i++) {
+                    if (combinCard[i] == Integer.parseInt(cardID)) {
+                        if (btnNo == 5) {
+                            Toast.makeText(getApplicationContext(), "合體卡不能選擇在最後的位置 ", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        break;
+                    }
+                }
+
                 Intent data = new Intent();
                 data.putExtra("card", card);
                 data.putExtra("cardLVSel", cardLVSel);
                 data.putExtra("selectIndex", btnNo);
                 data.putExtra("battle", battle);
-        //        data.putExtra("btnNo", getIntent().getStringExtra("btnNo"));
-        //        data.putExtra("returnCardLV", LVText.getText().toString());
-               data.putExtra("cardNo", cardID);
+                data.putExtra("disableData", disbaleCard);
+                //        data.putExtra("btnNo", getIntent().getStringExtra("btnNo"));
+                //        data.putExtra("returnCardLV", LVText.getText().toString());
+                data.putExtra("cardNo", cardID);
 
-        //        data.putExtra("returnCardData", card);
+                //        data.putExtra("returnCardData", card);
                 setResult(RESULT_CODE, data);
                 finish();
             }
@@ -144,7 +160,7 @@ public class SelectCardActivity extends ActionBarActivity{
             ImageView imageView;
 
             Resources r = Resources.getSystem();
-            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, r.getDisplayMetrics());
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, r.getDisplayMetrics());
 
             if (convertView == null) {  //if it's not recycled, initialize some 				attributes
                 imageView = new ImageView(mContext);
@@ -160,7 +176,7 @@ public class SelectCardActivity extends ActionBarActivity{
             try {
                 InputStream ims = getAssets().open(mThumbIds.get(position));
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 2;
+                //options.inSampleSize = 2;
                 bitmap = BitmapFactory.decodeStream(ims, null, options);
                 ims.close();
                 imageView.setImageBitmap(bitmap);
