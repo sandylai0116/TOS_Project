@@ -37,7 +37,7 @@ public class Home extends ActionBarActivity{
     Card card[] = new Card[6];
     int[] selectedCard = {0,0,0,0,0,0};
     int[] cardLevel = {0,0,0,0,0,0};
-    int[] disbaleCard = {-1,-1,-1,-1,-1,-1};
+    int[] disableCard = {-1,-1,-1,-1,-1,-1};
     int[] combinCard = {1,2,5};
     public final static String SER_KEY = "com.project.tos_project.model.ser";
 
@@ -47,6 +47,7 @@ public class Home extends ActionBarActivity{
         outState.putIntArray("selectedCard", selectedCard);
         outState.putIntArray("cardLevel", cardLevel);
         outState.putParcelable("battle", battle);
+        outState.putIntArray("disbaleCard", disableCard);
     }
 
     @Override
@@ -83,19 +84,10 @@ public class Home extends ActionBarActivity{
             selectedCard = savedInstanceState.getIntArray("selectedCard");
             cardLevel = savedInstanceState.getIntArray("cardLevel");
             battle = savedInstanceState.getParcelable("battle");
+            disableCard = savedInstanceState.getIntArray("disableCard");
         }
 
-        for(int i=0; i<selectedCard.length; i++) {
-            if(selectedCard[i] != 0) {
-                try {
-                    InputStream ims = getAssets().open("card/card-" + selectedCard[i] + ".png");
-                    Drawable d = Drawable.createFromStream(ims, null);
-                    cardButton[i].setImageDrawable(d);
-                } catch (Exception e) {
-                    cardButton[i].setImageResource(R.drawable.card_unknow);
-                }
-            }
-        }
+        printButton();
 
         calBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -111,42 +103,42 @@ public class Home extends ActionBarActivity{
         cardButton[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(0, selectedCard, cardLevel, disbaleCard);
+                selectCard(0, selectedCard, cardLevel, disableCard);
             }
         });
 
         cardButton[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(1, selectedCard, cardLevel, disbaleCard);
+                selectCard(1, selectedCard, cardLevel, disableCard);
             }
         });
 
         cardButton[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(2, selectedCard, cardLevel, disbaleCard);
+                selectCard(2, selectedCard, cardLevel, disableCard);
             }
         });
 
         cardButton[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(3, selectedCard, cardLevel, disbaleCard);
+                selectCard(3, selectedCard, cardLevel, disableCard);
             }
         });
 
         cardButton[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(4, selectedCard, cardLevel, disbaleCard);
+                selectCard(4, selectedCard, cardLevel, disableCard);
             }
         });
 
         cardButton[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(5, selectedCard, cardLevel, disbaleCard);
+                selectCard(5, selectedCard, cardLevel, disableCard);
             }
         });
 
@@ -164,32 +156,16 @@ public class Home extends ActionBarActivity{
                 selectedCard = data.getExtras().getIntArray("card");
                 cardLevel = data.getExtras().getIntArray("cardLVSel");
                 battle = (Battle) data.getExtras().getParcelable("battle");
-                disbaleCard = data.getExtras().getIntArray("disableData");
+                disableCard = data.getExtras().getIntArray("disableData");
 
                 for(int i=0; i<combinCard.length; i++){
                     if(combinCard[i] == Integer.parseInt(cardNum)){
-                        disbaleCard[index+1] = 0;
+                        disableCard[index+1] = 0;
                         selectedCard[index+1] = 0;
                         cardLevel[index+1] = 0;
                     }
                 }
-
-                for(int i=0; i<selectedCard.length; i++) {
-                    if(selectedCard[i] != 0) {
-                        try {
-                            InputStream ims = getAssets().open("card/card-" + selectedCard[i] + ".png");
-                            Drawable d = Drawable.createFromStream(ims, null);
-                            cardButton[i].setImageDrawable(d);
-                        } catch (Exception e) {
-                            cardButton[i].setImageResource(R.drawable.card_unknow);
-                        }
-                    }
-                    else{
-                      //  cardButton[i].setBackgroundColor(Color.parseColor("#80C0C0C0"));
-                        cardButton[i].setImageResource(0);
-                        cardButton[i].setImageDrawable(null);
-                    }
-                }
+                printButton();
                 tv.setText(cardNum);
             }
         }
@@ -208,7 +184,7 @@ public class Home extends ActionBarActivity{
         Bundle mBundle = new Bundle();
         intent.putExtra("cardSelData", selCard);
         intent.putExtra("cardLVData", selCardLv);
-        intent.putExtra("disableData", disbaleCard);
+        intent.putExtra("disableData", disableCard);
         mBundle.putParcelable(SER_KEY, battle);
         //    intent.putExtra("cardData", mBundle);
         intent.putExtra("btnNo", btnNo);
@@ -238,6 +214,25 @@ public class Home extends ActionBarActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void printButton(){
+        for(int i=0; i<selectedCard.length; i++) {
+            if(selectedCard[i] != 0) {
+                try {
+                    InputStream ims = getAssets().open("card/card-" + selectedCard[i] + ".png");
+                    Drawable d = Drawable.createFromStream(ims, null);
+                    cardButton[i].setImageDrawable(d);
+                } catch (Exception e) {
+                    cardButton[i].setImageResource(R.drawable.card_unknow);
+                }
+            }
+            else{
+                //  cardButton[i].setBackgroundColor(Color.parseColor("#80C0C0C0"));
+                cardButton[i].setImageResource(0);
+                cardButton[i].setImageDrawable(null);
+            }
+        }
     }
 
 }
