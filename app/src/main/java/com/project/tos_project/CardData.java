@@ -942,7 +942,7 @@ public class CardData {
         DBHelper.insertCardToDB(db, 8042, "yellow", "elf", 50, 328, 154, 148, 734, 345, 399, null, "elfAttack1.5");
         DBHelper.insertCardToDB(db, 8043, "purple", "elf", 30, 148, 87, 64, 375, 221, 199, null, "elfAttack1.5");
         DBHelper.insertCardToDB(db, 8044, "purple", "elf", 50, 309, 182, 133, 690, 407, 360, null, "elfAttack1.5");
-        DBHelper.insertCardToDB(db, 8045, "green", "demon", 99, 949, 1043, 88, 1703, 1802, 373, null, "greenAttack3WhenExistOnlyGreenElfBeastDemon");
+        DBHelper.insertCardToDB(db, 8045, "green", "demon", 99, 949, 1043, 88, 1703, 1802, 373, null, "greenAttack3WhenOnlyGreenElfBeastDemon");
         DBHelper.insertCardToDB(db, 9001, "blue", "elf", 50, 548, 288, 125, 1027, 540, 277, null, "elfAttack2.5");
         DBHelper.insertCardToDB(db, 9002, "blue", "elf", 99, 1045, 550, 239, 1994, 1049, 540, null, "elfAttack2.5");
         DBHelper.insertCardToDB(db, 9003, "red", "elf", 50, 577, 308, 111, 1080, 578, 246, null, "elfAttack2.5");
@@ -958,7 +958,7 @@ public class CardData {
         DBHelper.insertCardToDB(db, 9013, "purple", "demon", 50, 598, 564, 48, 1086, 988, 197, null, "attack4WhenMoreTime");
         DBHelper.insertCardToDB(db, 9014, "purple", "demon", 99, 1133, 1070, 88, 2109, 1918, 386, null, "attack4WhenMoreTime");
         DBHelper.insertCardToDB(db, 9015, "green", "demon", 99, 949, 1043, 88, 1703, 1802, 373, null, "demonAttack2,demonRecovery1.5");
-        DBHelper.insertCardToDB(db, 9016, "red", "demon", 99, 760, 1152, 83, 1364, 1990, 354, null, "greenAttack3WhenExistOnlyGreenElfBeastDemon");
+        DBHelper.insertCardToDB(db, 9016, "red", "demon", 99, 760, 1152, 83, 1364, 1990, 354, null, "greenAttack3WhenOnlyGreenElfBeastDemon");
 
         //optimize speed
         db.setTransactionSuccessful();

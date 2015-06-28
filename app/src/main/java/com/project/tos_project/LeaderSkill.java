@@ -3,6 +3,8 @@ package com.project.tos_project;
 import com.project.tos_project.model.Battle;
 import com.project.tos_project.model.Card;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -650,12 +652,16 @@ public class LeaderSkill {
                         threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",1 , "demon", "elf", 3.5, 2.5, 2.5);
                         break;
                     case "attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone":
+                        attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone(card);
                         break;
-                    case "greenAttack3WhenExistOnlyGreenElfBeastDemon":
+                    case "greenAttack3WhenOnlyGreenElfBeastDemon":
+                        greenAttack3WhenOnlyGreenElfBeastDemon(card);
                         break;
                     case "yellowAttack2MaxYellowAttack3.5WhenMoreHuman":
+                        yellowAttack2MaxYellowAttack3p5WhenMoreHuman(card);
                         break;
                     case "redGreenPurpleAttack3WhenExistRedGreenPurpleAndDissolve3AttributeStone":
+                        redGreenPurpleAttack3WhenExistRedGreenPurpleAndDissolve3AttributeStone(card);
                         break;
                     case "attack2.5WhenFullHP":
                         if(battle.getCurrentHP() == battle.getMaxHP()) attackBonus(card,2.5);
@@ -663,18 +669,32 @@ public class LeaderSkill {
                     case "attack4WhenMoreTime":
                         break;
                     case "yellowPossessPurple":
+                        if(!battle.isEnableYellowPossessPurple()) possessionFunction(battle,"yellow","purple",1.0);
+                        battle.setEnableYellowPossessPurple(true);
                         break;
                     case "purplePossessYellow":
-                        break;
-                    case "pinkPossess50%Yellow":
-                        break;
-                    case "pinkPossess50%Purple":
+                        if(!battle.isEnablePurplePossessYellow()) possessionFunction(battle, "purple", "yellow", 1.0);
+                        battle.setEnablePurplePossessYellow(true);
                         break;
                     case "pinkPossess50%Blue":
+                        if(!battle.isEnablePinkPossessBlue()) possessionFunction(battle, "pink", "blue", 0.5);
+                        battle.setEnablePinkPossessBlue(true);
                         break;
                     case "pinkPossess50%Red":
+                        if(!battle.isEnablePinkPossessRed()) possessionFunction(battle, "pink", "red", 0.5);
+                        battle.setEnablePinkPossessRed(true);
                         break;
                     case "pinkPossess50%Green":
+                        if(!battle.isEnablePinkPossessGreen()) possessionFunction(battle, "pink", "green", 0.5);
+                        battle.setEnablePinkPossessGreen(true);
+                        break;
+                    case "pinkPossess50%Yellow":
+                        if(!battle.isEnablePinkPossessYellow()) possessionFunction(battle, "pink", "yellow", 0.5);
+                        battle.setEnablePinkPossessYellow(true);
+                        break;
+                    case "pinkPossess50%Purple":
+                        if (!battle.isEnablePinkPossessPurple()) possessionFunction(battle,"pink","purple",0.5);
+                        battle.setEnablePinkPossessPurple(true);
                         break;
                     case "bluePossessAllBasedOnBeast":
                         break;
@@ -840,48 +860,48 @@ public class LeaderSkill {
             }
         }
     }
-    public static void blueSuppressRedFactor(Battle battle,Double factor){
+    public static void blueSuppressRedFactor(Battle battle, Double factor){
         if(Double.compare(battle.getBlueSuppressRedFactor(),1.5) == 0)
             battle.setBlueSuppressRedFactor(factor);
         else battle.setBlueSuppressRedFactor(battle.getBlueSuppressRedFactor() * factor);
     }
-    public static void redSuppressGreenFactor(Battle battle,Double factor){
+    public static void redSuppressGreenFactor(Battle battle, Double factor){
         if(Double.compare(battle.getRedSuppressGreenFactor(),1.5) == 0)
             battle.setRedSuppressGreenFactor(factor);
         else battle.setRedSuppressGreenFactor(battle.getRedSuppressGreenFactor() * factor);
     }
-    public static void greenSuppressBlueFactor(Battle battle,Double factor){
+    public static void greenSuppressBlueFactor(Battle battle, Double factor) {
         if(Double.compare(battle.getGreenSuppressBlueFactor(),1.5) == 0)
             battle.setGreenSuppressBlueFactor(factor);
         else battle.setGreenSuppressBlueFactor(battle.getGreenSuppressBlueFactor() * factor);
     }
-    public static void yellowSuppressPurpleFactor(Battle battle,Double factor){
-        if(Double.compare(battle.getYellowSuppressPurpleFactor(),1.5) == 0)
+    public static void yellowSuppressPurpleFactor(Battle battle, Double factor) {
+        if (Double.compare(battle.getYellowSuppressPurpleFactor(),1.5) == 0)
             battle.setYellowSuppressPurpleFactor(factor);
         else battle.setYellowSuppressPurpleFactor(battle.getYellowSuppressPurpleFactor() * factor);
     }
-    public static void purpleSuppressYellowFactor(Battle battle,Double factor){
-        if(Double.compare(battle.getPurpleSuppressYellowFactor(),1.5) == 0)
+    public static void purpleSuppressYellowFactor(Battle battle, Double factor) {
+        if (Double.compare(battle.getPurpleSuppressYellowFactor(),1.5) == 0)
             battle.setPurpleSuppressYellowFactor(factor);
         else battle.setPurpleSuppressYellowFactor(battle.getPurpleSuppressYellowFactor() * factor);
     }
 
-    public static void blueSuppressPurpleFactor(Battle battle,Double factor){
+    public static void blueSuppressPurpleFactor(Battle battle, Double factor) {
         if(Double.compare(battle.getBlueSuppressPurpleFactor(),1.5) == 0)
             battle.setBlueSuppressPurpleFactor(factor);
         else battle.setBlueSuppressPurpleFactor(battle.getBlueSuppressPurpleFactor() * factor);
     }
-    public static void redSuppressRedFactor(Battle battle,Double factor){
+    public static void redSuppressRedFactor(Battle battle, Double factor){
         if(Double.compare(battle.getRedSuppressRedFactor(),1.5) == 0)
             battle.setRedSuppressRedFactor(factor);
         else battle.setRedSuppressRedFactor(battle.getRedSuppressRedFactor() * factor);
     }
-    public static void greenSuppressYellowFactor(Battle battle,Double factor){
+    public static void greenSuppressYellowFactor(Battle battle, Double factor) {
         if(Double.compare(battle.getGreenSuppressYellowFactor(),1.5) == 0)
             battle.setGreenSuppressYellowFactor(factor);
         else battle.setGreenSuppressYellowFactor(battle.getGreenSuppressYellowFactor() * factor);
     }
-    public static void yellowSuppressRedFactor(Battle battle,Double factor){
+    public static void yellowSuppressRedFactor(Battle battle, Double factor) {
         if(Double.compare(battle.getYellowSuppressRedFactor(),1.5) == 0)
             battle.setYellowSuppressRedFactor(factor);
         else battle.setYellowSuppressRedFactor(battle.getYellowSuppressRedFactor() * factor);
@@ -964,8 +984,9 @@ public class LeaderSkill {
                 }
             }
         }
-        int total=blue+red+green+yellow+purple;
-        attackBonus(card,1+total*0.5);
+        double factor=1+(blue+red+green+yellow+purple)*0.5;
+        if(factor>3.5)factor=3.5;
+        attackBonus(card,factor);
     }
 
     public static void attackBonusWhenOnly2Race(Card[] card, String race1, String race2, Double factor){
@@ -979,9 +1000,9 @@ public class LeaderSkill {
         if(isRace1 == true && isRace2 == true) attackBonus(card,factor);
     }
 
-    public static void attackBonusRecoveryBonusWhenOnlyNumbersOfColor(Card[] card,String color,int numColor,Double attackFactor, Double recoveryFactor){
-        int currentColorCount=0;
-        for(Card c:card){
+    public static void attackBonusRecoveryBonusWhenOnlyNumbersOfColor(Card[] card,String color,int numColor,Double attackFactor, Double recoveryFactor) {
+        int currentColorCount = 0;
+        for (Card c:card){
             if(c.getColor().equals(color)) currentColorCount++;
         }
         if(currentColorCount == numColor){
@@ -1006,9 +1027,209 @@ public class LeaderSkill {
                 if(c.getRace().equals(race2a))currentNumOfRace++;
         }
         if( !(currentNumOfRace<numOfRace || otherRace == true) ){
-            raceAttackBonus(card,race1,race1Ack);
-            raceAttackBonus(card,race2a,race2aAck);
+            raceAttackBonus(card, race1, race1Ack);
+            raceAttackBonus(card, race2a, race2aAck);
             if(race2b!=null && race2bAck!=null) raceAttackBonus(card,race2b,race2bAck);
         }
     }
+
+    public static void attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone(Card[] card){
+        //隊伍中只有水、火及木屬性的成員時
+        boolean isBlue = false;
+        boolean isRed = false;
+        boolean isGreen = false;
+        for(Card c:card){
+            switch(c.getColor()){
+                case "blue":
+                    isBlue = true;
+                    break;
+                case "red":
+                    isRed = true;
+                    break;
+                case "green":
+                    isGreen = true;
+                    break;
+                case "yellow":
+                    return; //return
+                case "purple":
+                    return; //return
+            }
+        }
+        if(!isBlue || !isRed || !isGreen ) return;
+        //消除任何三種或以上屬性符石
+        int blue = 0;
+        int red = 0;
+        int green = 0;
+        int yellow = 0;
+        int purple = 0;
+        int pink = 0;
+        for(Card c:card){
+            switch(c.getColor()){
+                case "blue":
+                    blue = 1;
+                    break;
+                case "red":
+                    red = 1;
+                    break;
+                case "green":
+                    green = 1;
+                    break;
+                case "yellow":
+                    yellow = 1;
+                    break;
+                case "purple":
+                    purple = 1;
+                    break;
+                case "pink":
+                    pink = 1;
+            }
+        }
+        int total = blue+red+green+yellow+purple+pink;
+        if(total>=3) attackBonus(card,3.0);
+    }
+
+    public static void greenAttack3WhenOnlyGreenElfBeastDemon(Card[] card){
+        boolean isElf = false;
+        boolean isBeast = false;
+        boolean isDemon = false;
+
+        for(Card c:card){
+            if(c.getColor().equals("green")) {
+                switch (c.getRace()) {
+                    case "elf":
+                        isElf = true;
+                        break;
+                    case "beast":
+                        isBeast = true;
+                        break;
+                    case "god":
+                        return; //return
+                    case "demon":
+                        isDemon = true;
+                        break;
+                    case "dragon":
+                        return; //return
+                    case "human":
+                        return; //return
+                }
+            }
+            else if(!c.getColor().equals("")) return;
+        }
+        if(isElf && isBeast && isDemon ) colorAttackBonus(card,"green",3.0);
+    }
+
+    public static void yellowAttack2MaxYellowAttack3p5WhenMoreHuman(Card[] card){
+       int numOfHuman = 0;
+        for(Card c:card){
+            if(c.getRace().equals("human")) numOfHuman++;
+        }
+        Double factor = 2+0.25*numOfHuman;
+        if(factor>3.5)factor = 3.5;
+        colorAttackBonus(card,"yellow",factor);
+    }
+
+    public static void redGreenPurpleAttack3WhenExistRedGreenPurpleAndDissolve3AttributeStone(Card[] card){
+        //隊伍中須有火、木及暗屬性的成員
+        boolean isRed = false;
+        boolean isGreen = false;
+        boolean isPurple = false;
+        for(Card c:card){
+            switch(c.getColor()){
+                case "red":
+                    isRed = true;
+                    break;
+                case "green":
+                    isGreen = true;
+                    break;
+                case "purple":
+                    isPurple = true;
+                    break;
+            }
+        }
+        if(!isRed || !isGreen || !isPurple) return;
+        //消除任何三種或以上屬性符石
+        int blue = 0;
+        int red = 0;
+        int green = 0;
+        int yellow = 0;
+        int purple = 0;
+        int pink = 0;
+        for(Card c:card){
+            switch(c.getColor()){
+                case "blue":
+                    blue = 1;
+                    break;
+                case "red":
+                    red = 1;
+                    break;
+                case "green":
+                    green = 1;
+                    break;
+                case "yellow":
+                    yellow = 1;
+                    break;
+                case "purple":
+                    purple = 1;
+                    break;
+                case "pink":
+                    pink = 1;
+            }
+        }
+        int total = blue+red+green+yellow+purple+pink;
+        if(total>=3) {
+            colorAttackBonus(card,"red",3.0);
+            colorAttackBonus(card,"green",3.0);
+            colorAttackBonus(card,"purple",3.0);
+        }
+    }
+
+    public static void possessionFunction(Battle battle, String color1, String color2, Double factor){
+        //color1 part
+        List<Integer> color1List = new ArrayList<>();
+        switch(color1){
+            case "blue":
+                color1List.addAll(battle.getNumOfBlue());
+                break;
+            case "red":
+                color1List.addAll(battle.getNumOfRed());
+                break;
+            case "green":
+                color1List.addAll(battle.getNumOfGreen());
+                break;
+            case "yellow":
+                color1List.addAll(battle.getNumOfYellow());
+                break;
+            case "purple":
+                color1List.addAll(battle.getNumOfPurple());
+                break;
+        }
+        //factor part
+        List<Double> factorList = new ArrayList<>();
+        int sizeofColor1List = color1List.size();
+        for(int i=0;i<sizeofColor1List;i++) factorList.add(factor);
+        //color2 and factor part
+        switch(color2){
+            case "blue":
+                battle.setBlueForPossession(color1List);
+                battle.setBlueForPossessFactor(factorList);
+                break;
+            case "red":
+                battle.setRedForPossession(color1List);
+                battle.setRedForPossessFactor(factorList);
+                break;
+            case "green":
+                battle.setGreenForPossession(color1List);
+                battle.setGreenForPossessFactor(factorList);
+                break;
+            case "yellow":
+                battle.setYellowForPossession(color1List);
+                battle.setYellowForPossessFactor(factorList);
+                break;
+            case "purple":
+                battle.setPurpleForPossession(color1List);
+                battle.setPurpleForPossessFactor(factorList);
+                break;
+        }
+    }
+
 }
