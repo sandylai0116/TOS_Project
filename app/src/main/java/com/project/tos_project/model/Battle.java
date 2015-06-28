@@ -28,7 +28,7 @@ public class Battle implements Parcelable {
     private int numOfEnchantedPurple;
     private int numOfEnchantedPink;
 
-    //Skills
+    //leader skills
     private double eachComboFactor;
 
     private double specialSuppressionFactor;
@@ -43,16 +43,25 @@ public class Battle implements Parcelable {
     private double yellowSuppressRedFactor;
     private double purpleSuppressGreenFactor;
 
-    private boolean enablePinkPossessRed;
-    private double pinkPossessRedFactor;
     private boolean enablePinkPossessBlue;
-    private double pinkPossessBlueFactor;
+    private boolean enablePinkPossessRed;
     private boolean enablePinkPossessGreen;
-    private double pinkPossessGreenFactor;
     private boolean enablePinkPossessYellow;
-    private double pinkPossessYellowFactor;
     private boolean enablePinkPossessPurple;
-    private double pinkPossessPurpleFactor;
+    private boolean enableYellowPossessPurple;
+    private boolean enablePurplePossessYellow;
+
+    private List<Integer> blueForPossession;
+    private List<Integer> redForPossession;
+    private List<Integer> greenForPossession;
+    private List<Integer> yellowForPossession;
+    private List<Integer> purpleForPossession;
+
+    private List<Double> blueForPossessFactor;
+    private List<Double> redForPossessFactor;
+    private List<Double> greenForPossessFactor;
+    private List<Double> yellowForPossessFactor;
+    private List<Double> purpleForPossessFactor;
 
     private boolean enable2Red;
     private boolean enable2Green;
@@ -79,6 +88,16 @@ public class Battle implements Parcelable {
         numOfGreen = new ArrayList<>();
         numOfYellow = new ArrayList<>();
         numOfPurple = new ArrayList<>();
+        blueForPossession = new ArrayList<>();
+        redForPossession = new ArrayList<>();
+        greenForPossession = new ArrayList<>();
+        yellowForPossession = new ArrayList<>();
+        purpleForPossession = new ArrayList<>();
+        blueForPossessFactor = new ArrayList<>();
+        redForPossessFactor = new ArrayList<>();
+        greenForPossessFactor = new ArrayList<>();
+        yellowForPossessFactor = new ArrayList<>();
+        purpleForPossessFactor = new ArrayList<>();
         bossColor = "";
     }
 
@@ -378,28 +397,12 @@ public class Battle implements Parcelable {
         this.enablePinkPossessRed = enablePinkPossessRed;
     }
 
-    public double getPinkPossessRedFactor() {
-        return pinkPossessRedFactor;
-    }
-
-    public void setPinkPossessRedFactor(double pinkPossessRedFactor) {
-        this.pinkPossessRedFactor = pinkPossessRedFactor;
-    }
-
     public boolean getEnablePinkPossessBlue() {
         return enablePinkPossessBlue;
     }
 
     public void setEnablePinkPossessBlue(boolean enablePinkPossessBlue) {
         this.enablePinkPossessBlue = enablePinkPossessBlue;
-    }
-
-    public double getPinkPossessBlueFactor() {
-        return pinkPossessBlueFactor;
-    }
-
-    public void setPinkPossessBlueFactor(double pinkPossessBlueFactor) {
-        this.pinkPossessBlueFactor = pinkPossessBlueFactor;
     }
 
     public boolean getEnablePinkPossessGreen() {
@@ -410,14 +413,6 @@ public class Battle implements Parcelable {
         this.enablePinkPossessGreen = enablePinkPossessGreen;
     }
 
-    public double getPinkPossessGreenFactor() {
-        return pinkPossessGreenFactor;
-    }
-
-    public void setPinkPossessGreenFactor(double pinkPossessGreenFactor) {
-        this.pinkPossessGreenFactor = pinkPossessGreenFactor;
-    }
-
     public boolean getEnablePinkPossessYellow() {
         return enablePinkPossessYellow;
     }
@@ -426,28 +421,12 @@ public class Battle implements Parcelable {
         this.enablePinkPossessYellow = enablePinkPossessYellow;
     }
 
-    public double getPinkPossessYellowFactor() {
-        return pinkPossessYellowFactor;
-    }
-
-    public void setPinkPossessYellowFactor(double pinkPossessYellowFactor) {
-        this.pinkPossessYellowFactor = pinkPossessYellowFactor;
-    }
-
     public boolean getEnablePinkPossessPurple() {
         return enablePinkPossessPurple;
     }
 
     public void setEnablePinkPossessPurple(boolean enablePinkPossessPurple) {
         this.enablePinkPossessPurple = enablePinkPossessPurple;
-    }
-
-    public double getPinkPossessPurpleFactor() {
-        return pinkPossessPurpleFactor;
-    }
-
-    public void setPinkPossessPurpleFactor(double pinkPossessPurpleFactor) {
-        this.pinkPossessPurpleFactor = pinkPossessPurpleFactor;
     }
 
     public boolean getEnable2Red() {
@@ -494,6 +473,22 @@ public class Battle implements Parcelable {
         return enablePinkPossessPurple;
     }
 
+    public boolean isEnableYellowPossessPurple() {
+        return enableYellowPossessPurple;
+    }
+
+    public void setEnableYellowPossessPurple(boolean enableYellowPossessPurple) {
+        this.enableYellowPossessPurple = enableYellowPossessPurple;
+    }
+
+    public boolean isEnablePurplePossessYellow() {
+        return enablePurplePossessYellow;
+    }
+
+    public void setEnablePurplePossessYellow(boolean enablePurplePossessYellow) {
+        this.enablePurplePossessYellow = enablePurplePossessYellow;
+    }
+
     public boolean isEnable2Red() {
         return enable2Red;
     }
@@ -512,5 +507,85 @@ public class Battle implements Parcelable {
 
     public void setEnableCombo25(boolean enableCombo25) {
         this.enableCombo25 = enableCombo25;
+    }
+
+    public List<Integer> getBlueForPossession() {
+        return blueForPossession;
+    }
+
+    public void setBlueForPossession(List<Integer> blueForPossession) {
+        this.blueForPossession = blueForPossession;
+    }
+
+    public List<Integer> getRedForPossession() {
+        return redForPossession;
+    }
+
+    public void setRedForPossession(List<Integer> redForPossession) {
+        this.redForPossession = redForPossession;
+    }
+
+    public List<Integer> getGreenForPossession() {
+        return greenForPossession;
+    }
+
+    public void setGreenForPossession(List<Integer> greenForPossession) {
+        this.greenForPossession = greenForPossession;
+    }
+
+    public List<Integer> getYellowForPossession() {
+        return yellowForPossession;
+    }
+
+    public void setYellowForPossession(List<Integer> yellowForPossession) {
+        this.yellowForPossession = yellowForPossession;
+    }
+
+    public List<Integer> getPurpleForPossession() {
+        return purpleForPossession;
+    }
+
+    public void setPurpleForPossession(List<Integer> purpleForPossession) {
+        this.purpleForPossession = purpleForPossession;
+    }
+
+    public List<Double> getBlueForPossessFactor() {
+        return blueForPossessFactor;
+    }
+
+    public void setBlueForPossessFactor(List<Double> blueForPossessFactor) {
+        this.blueForPossessFactor = blueForPossessFactor;
+    }
+
+    public List<Double> getRedForPossessFactor() {
+        return redForPossessFactor;
+    }
+
+    public void setRedForPossessFactor(List<Double> redForPossessFactor) {
+        this.redForPossessFactor = redForPossessFactor;
+    }
+
+    public List<Double> getGreenForPossessFactor() {
+        return greenForPossessFactor;
+    }
+
+    public void setGreenForPossessFactor(List<Double> greenForPossessFactor) {
+        this.greenForPossessFactor = greenForPossessFactor;
+    }
+
+    public List<Double> getYellowForPossessFactor() {
+        return yellowForPossessFactor;
+    }
+
+    public void setYellowForPossessFactor(List<Double> yellowForPossessFactor) {
+        this.yellowForPossessFactor = yellowForPossessFactor;
+    }
+
+    public List<Double> getPurpleForPossessFactor() {
+        return purpleForPossessFactor;
+    }
+
+    public void setPurpleForPossessFactor(List<Double> purpleForPossessFactor) {
+        this.purpleForPossessFactor = purpleForPossessFactor;
     }
 }
