@@ -697,22 +697,31 @@ public class LeaderSkill {
                         battle.setEnablePinkPossessPurple(true);
                         break;
                     case "bluePossessAllBasedOnBeast":
+                        colorPossessAllBasedOnBeast(battle, card, "blue");
                         break;
                     case "redPossessAllBasedOnBeast":
+                        colorPossessAllBasedOnBeast(battle,card,"red");
                         break;
                     case "greenPossessAllBasedOnBeast":
+                        colorPossessAllBasedOnBeast(battle,card,"green");
                         break;
                     case "yellowPossessAllBasedOnBeast":
+                        colorPossessAllBasedOnBeast(battle,card,"yellow");
                         break;
                     case "purplePossessAllBasedOnBeast":
+                        colorPossessAllBasedOnBeast(battle,card,"purple");
+                        break;
+                    case "singleAttack2":
+                        singleAttack(battle,card,2.0);
+                        break;
+                    case "singleAttack2.5":
+                        singleAttack(battle,card,2.5);
                         break;
                     case "blueAttack3.5WhenKeepDissolveStone":
                         break;
                     case "redAttack3.5WhenKeepDissolveStone":
                         break;
                     case "greenAttack3.5WhenKeepDissolveStone":
-                        break;
-                    case "singleAttack2.5":
                         break;
                     case "blueAttack3WhenKeepDissolveStone":
                         break;
@@ -922,7 +931,7 @@ public class LeaderSkill {
         */
         double currentHPPercent = (double)battle.getCurrentHP()/battle.getMaxHP();
         double detainedHPPercent = 1.0 - currentHPPercent;
-        if(currentHPPercent >50) attackBonus(card, 1 + detainedHPPercent * 2);
+        if(currentHPPercent > 50) attackBonus(card, 1 + detainedHPPercent * 2);
         else if(currentHPPercent <20) attackBonus(card,3.0);
         else attackBonus(card,detainedHPPercent*4);
     }
@@ -1006,8 +1015,8 @@ public class LeaderSkill {
             if(c.getColor().equals(color)) currentColorCount++;
         }
         if(currentColorCount == numColor){
-            attackBonus(card,attackFactor);
-            recoveryBonus(card,recoveryFactor);
+            attackBonus(card, attackFactor);
+            recoveryBonus(card, recoveryFactor);
         }
     }
 
@@ -1230,6 +1239,48 @@ public class LeaderSkill {
                 battle.setPurpleForPossessFactor(factorList);
                 break;
         }
+    }
+
+    public static void colorPossessAllBasedOnBeast(Battle battle,Card[] card,String color){
+        //每個獸類成員提升 10% 效果，最高 50%
+        int counter = 0;
+        for(Card c:card){
+            if(c.getRace().equals("beast"))counter++;
+        }
+        if(counter>5)counter=5;
+        if(!color.equals("blue")) possessionFunction(battle,color,"blue",0.1*counter);
+        if(!color.equals("red")) possessionFunction(battle,color,"red",0.1*counter);
+        if(!color.equals("green"))  possessionFunction(battle,color,"green",0.1*counter);
+        if(!color.equals("yellow"))  possessionFunction(battle,color,"yellow",0.1*counter);
+        if(!color.equals("purple"))  possessionFunction(battle,color,"purple",0.1*counter);
+    }
+
+    public static void singleAttack(Battle battle,Card[] card,Double factor){
+        boolean isSingleStone = true;
+        //blue
+        for(int i:battle.getNumOfBlue())
+            if(i>=5)isSingleStone = false;
+        if(isSingleStone)colorAttackBonus(card,"blue",factor);
+        //red
+        isSingleStone = true;
+        for(int i:battle.getNumOfRed())
+            if(i>=5)isSingleStone = false;
+        if(isSingleStone)colorAttackBonus(card,"red",factor);
+        //green
+        isSingleStone = true;
+        for(int i:battle.getNumOfGreen())
+            if(i>=5)isSingleStone = false;
+        if(isSingleStone)colorAttackBonus(card,"green",factor);
+        //yellow
+        isSingleStone = true;
+        for(int i:battle.getNumOfYellow())
+            if(i>=5)isSingleStone = false;
+        if(isSingleStone)colorAttackBonus(card,"yellow",factor);
+        //purple
+        isSingleStone = true;
+        for(int i:battle.getNumOfPurple())
+            if(i>=5)isSingleStone = false;
+        if(isSingleStone)colorAttackBonus(card,"purple",factor);
     }
 
 }
