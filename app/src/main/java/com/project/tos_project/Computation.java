@@ -78,7 +78,7 @@ public class Computation {
             output *= 1 + (battle.getNumOfCombo() - 1) * battle.getEachComboFactor();
 
             //calculate color suppression
-            output *= colorSuppressionFactor;
+            if(battle.isEnableSuppression())output *= colorSuppressionFactor;
 
             //save
             card[i].setCalculatedAttack(output);

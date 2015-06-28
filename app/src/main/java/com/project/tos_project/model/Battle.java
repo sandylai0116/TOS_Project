@@ -31,6 +31,7 @@ public class Battle implements Parcelable {
     //leader skills
     private double eachComboFactor;
 
+    private boolean enableSuppression;
     private double specialSuppressionFactor;
     private double blueSuppressRedFactor;
     private double redSuppressGreenFactor;
@@ -72,6 +73,7 @@ public class Battle implements Parcelable {
 
     public Battle() {
         eachComboFactor = 0.25;
+        enableSuppression = true;
         specialSuppressionFactor = 1.0;
         blueSuppressRedFactor = 1.5;
         redSuppressGreenFactor = 1.5;
@@ -587,5 +589,13 @@ public class Battle implements Parcelable {
 
     public void setPurpleForPossessFactor(List<Double> purpleForPossessFactor) {
         this.purpleForPossessFactor = purpleForPossessFactor;
+    }
+
+    public boolean isEnableSuppression() {
+        return enableSuppression;
+    }
+
+    public void setEnableSuppression(boolean enableSuppression) {
+        this.enableSuppression = enableSuppression;
     }
 }

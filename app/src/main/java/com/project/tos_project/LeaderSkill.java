@@ -732,12 +732,16 @@ public class LeaderSkill {
                     case "yellowAttack2.5WhenDissolve4Yellow":
                         break;
                     case "dissolve2Red":
+                        battle.setEnable2Red(true);
                         break;
                     case "dissolve2Green":
+                        battle.setEnable2Green(true);
                         break;
                     case "dissolve2Pink":
+                        battle.setEnable2Pink(true);
                         break;
                     case "noAttributeRelation":
+                        battle.setEnableSuppression(false);
                         break;
                     case "no415":
                         break;
