@@ -576,7 +576,7 @@ public class LeaderSkill {
                         battle.setEachComboFactor(battle.getEachComboFactor()+1.25);
                         break;
                     case "combo125%WhenOnlyDragon":
-                        for(Card c: card) if( !(c.getRace().equals("dragon") || c.getRace().equals("")) ) break;
+                        for(Card c: card) if( !c.getRace().equals("dragon") && !c.getRace().equals("") ) break;
                         battle.setEachComboFactor(battle.getEachComboFactor()+1.25);
                         break;
                     case "attack2.5WhenHPBelow20%":
@@ -603,14 +603,14 @@ public class LeaderSkill {
                         highAttackWhenMoreAttribute(card,"beast");
                         break;
                     case "attack2.5WhenOnlyGod":
-                        for(Card c: card) if( !(c.getRace().equals("god") || c.getRace().equals("")) ) break;
+                        for(Card c: card) if( !c.getRace().equals("god") && !c.getRace().equals("") ) break;
                         attackBonus(card,2.5);
                         break;
                     case "attack3WhenOnlyDemonDragon":
-                        attackBonusWhenOnly2Race(card,"demon","dragon",3.0);
+                        if(isOnly3Race(card,"demon","dragon",null)) attackBonus(card,3.0);
                         break;
                     case "attack2.5WhenOnlyGodDragon":
-                        attackBonusWhenOnly2Race(card,"god","dragon",2.5);
+                        if(isOnly3Race(card,"god","dragon",null)) attackBonus(card,2.5);
                         break;
                     case "attack3Recovery2WhenOnly2Red":
                         attackBonusRecoveryBonusWhenOnlyNumbersOfColor(card,"red",2,3.0,2.0);
@@ -618,50 +618,51 @@ public class LeaderSkill {
                     case "attack5WhenComboIsEven":
                         if(battle.getNumOfCombo()%2 == 0) attackBonus(card,5.0);
                         break;
-                    case "humanAttack3DragonAttack1.5WhenExistHumanAnd2Dragon":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "dragon", null, 3.0, 1.5, null);
+                    case "humanAttack3DragonAttack1.5WhenOnlyHumanAnd2Dragon":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "dragon", null, 3.0, 1.5, null);
                         break;
-                    case "humanAttack3beastAttack2ElfAttack2WhenExistHumanAnd2BeastOrElf":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "beast", "elf", 3.0, 2.0, 2.0);
+                    case "humanAttack3beastAttack2ElfAttack2WhenOnlyHumanAnd2BeastOrElf":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "beast", "elf", 3.0, 2.0, 2.0);
                         break;
-                    case "humanAttack3DemonAttack2ElfAttack2WhenExistHumanAnd2DemonOrElf":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "demon", "elf", 3.0, 2.0, 2.0);
+                    case "humanAttack3DemonAttack2ElfAttack2WhenOnlyHumanAnd2DemonOrElf":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "demon", "elf", 3.0, 2.0, 2.0);
                         break;
-                    case "humanAttack3GodAttack1.5WhenExistHumanAnd2God":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "god", null, 3.0, 1.5, null);
+                    case "humanAttack3GodAttack1.5WhenOnlyHumanAnd2God":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "god", null, 3.0, 1.5, null);
                         break;
-                    case "humanAttack3.5GodAttack2WhenExistHumanAnd2God":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "god", null, 3.5, 2.0, null);
+                    case "humanAttack3.5GodAttack2WhenOnlyHumanAnd2God":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "god", null, 3.5, 2.0, null);
                         break;
-                    case "humanAttack3.5DragonAttack2WhenExistHumanAnd2Dragon":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "dragon", null, 3.5, 2.0, null);
+                    case "humanAttack3.5DragonAttack2WhenOnlyHumanAnd2Dragon":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "dragon", null, 3.5, 2.0, null);
                         break;
-                    case "humanAttack3.5BeastAttack2.5ElfAttack2.5WhenExistHumanAnd2BeastOrElf":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "beast", "elf", 3.5, 2.5, 2.5);
+                    case "humanAttack3.5BeastAttack2.5ElfAttack2.5WhenOnlyHumanAnd2BeastOrElf":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "beast", "elf", 3.5, 2.5, 2.5);
                         break;
-                    case "humanAttack3.5DemonAttack2.5ElfAttack2.5WhenExistHumanAnd2DemonOrElf":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",2 , "demon", "elf", 3.5, 2.5, 2.5);
+                    case "humanAttack3.5DemonAttack2.5ElfAttack2.5WhenOnlyHumanAnd2DemonOrElf":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 2, "demon", "elf", 3.5, 2.5, 2.5);
                         break;
-                    case "humanAttack3.5DragonAttack2WhenExistHumanAnd1Dragon":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",1 , "dragon", null, 3.5, 2.0, null);
+                    case "humanAttack3.5DragonAttack2WhenOnlyHumanAnd1Dragon":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 1, "dragon", null, 3.5, 2.0, null);
                         break;
-                    case "humanAttack3.5beastAttack2.5ElfAttack2.5WhenExistHumanAnd1BeastOrElf":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",1 , "beast", "elf", 3.5, 2.5, 2.5);
+                    case "humanAttack3.5beastAttack2.5ElfAttack2.5WhenOnlyHumanAnd1BeastOrElf":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 1, "beast", "elf", 3.5, 2.5, 2.5);
                         break;
-                    case "humanAttack3.5DemonAttack2.5ElfAttack2.5WhenExistHumanAnd1DemonOrElf":
-                        threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(card, "human",1 , "demon", "elf", 3.5, 2.5, 2.5);
+                    case "humanAttack3.5DemonAttack2.5ElfAttack2.5WhenOnlyHumanAnd1DemonOrElf":
+                        threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(card, "human", 1, "demon", "elf", 3.5, 2.5, 2.5);
                         break;
                     case "attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone":
-                        attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone(card);
+                        if(isOnly3Color(card,"blue","red","green") && isDissolve3OrMoreAttributeStone(battle)) attackBonus(card,3.0);
                         break;
                     case "greenAttack3WhenOnlyGreenElfBeastDemon":
-                        greenAttack3WhenOnlyGreenElfBeastDemon(card);
+                        for(Card c:card)  if(!c.getColor().equals("green") && !c.getColor().equals("") ) break;
+                        if(isOnly3Race(card,"elf","beast","demon")) colorAttackBonus(card, "green", 3.0);
                         break;
                     case "yellowAttack2MaxYellowAttack3.5WhenMoreHuman":
                         yellowAttack2MaxYellowAttack3p5WhenMoreHuman(card);
                         break;
                     case "redGreenPurpleAttack3WhenExistRedGreenPurpleAndDissolve3AttributeStone":
-                        redGreenPurpleAttack3WhenExistRedGreenPurpleAndDissolve3AttributeStone(card);
+                        colorAttackWhenExist3ColorAndDissolve3AttributeStone(battle, card, "red", "green", "purple", 3.0);
                         break;
                     case "attack2.5WhenFullHP":
                         if(battle.getCurrentHP() == battle.getMaxHP()) attackBonus(card,2.5);
@@ -744,14 +745,20 @@ public class LeaderSkill {
                         battle.setEnableSuppression(false);
                         break;
                     case "no415":
+                        no415(battle,card,1.5,3.0);
                         break;
                     case "no419":
+                        no415(battle,card,null,3.0);
                         break;
                     case "no450":
+                        no450(battle,card);
                         break;
                     case "no531":
+                        colorAttackWhenExist3ColorAndDissolve3AttributeStone(battle,card,"blue","yellow",null,2.5);
                         break;
                     case "no688":
+                        if(isDissolve3OrMoreAttributeStone(battle)) singleAttack(battle, card, 3.0);
+                        else singleAttack(battle, card, 2.5);
                         break;
                     case "no754":
                         break;
@@ -977,7 +984,7 @@ public class LeaderSkill {
         int yellow=0;
         int purple=0;
         for(Card c:card){
-            if( race == null || c.getRace().equals(race) ) {
+            if( race == null || c.getRace().equals(race) ) { //accept null race
                 switch (c.getColor()) {
                     case "blue":
                         blue = 1;
@@ -1002,17 +1009,6 @@ public class LeaderSkill {
         attackBonus(card,factor);
     }
 
-    public static void attackBonusWhenOnly2Race(Card[] card, String race1, String race2, Double factor){
-        boolean isRace1 = false;
-        boolean isRace2 = false;
-
-        for(Card c:card){
-            if(c.getRace().equals(race1)) isRace1=true;
-            else if(c.getRace().equals(race2)) isRace2=true;
-        }
-        if(isRace1 == true && isRace2 == true) attackBonus(card,factor);
-    }
-
     public static void attackBonusRecoveryBonusWhenOnlyNumbersOfColor(Card[] card,String color,int numColor,Double attackFactor, Double recoveryFactor) {
         int currentColorCount = 0;
         for (Card c:card){
@@ -1024,111 +1020,26 @@ public class LeaderSkill {
         }
     }
 
-    public static void threeRaceAttackWhenExistRaceAndNumberOfRaceOrOtherRace(Card[] card,String race1,int numOfRace,String race2a, String race2b,Double race1Ack,Double race2aAck,Double race2bAck){
+    public static void threeRaceAttackWhenOnlyRaceAndNumberOfRaceOrOtherRace(Card[] card,String race1,int numOfRace,String race2a, String race2b,Double race1Ack,Double race2aAck,Double race2bAck){
         int currentNumOfRace=0;
-        boolean otherRace = false;
-        for(Card c:card){
-            //check contain other race
-            if( !(c.getRace().equals(race1) || c.getRace().equals(race2a) || c.getRace().equals(race2b)) ){
-                otherRace=true;
-                break;
+        //only the 3 races
+        if(!isOnly3Race(card,race1,race2a,race2b)) return;
+
+        //check race should equal or above num
+        if(race2b!=null)
+            for(Card c:card) {
+                if(c.getRace().equals(race2a) || c.getRace().equals(race2b)) currentNumOfRace++;
             }
-            //check race should equal or above num
-            if(race2b!=null)
-                if(c.getRace().equals(race2a) || c.getRace().equals(race2b))numOfRace++;
-            else
-                if(c.getRace().equals(race2a))currentNumOfRace++;
-        }
-        if( !(currentNumOfRace<numOfRace || otherRace == true) ){
+        else
+            for(Card c:card) {
+                if(c.getRace().equals(race2a)) currentNumOfRace++;
+            }
+
+        if( currentNumOfRace >= numOfRace ){
             raceAttackBonus(card, race1, race1Ack);
             raceAttackBonus(card, race2a, race2aAck);
             if(race2b!=null && race2bAck!=null) raceAttackBonus(card,race2b,race2bAck);
         }
-    }
-
-    public static void attack3WhenOnlyBlueRedGreenAndDissolve3AttributeStone(Card[] card){
-        //隊伍中只有水、火及木屬性的成員時
-        boolean isBlue = false;
-        boolean isRed = false;
-        boolean isGreen = false;
-        for(Card c:card){
-            switch(c.getColor()){
-                case "blue":
-                    isBlue = true;
-                    break;
-                case "red":
-                    isRed = true;
-                    break;
-                case "green":
-                    isGreen = true;
-                    break;
-                case "yellow":
-                    return; //return
-                case "purple":
-                    return; //return
-            }
-        }
-        if(!isBlue || !isRed || !isGreen ) return;
-        //消除任何三種或以上屬性符石
-        int blue = 0;
-        int red = 0;
-        int green = 0;
-        int yellow = 0;
-        int purple = 0;
-        int pink = 0;
-        for(Card c:card){
-            switch(c.getColor()){
-                case "blue":
-                    blue = 1;
-                    break;
-                case "red":
-                    red = 1;
-                    break;
-                case "green":
-                    green = 1;
-                    break;
-                case "yellow":
-                    yellow = 1;
-                    break;
-                case "purple":
-                    purple = 1;
-                    break;
-                case "pink":
-                    pink = 1;
-            }
-        }
-        int total = blue+red+green+yellow+purple+pink;
-        if(total>=3) attackBonus(card,3.0);
-    }
-
-    public static void greenAttack3WhenOnlyGreenElfBeastDemon(Card[] card){
-        boolean isElf = false;
-        boolean isBeast = false;
-        boolean isDemon = false;
-
-        for(Card c:card){
-            if(c.getColor().equals("green")) {
-                switch (c.getRace()) {
-                    case "elf":
-                        isElf = true;
-                        break;
-                    case "beast":
-                        isBeast = true;
-                        break;
-                    case "god":
-                        return; //return
-                    case "demon":
-                        isDemon = true;
-                        break;
-                    case "dragon":
-                        return; //return
-                    case "human":
-                        return; //return
-                }
-            }
-            else if(!c.getColor().equals("")) return;
-        }
-        if(isElf && isBeast && isDemon ) colorAttackBonus(card,"green",3.0);
     }
 
     public static void yellowAttack2MaxYellowAttack3p5WhenMoreHuman(Card[] card){
@@ -1141,58 +1052,13 @@ public class LeaderSkill {
         colorAttackBonus(card,"yellow",factor);
     }
 
-    public static void redGreenPurpleAttack3WhenExistRedGreenPurpleAndDissolve3AttributeStone(Card[] card){
-        //隊伍中須有火、木及暗屬性的成員
-        boolean isRed = false;
-        boolean isGreen = false;
-        boolean isPurple = false;
-        for(Card c:card){
-            switch(c.getColor()){
-                case "red":
-                    isRed = true;
-                    break;
-                case "green":
-                    isGreen = true;
-                    break;
-                case "purple":
-                    isPurple = true;
-                    break;
-            }
-        }
-        if(!isRed || !isGreen || !isPurple) return;
+    public static void colorAttackWhenExist3ColorAndDissolve3AttributeStone(Battle battle, Card[] card,String color1,String color2, String color3,Double factor){
+        //隊伍中須有3種屬性的成員
         //消除任何三種或以上屬性符石
-        int blue = 0;
-        int red = 0;
-        int green = 0;
-        int yellow = 0;
-        int purple = 0;
-        int pink = 0;
-        for(Card c:card){
-            switch(c.getColor()){
-                case "blue":
-                    blue = 1;
-                    break;
-                case "red":
-                    red = 1;
-                    break;
-                case "green":
-                    green = 1;
-                    break;
-                case "yellow":
-                    yellow = 1;
-                    break;
-                case "purple":
-                    purple = 1;
-                    break;
-                case "pink":
-                    pink = 1;
-            }
-        }
-        int total = blue+red+green+yellow+purple+pink;
-        if(total>=3) {
-            colorAttackBonus(card,"red",3.0);
-            colorAttackBonus(card,"green",3.0);
-            colorAttackBonus(card,"purple",3.0);
+        if(isExist3Color(card,color1,color2,color3) && isDissolve3OrMoreAttributeStone(battle)) {
+            if(color1!=null)colorAttackBonus(card,color1,factor);   //specific color
+            if(color2!=null)colorAttackBonus(card,color2,factor);   //specific color
+            if(color3!=null) colorAttackBonus(card,color3,factor);  //specific color
         }
     }
 
@@ -1284,7 +1150,158 @@ public class LeaderSkill {
         isSingleStone = true;
         for(int i:battle.getNumOfPurple())
             if(i>=5)isSingleStone = false;
-        if(isSingleStone)colorAttackBonus(card,"purple",factor);
+        if(isSingleStone)colorAttackBonus(card, "purple", factor);
     }
+
+    public static void no415(Battle battle, Card[] card,Double factor1, Double factor2){
+        //龍類攻擊力 1.5 倍；消除一組 6 粒或以上的相同屬性符石，龍類攻擊力 3 倍
+        boolean is6Stone = false;
+        //blue
+        for(int i:battle.getNumOfBlue())
+            if(i>=6)is6Stone = true;
+        //red
+        for(int i:battle.getNumOfRed())
+            if(i>=6)is6Stone = true;
+        //green
+        for(int i:battle.getNumOfGreen())
+            if(i>=6)is6Stone = true;
+        //yellow
+        for(int i:battle.getNumOfYellow())
+            if(i>=6)is6Stone = true;
+        //purple
+        for(int i:battle.getNumOfPurple())
+            if(i>=6)is6Stone = true;
+        //pink
+        for(int i:battle.getNumOfPink())
+            if(i>=6)is6Stone = true;
+
+        if(!is6Stone && factor1!=null)  raceAttackBonus(card, "dragon", factor1);
+        if(is6Stone && factor2!=null) raceAttackBonus(card, "dragon", factor2);
+    }
+
+    public static void no450(Battle battle, Card[] card){
+        //當隊伍中只有神族及魔族成員時，神族攻擊力 3 倍及魔族攻擊力 2.5 倍，同時火符石及木符石兼具 50% 水符石效果 (效果不能疊加)
+        if( isOnly3Race(card,"god","demon",null) ) {
+            raceAttackBonus(card, "god", 3.0);
+            raceAttackBonus(card, "demon", 2.5);
+            if( !battle.isEnableRedPossessBlue() )possessionFunction(battle, "red", "blue", 0.5);
+            if( !battle.isEnableGreenPossessBlue() )possessionFunction(battle, "green", "blue", 0.5);
+            battle.setEnableRedPossessBlue(true);
+            battle.setEnableGreenPossessBlue(true);
+        }
+    }
+
+    public static boolean isDissolve3OrMoreAttributeStone(Battle battle){
+        //消除任何三種或以上屬性符石
+        int countOfColor = 0;
+        //color
+        if(battle.getNumOfBlue().size()>0) countOfColor++;
+        if(battle.getNumOfRed().size()>0) countOfColor++;
+        if(battle.getNumOfGreen().size()>0) countOfColor++;
+        if(battle.getNumOfYellow().size()>0) countOfColor++;
+        if(battle.getNumOfPurple().size()>0) countOfColor++;
+        if(battle.getNumOfPink().size()>0) countOfColor++;
+
+        if(countOfColor >= 3) return true;
+        else return false;
+    }
+
+    public static boolean isExist3Color(Card[] card,String color1,String color2,String color3){
+        //隊伍中須有3種屬性的成員
+        boolean isColor1 = false;
+        boolean isColor2 = false;
+        boolean isColor3 = false;
+        for(Card c:card){
+            if(color1!=null && c.getColor().equals(color1)) isColor1 = true;
+            else if(color2!=null && c.getColor().equals(color2)) isColor2 = true;
+            else if(color3!=null && c.getColor().equals(color3)) isColor3 = true;
+        }
+
+        if(color1!=null && !isColor1)return false;
+        if(color2!=null && !isColor2)return false;
+        if(color3!=null && !isColor3)return false;
+        return true;
+    }
+
+    public static boolean isOnly3Color(Card[] card,String color1,String color2,String color3){
+        //隊伍中只有3種屬性的成員
+        boolean isColor1 = false;
+        boolean isColor2 = false;
+        boolean isColor3 = false;
+        for(Card c:card){
+            if(c.getColor().equals("")) continue; //handle no card
+            else if(color1!=null && c.getColor().equals(color1)) isColor1 = true;
+            else if(color2!=null && c.getColor().equals(color2)) isColor2 = true;
+            else if(color3!=null && c.getColor().equals(color3)) isColor3 = true;
+            else return false; //other color
+        }
+
+        if(color1!=null && !isColor1)return false;
+        if(color2!=null && !isColor2)return false;
+        if(color3!=null && !isColor3)return false;
+        return true;
+    }
+
+    public static boolean isExist3Race(Card[] card,String race1,String race2,String race3){
+        //隊伍中須有3種種族的成員
+        boolean isRace1 = false;
+        boolean isRace2 = false;
+        boolean isRace3 = false;
+        for(Card c:card){
+            if(race1!=null && c.getRace().equals(race1)) isRace1 = true;
+            else if(race2!=null && c.getRace().equals(race2)) isRace2 = true;
+            else if(race3!=null && c.getRace().equals(race3)) isRace3 = true;
+        }
+
+        if(race1!=null && !isRace1)return false;
+        if(race2!=null && !isRace2)return false;
+        if(race3!=null && !isRace3)return false;
+        return true;
+    }
+
+    public static boolean isOnly3Race(Card[] card,String race1,String race2,String race3){
+        //隊伍中只有3種種族的成員
+        boolean isRace1 = false;
+        boolean isRace2 = false;
+        boolean isRace3 = false;
+        for(Card c:card){
+            if(c.getRace().equals("")) continue; //handle no card
+            else if(race1!=null && c.getRace().equals(race1)) isRace1 = true;
+            else if(race2!=null && c.getRace().equals(race2)) isRace2 = true;
+            else if(race3!=null && c.getRace().equals(race3)) isRace3 = true;
+            else return false; //other color
+        }
+
+        if(race1!=null && !isRace1)return false;
+        if(race2!=null && !isRace2)return false;
+        if(race3!=null && !isRace3)return false;
+        return true;
+    }
+
+/*
+    public static void no754(Battle battle, Card[] card){
+        //隊伍中只有人類及魔族成員時，人類及魔族攻擊力 2.5 倍；當生命力未滿時，攻擊力提升至 3.5 倍
+        boolean isHuman = false;
+        boolean isDemon = false;
+        for(Card c:card) {
+            switch (c.getRace()) {
+                case "elf":
+                    return; //return
+                case "beast":
+                    return; //return
+                case "god":
+                    return; //return
+                case "demon":
+                    isDemon = true;
+                    break;
+                case "dragon":
+                    return; //return
+                case "human":
+                    isHuman = true;
+                    break;
+            }
+        }
+    }
+*/
 
 }

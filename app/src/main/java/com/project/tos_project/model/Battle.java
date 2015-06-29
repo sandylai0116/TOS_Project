@@ -51,6 +51,8 @@ public class Battle implements Parcelable {
     private boolean enablePinkPossessPurple;
     private boolean enableYellowPossessPurple;
     private boolean enablePurplePossessYellow;
+    private boolean enableRedPossessBlue;
+    private boolean enableGreenPossessBlue;
 
     private List<Integer> blueForPossession;
     private List<Integer> redForPossession;
@@ -597,5 +599,21 @@ public class Battle implements Parcelable {
 
     public void setEnableSuppression(boolean enableSuppression) {
         this.enableSuppression = enableSuppression;
+    }
+
+    public boolean isEnableRedPossessBlue() {
+        return enableRedPossessBlue;
+    }
+
+    public void setEnableRedPossessBlue(boolean enableRedPossessBlue) {
+        this.enableRedPossessBlue = enableRedPossessBlue;
+    }
+
+    public boolean isEnableGreenPossessBlue() {
+        return enableGreenPossessBlue;
+    }
+
+    public void setEnableGreenPossessBlue(boolean enableGreenPossessBlue) {
+        this.enableGreenPossessBlue = enableGreenPossessBlue;
     }
 }
