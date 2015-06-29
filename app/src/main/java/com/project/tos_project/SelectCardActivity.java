@@ -40,6 +40,7 @@ public class SelectCardActivity extends ActionBarActivity{
     List<String> mThumbIds = new ArrayList<String>();
     Cursor cursor;
     Home h = new Home();
+    int cut = 4;
     int[] combinCard = h.combinCard;
     public final static int RESULT_CODE  = 2;
     @Override
@@ -59,7 +60,14 @@ public class SelectCardActivity extends ActionBarActivity{
             cursor = dbHelper.query(db, "SELECT CARD_ID as cardNo FROM CARD", null);
             while (cursor.moveToNext()) {
                 String cardNo = cursor.getString(cursor.getColumnIndex("cardNo"));
-                mThumbIds.add("card/card-" + cardNo + ".png");
+                String imagPathOpen = "card-";
+                for(int i=0; i<combinCard.length; i++){
+                    if(combinCard[i] == Integer.parseInt(cardNo)) {
+                        imagPathOpen = "cardMin-";
+                        break;
+                    }
+                }
+                mThumbIds.add("card/"+ imagPathOpen + cardNo + ".png");
             }
         } catch (SQLiteException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();

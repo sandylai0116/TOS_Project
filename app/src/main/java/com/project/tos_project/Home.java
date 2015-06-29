@@ -38,7 +38,7 @@ public class Home extends ActionBarActivity{
     int[] selectedCard = {0,0,0,0,0,0};
     int[] cardLevel = {0,0,0,0,0,0};
     int[] disableCard = {-1,-1,-1,-1,-1,-1};
-    int[] combinCard = {1,2,5};
+    int[] combinCard = {620, 656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
     public final static String SER_KEY = "com.project.tos_project.model.ser";
 
     @Override
@@ -165,6 +165,7 @@ public class Home extends ActionBarActivity{
                         cardLevel[index+1] = 0;
                     }
                 }
+
                 printButton();
                 tv.setText(cardNum);
             }
@@ -217,6 +218,7 @@ public class Home extends ActionBarActivity{
     }
 
     public void printButton(){
+
         for(int i=0; i<selectedCard.length; i++) {
             if(selectedCard[i] != 0) {
                 try {
