@@ -157,12 +157,20 @@ public class Home extends ActionBarActivity{
         if (requestCode == REQUEST_CODE && resultCode == SelectCardActivity.RESULT_CODE) {
             if (data.hasExtra("card")) {
                 String cardNum = data.getExtras().getString("cardNo");
-                int index = data.getExtras().getInt("selectIndex");
-                selectedCard = data.getExtras().getIntArray("card");
-                cardLevel = data.getExtras().getIntArray("cardLVSel");
-                battle = (Battle) data.getExtras().getParcelable("battle");
-      //          disableCard = data.getExtras().getIntArray("disableData");
-
+                if(!cardNum.equals("0")) {
+                    int index = data.getExtras().getInt("selectIndex");
+                    selectedCard = data.getExtras().getIntArray("card");
+                    cardLevel = data.getExtras().getIntArray("cardLVSel");
+                    battle = (Battle) data.getExtras().getParcelable("battle");
+                    //          disableCard = data.getExtras().getIntArray("disableData");
+                }
+                else{
+                    int index = data.getExtras().getInt("selectIndex");
+                    selectedCard = data.getExtras().getIntArray("card");
+                    cardLevel = data.getExtras().getIntArray("cardLVSel");
+                    battle = (Battle) data.getExtras().getParcelable("battle");
+                    selectedCard[index] = 0;
+                }
                 printButton();
                 tv.setText(cardNum);
             }

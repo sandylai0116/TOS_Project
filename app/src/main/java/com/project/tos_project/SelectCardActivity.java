@@ -54,6 +54,9 @@ public class SelectCardActivity extends ActionBarActivity{
         cardLVSel = getIntent().getIntArrayExtra("cardLVData");
         disbaleCard = getIntent().getIntArrayExtra("disableData");
 
+        // cancel card
+        mThumbIds.add("card/card-0.png");
+
         battle = (Battle)getIntent().getParcelableExtra(Home.SER_KEY);
         try {
             // eg. 1 - RawQuery
@@ -81,7 +84,21 @@ public class SelectCardActivity extends ActionBarActivity{
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Toast.makeText(SelectCardActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-                createCardLevelDialogBox(mThumbIds.get(position));
+                if(position > 0) {
+                    createCardLevelDialogBox(mThumbIds.get(position));
+                }
+                else{
+                    int btnNo = getIntent().getIntExtra("btnNo", 0);
+                    Intent data = new Intent();
+                    data.putExtra("card", card);
+                    data.putExtra("cardLVSel", cardLVSel);
+                    data.putExtra("selectIndex", btnNo);
+                    data.putExtra("battle", battle);
+                    data.putExtra("cardNo", "0");
+                    setResult(RESULT_CODE, data);
+                    finish();
+                }
+
             }
         });
     }
@@ -132,7 +149,7 @@ public class SelectCardActivity extends ActionBarActivity{
                                     }
                                 } else if (btnNo == 1) {
                                     if (card[btnNo + 1] != 0) {
-                                        Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "隊長或隊友不能選擇合體卡 ", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     btnNo = 1;
@@ -177,7 +194,6 @@ public class SelectCardActivity extends ActionBarActivity{
                         finish();
                     }
                 }
-
         );
 
             //     cardLV.create();
