@@ -21,6 +21,8 @@ import com.project.tos_project.model.Card;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Home extends ActionBarActivity{
@@ -37,8 +39,10 @@ public class Home extends ActionBarActivity{
     Card card[] = new Card[6];
     int[] selectedCard = {0,0,0,0,0,0};
     int[] cardLevel = {0,0,0,0,0,0};
-    int[] disableCard = {-1,-1,-1,-1,-1,-1};
-    int[] combinCard = {620, 656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
+  //  int[] disableCard = {-1,-1,-1,-1,-1,-1};
+    Integer[] combinCard ={656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
+    int fiveInOne = 620;
+  //  int[] combinCard = {620, 656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
     public final static String SER_KEY = "com.project.tos_project.model.ser";
 
     @Override
@@ -47,7 +51,7 @@ public class Home extends ActionBarActivity{
         outState.putIntArray("selectedCard", selectedCard);
         outState.putIntArray("cardLevel", cardLevel);
         outState.putParcelable("battle", battle);
-        outState.putIntArray("disbaleCard", disableCard);
+   //     outState.putIntArray("disbaleCard", disableCard);
     }
 
     @Override
@@ -84,7 +88,7 @@ public class Home extends ActionBarActivity{
             selectedCard = savedInstanceState.getIntArray("selectedCard");
             cardLevel = savedInstanceState.getIntArray("cardLevel");
             battle = savedInstanceState.getParcelable("battle");
-            disableCard = savedInstanceState.getIntArray("disableCard");
+        //    disableCard = savedInstanceState.getIntArray("disableCard");
         }
 
         printButton();
@@ -103,42 +107,42 @@ public class Home extends ActionBarActivity{
         cardButton[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(0, selectedCard, cardLevel, disableCard);
+                selectCard(0, selectedCard, cardLevel);
             }
         });
 
         cardButton[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(1, selectedCard, cardLevel, disableCard);
+                selectCard(1, selectedCard, cardLevel);
             }
         });
 
         cardButton[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(2, selectedCard, cardLevel, disableCard);
+                selectCard(2, selectedCard, cardLevel);
             }
         });
 
         cardButton[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(3, selectedCard, cardLevel, disableCard);
+                selectCard(3, selectedCard, cardLevel);
             }
         });
 
         cardButton[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(4, selectedCard, cardLevel, disableCard);
+                selectCard(4, selectedCard, cardLevel);
             }
         });
 
         cardButton[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCard(5, selectedCard, cardLevel, disableCard);
+                selectCard(5, selectedCard, cardLevel);
             }
         });
 
@@ -156,13 +160,38 @@ public class Home extends ActionBarActivity{
                 selectedCard = data.getExtras().getIntArray("card");
                 cardLevel = data.getExtras().getIntArray("cardLVSel");
                 battle = (Battle) data.getExtras().getParcelable("battle");
-                disableCard = data.getExtras().getIntArray("disableData");
+        //        disableCard = data.getExtras().getIntArray("disableData");
 
-                for(int i=0; i<combinCard.length; i++){
-                    if(combinCard[i] == Integer.parseInt(cardNum)){
-                        disableCard[index+1] = 0;
-                        selectedCard[index+1] = 0;
-                        cardLevel[index+1] = 0;
+                if(Arrays.asList(combinCard).contains(Integer.parseInt(cardNum))){
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
+                    LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
+                    lp.setMargins(4, 4, 4, 4);
+                    //           cardButton[index].setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f));
+                    cardButton[index].setLayoutParams(lp);
+                 //   cardButton[index+1].setVisibility(View.INVISIBLE);
+                    cardButton[index+1].setLayoutParams(hlp);
+                }
+                else{
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+                    lp.setMargins(4, 4, 4, 4);
+                    cardButton[index].setLayoutParams(lp);
+                }
+
+                // card 620
+                if(Integer.parseInt(cardNum) == fiveInOne){
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 5f);
+                    LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
+                    lp.setMargins(4, 4, 4, 4);
+                    cardButton[index].setLayoutParams(lp);
+                    for(int i=1; i<5; i++){
+                        cardButton[i].setLayoutParams(hlp);
+                    }
+                }
+                else{
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+                    lp.setMargins(4, 4, 4, 4);
+                    for(int i=1; i< 6; i++){
+                        cardButton[i].setLayoutParams(lp);
                     }
                 }
 
@@ -173,21 +202,16 @@ public class Home extends ActionBarActivity{
     }
 
     // selectCard will be running when image button clicked
-    public void selectCard(int btnNo, int selCard[],  int selCardLv[], int disable[]){
+    public void selectCard(int btnNo, int selCard[],  int selCardLv[]){
 
-        if(disable[btnNo] == 0){
-            Toast.makeText(getApplicationContext(), "已選擇合體卡 ", Toast.LENGTH_SHORT).show();
-            return;
-        }
         //  set the target activity
         Intent intent = new Intent(this, SelectCardActivity.class);
         // set the value
         Bundle mBundle = new Bundle();
         intent.putExtra("cardSelData", selCard);
         intent.putExtra("cardLVData", selCardLv);
-        intent.putExtra("disableData", disableCard);
+  //      intent.putExtra("disableData", disableCard);
         mBundle.putParcelable(SER_KEY, battle);
-        //    intent.putExtra("cardData", mBundle);
         intent.putExtra("btnNo", btnNo);
         intent.putExtras(mBundle);
 

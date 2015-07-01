@@ -40,8 +40,9 @@ public class SelectCardActivity extends ActionBarActivity{
     List<String> mThumbIds = new ArrayList<String>();
     Cursor cursor;
     Home h = new Home();
-    int cut = 4;
-    int[] combinCard = h.combinCard;
+    int lastButton;
+    Integer[] combinCard = h.combinCard;
+    int fiveInOne = h.fiveInOne;
     public final static int RESULT_CODE  = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,8 @@ public class SelectCardActivity extends ActionBarActivity{
         GridView gridview = (GridView) findViewById(R.id.gridview);
         card = getIntent().getIntArrayExtra("cardSelData");
         cardLVSel = getIntent().getIntArrayExtra("cardLVData");
-        disbaleCard = getIntent().getIntArrayExtra("disableData");
+      //  disbaleCard = getIntent().getIntArrayExtra("disableData");
+        lastButton = getIntent().getIntExtra("lastButton", 5);
 
         battle = (Battle)getIntent().getParcelableExtra(Home.SER_KEY);
         try {
@@ -110,30 +112,58 @@ public class SelectCardActivity extends ActionBarActivity{
                 String[] cardNum = cardNumber.split("-");
                 String cardID = cardNum[1].substring(0, cardNum[1].length() - 4);
 
-                card[btnNo] = Integer.parseInt(cardID);
-                cardLVSel[btnNo] = Integer.parseInt(LVText.getText().toString());
-
                 for (int i = 0; i < combinCard.length; i++) {
                     if (combinCard[i] == Integer.parseInt(cardID)) {
                         if (btnNo == 5) {
-                            Toast.makeText(getApplicationContext(), "合體卡不能選擇在最後的位置 ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "隊友不能選擇合體卡 ", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        break;
+
+                        if (btnNo == 4) {
+                            if (card[btnNo - 1] != 0) {
+                                Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                btnNo = 3;
+                            }
+                        } else if (btnNo == 0) {
+                            if (card[btnNo + 1] != 0) {
+                                Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } else {
+                            if (card[btnNo + 1] != 0) {
+                                if (card[btnNo - 1] != 0) {
+                                    Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                                    return;
+                                } else {
+                                    btnNo = btnNo - 1;
+                                }
+                            }
+                        }
                     }
                 }
+
+                if (Integer.parseInt(cardID) == fiveInOne) {
+                    for (int i = 0; i < card.length -1; i++) {
+                        if (card[i] != 0) {
+                            Toast.makeText(getApplicationContext(), "沒有位置放「超獸魔神」 ", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    btnNo = 0;
+                }
+
+                card[btnNo] = Integer.parseInt(cardID);
+                cardLVSel[btnNo] = Integer.parseInt(LVText.getText().toString());
 
                 Intent data = new Intent();
                 data.putExtra("card", card);
                 data.putExtra("cardLVSel", cardLVSel);
                 data.putExtra("selectIndex", btnNo);
                 data.putExtra("battle", battle);
-                data.putExtra("disableData", disbaleCard);
-                //        data.putExtra("btnNo", getIntent().getStringExtra("btnNo"));
-                //        data.putExtra("returnCardLV", LVText.getText().toString());
+                //      data.putExtra("disableData", disbaleCard);
                 data.putExtra("cardNo", cardID);
-
-                //        data.putExtra("returnCardData", card);
                 setResult(RESULT_CODE, data);
                 finish();
             }
@@ -197,7 +227,3 @@ public class SelectCardActivity extends ActionBarActivity{
     }
 
 }
-
-
-
-
