@@ -28,6 +28,7 @@ import com.project.tos_project.model.Card;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -103,80 +104,87 @@ public class SelectCardActivity extends ActionBarActivity{
 
         });
         cardLV.setPositiveButton("確定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int btnNo = getIntent().getIntExtra("btnNo", 0);
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int btnNo = getIntent().getIntExtra("btnNo", 0);
 
-                //    String cardLv = data.getExtras().getString("returnCardLV");
-                String[] cardNum = cardNumber.split("-");
-                String cardID = cardNum[1].substring(0, cardNum[1].length() - 4);
+                        //    String cardLv = data.getExtras().getString("returnCardLV");
+                        String[] cardNum = cardNumber.split("-");
+                        String cardID = cardNum[1].substring(0, cardNum[1].length() - 4);
 
-                for (int i = 0; i < combinCard.length; i++) {
-                    if (combinCard[i] == Integer.parseInt(cardID)) {
-                        if (btnNo == 5) {
-                            Toast.makeText(getApplicationContext(), "隊友不能選擇合體卡 ", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        if (btnNo == 0) {
-                            Toast.makeText(getApplicationContext(), "隊長不能選擇合體卡 ", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        if (btnNo == 4) {
-                            if (card[btnNo - 1] != 0) {
-                                Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
-                                return;
-                            } else {
-                                btnNo = 3;
-                            }
-                        } else {
-                            if (card[btnNo + 1] != 0) {
-                                if (card[btnNo - 1] != 0) {
-                                    Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < combinCard.length; i++) {
+                            if (combinCard[i] == Integer.parseInt(cardID)) {
+                                if (btnNo == 5 || btnNo == 0) {
+                                    Toast.makeText(getApplicationContext(), "隊長或隊友不能選擇合體卡 ", Toast.LENGTH_SHORT).show();
                                     return;
+                                }
+
+                                if (btnNo == 4) {
+                                    if (card[btnNo - 1] != 0) {
+                                        Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    } else {
+                                        if (Arrays.asList(combinCard).contains(card[2])) {
+                                            Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+                                        btnNo = 3;
+                                    }
+                                } else if (btnNo == 1) {
+                                    if (card[btnNo + 1] != 0) {
+                                        Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    btnNo = 1;
                                 } else {
-                                    btnNo = btnNo - 1;
+                                    if (card[btnNo + 1] != 0) {
+                                        if (card[btnNo - 1] != 0) {
+                                            Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
+                                            return;
+                                        } else {
+                                            btnNo = btnNo - 1;
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
-                }
 
-                if (Integer.parseInt(cardID) == fiveInOne) {
-                    if (btnNo == 5) {
-                        Toast.makeText(getApplicationContext(), "隊友不能選擇「超獸魔神」 ", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    for (int i = 1; i < card.length - 1; i++) {
-                        if (card[i] != 0) {
-                            Toast.makeText(getApplicationContext(), "沒有位置放「超獸魔神」 ", Toast.LENGTH_SHORT).show();
-                            return;
+                        if (Integer.parseInt(cardID) == fiveInOne) {
+                            if (btnNo == 5) {
+                                Toast.makeText(getApplicationContext(), "隊友不能選擇「超獸魔神」 ", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            for (int i = 1; i < card.length - 1; i++) {
+                                if (card[i] != 0) {
+                                    Toast.makeText(getApplicationContext(), "沒有位置放「超獸魔神」 ", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+                            btnNo = 0;
                         }
+
+                        card[btnNo] = Integer.parseInt(cardID);
+                        cardLVSel[btnNo] = Integer.parseInt(LVText.getText().toString());
+
+                        Intent data = new Intent();
+                        data.putExtra("card", card);
+                        data.putExtra("cardLVSel", cardLVSel);
+                        data.putExtra("selectIndex", btnNo);
+                        data.putExtra("battle", battle);
+                        data.putExtra("disableData", disbaleCard);
+                        data.putExtra("cardNo", cardID);
+                        setResult(RESULT_CODE, data);
+                        finish();
                     }
-                    btnNo = 0;
                 }
 
-                card[btnNo] = Integer.parseInt(cardID);
-                cardLVSel[btnNo] = Integer.parseInt(LVText.getText().toString());
+        );
 
-                Intent data = new Intent();
-                data.putExtra("card", card);
-                data.putExtra("cardLVSel", cardLVSel);
-                data.putExtra("selectIndex", btnNo);
-                data.putExtra("battle", battle);
-                data.putExtra("disableData", disbaleCard);
-                data.putExtra("cardNo", cardID);
-                setResult(RESULT_CODE, data);
-                finish();
-            }
-        });
+            //     cardLV.create();
+            cardLV.show();
+        }
 
-   //     cardLV.create();
-        cardLV.show();
-    }
-
-    public class ImageAdapter extends BaseAdapter {
+        public class ImageAdapter extends BaseAdapter {
         private Context mContext;
         List<String> mThumbIds = new ArrayList<String>();
         public ImageAdapter(Context c, List<String> mThumbIds) {
