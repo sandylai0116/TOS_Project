@@ -52,7 +52,7 @@ public class Home extends ActionBarActivity{
         outState.putIntArray("selectedCard", selectedCard);
         outState.putIntArray("cardLevel", cardLevel);
         outState.putParcelable("battle", battle);
-   //     outState.putIntArray("disbaleCard", disableCard);
+       outState.putIntArray("disbaleCard", disableCard);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class Home extends ActionBarActivity{
             selectedCard = savedInstanceState.getIntArray("selectedCard");
             cardLevel = savedInstanceState.getIntArray("cardLevel");
             battle = savedInstanceState.getParcelable("battle");
-        //    disableCard = savedInstanceState.getIntArray("disableCard");
+            disableCard = savedInstanceState.getIntArray("disableCard");
         }
 
         printButton();
@@ -161,7 +161,7 @@ public class Home extends ActionBarActivity{
                 selectedCard = data.getExtras().getIntArray("card");
                 cardLevel = data.getExtras().getIntArray("cardLVSel");
                 battle = (Battle) data.getExtras().getParcelable("battle");
-        //        disableCard = data.getExtras().getIntArray("disableData");
+                disableCard = data.getExtras().getIntArray("disableData");
 
 
                 // card 620
@@ -232,7 +232,7 @@ public class Home extends ActionBarActivity{
         Bundle mBundle = new Bundle();
         intent.putExtra("cardSelData", selCard);
         intent.putExtra("cardLVData", selCardLv);
-  //      intent.putExtra("disableData", disableCard);
+       intent.putExtra("disableData", disableCard);
         mBundle.putParcelable(SER_KEY, battle);
         intent.putExtra("btnNo", btnNo);
         intent.putExtras(mBundle);

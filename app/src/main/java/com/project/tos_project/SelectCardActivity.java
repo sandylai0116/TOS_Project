@@ -51,7 +51,7 @@ public class SelectCardActivity extends ActionBarActivity{
         GridView gridview = (GridView) findViewById(R.id.gridview);
         card = getIntent().getIntArrayExtra("cardSelData");
         cardLVSel = getIntent().getIntArrayExtra("cardLVData");
-      //  disbaleCard = getIntent().getIntArrayExtra("disableData");
+        disbaleCard = getIntent().getIntArrayExtra("disableData");
         lastButton = getIntent().getIntExtra("lastButton", 5);
 
         battle = (Battle)getIntent().getParcelableExtra(Home.SER_KEY);
@@ -162,7 +162,7 @@ public class SelectCardActivity extends ActionBarActivity{
                 data.putExtra("cardLVSel", cardLVSel);
                 data.putExtra("selectIndex", btnNo);
                 data.putExtra("battle", battle);
-                //      data.putExtra("disableData", disbaleCard);
+                data.putExtra("disableData", disbaleCard);
                 data.putExtra("cardNo", cardID);
                 setResult(RESULT_CODE, data);
                 finish();
