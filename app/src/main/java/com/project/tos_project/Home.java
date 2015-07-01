@@ -39,7 +39,8 @@ public class Home extends ActionBarActivity{
     Card card[] = new Card[6];
     int[] selectedCard = {0,0,0,0,0,0};
     int[] cardLevel = {0,0,0,0,0,0};
-  //  int[] disableCard = {-1,-1,-1,-1,-1,-1};
+    boolean isFive = false;
+    int[] disableCard = {-1,-1,-1,-1,-1,-1};
     Integer[] combinCard ={656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
     int fiveInOne = 620;
   //  int[] combinCard = {620, 656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
@@ -162,39 +163,60 @@ public class Home extends ActionBarActivity{
                 battle = (Battle) data.getExtras().getParcelable("battle");
         //        disableCard = data.getExtras().getIntArray("disableData");
 
-                if(Arrays.asList(combinCard).contains(Integer.parseInt(cardNum))){
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
-                    LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
-                    lp.setMargins(4, 4, 4, 4);
-                    //           cardButton[index].setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f));
-                    cardButton[index].setLayoutParams(lp);
-                 //   cardButton[index+1].setVisibility(View.INVISIBLE);
-                    cardButton[index+1].setLayoutParams(hlp);
-                }
-                else{
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
-                    lp.setMargins(4, 4, 4, 4);
-                    cardButton[index].setLayoutParams(lp);
-                }
 
                 // card 620
-                if(Integer.parseInt(cardNum) == fiveInOne){
+                if(selectedCard[0] == fiveInOne){
+                    isFive = true;
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 5f);
                     LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
                     lp.setMargins(4, 4, 4, 4);
-                    cardButton[index].setLayoutParams(lp);
+                    cardButton[0].setLayoutParams(lp);
                     for(int i=1; i<5; i++){
                         cardButton[i].setLayoutParams(hlp);
                     }
                 }
-                else{
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
-                    lp.setMargins(4, 4, 4, 4);
-                    for(int i=1; i< 6; i++){
-                        cardButton[i].setLayoutParams(lp);
-                    }
+                else {
+                       if (Arrays.asList(combinCard).contains(Integer.parseInt(cardNum))) {
+                           LinearLayout.LayoutParams conlp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
+                           conlp.setMargins(4, 4, 4, 4);
+                           LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
+                           cardButton[index].setLayoutParams(conlp);
+                           cardButton[index + 1].setLayoutParams(hlp);
+                           disableCard[index+1] = 0;
+                           disableCard[index] = 0;
+                       }
+                       else {
+                           LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+                           lp.setMargins(4, 4, 4, 4);
+                           if(index < 5) {
+                               disableCard[index + 1] = -1;
+                           }
+                           disableCard[index] = -1;
+                           for (int i = 0; i < selectedCard.length; i++) {
+                                   if(disableCard[i] == -1) {
+                                       cardButton[i].setLayoutParams(lp);
+                                   }
+                           }
+                       }
+
                 }
 
+    /*            if(!isFive) {
+                    if (Arrays.asList(combinCard).contains(Integer.parseInt(cardNum))) {
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f);
+                        LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f);
+                        lp.setMargins(4, 4, 4, 4);
+                        //           cardButton[index].setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f));
+                        cardButton[index].setLayoutParams(lp);
+                        //   cardButton[index+1].setVisibility(View.INVISIBLE);
+                        cardButton[index + 1].setLayoutParams(hlp);
+                    } else {
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+                        lp.setMargins(4, 4, 4, 4);
+                        cardButton[index].setLayoutParams(lp);
+                    }
+                }
+*/
                 printButton();
                 tv.setText(cardNum);
             }
