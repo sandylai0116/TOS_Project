@@ -52,7 +52,6 @@ public class SelectCardActivity extends ActionBarActivity{
         card = getIntent().getIntArrayExtra("cardSelData");
         cardLVSel = getIntent().getIntArrayExtra("cardLVData");
         disbaleCard = getIntent().getIntArrayExtra("disableData");
-        lastButton = getIntent().getIntExtra("lastButton", 5);
 
         battle = (Battle)getIntent().getParcelableExtra(Home.SER_KEY);
         try {
@@ -119,17 +118,17 @@ public class SelectCardActivity extends ActionBarActivity{
                             return;
                         }
 
+                        if (btnNo == 0) {
+                            Toast.makeText(getApplicationContext(), "隊長不能選擇合體卡 ", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         if (btnNo == 4) {
                             if (card[btnNo - 1] != 0) {
                                 Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
                                 return;
                             } else {
                                 btnNo = 3;
-                            }
-                        } else if (btnNo == 0) {
-                            if (card[btnNo + 1] != 0) {
-                                Toast.makeText(getApplicationContext(), "沒有位置放合體卡 ", Toast.LENGTH_SHORT).show();
-                                return;
                             }
                         } else {
                             if (card[btnNo + 1] != 0) {
@@ -145,7 +144,11 @@ public class SelectCardActivity extends ActionBarActivity{
                 }
 
                 if (Integer.parseInt(cardID) == fiveInOne) {
-                    for (int i = 0; i < card.length -1; i++) {
+                    if (btnNo == 5) {
+                        Toast.makeText(getApplicationContext(), "隊友不能選擇「超獸魔神」 ", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    for (int i = 1; i < card.length - 1; i++) {
                         if (card[i] != 0) {
                             Toast.makeText(getApplicationContext(), "沒有位置放「超獸魔神」 ", Toast.LENGTH_SHORT).show();
                             return;
