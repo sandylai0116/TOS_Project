@@ -761,6 +761,7 @@ public class LeaderSkill {
                         else singleAttack(battle, card, 2.5);
                         break;
                     case "no754":
+                        no754(battle,card);
                         break;
                     case "no762":
                         break;
@@ -777,7 +778,7 @@ public class LeaderSkill {
                     case "no824":
                         break;
                 }
-            }
+             }
         }
     }
 
@@ -1278,30 +1279,20 @@ public class LeaderSkill {
         return true;
     }
 
-/*
+
     public static void no754(Battle battle, Card[] card){
         //隊伍中只有人類及魔族成員時，人類及魔族攻擊力 2.5 倍；當生命力未滿時，攻擊力提升至 3.5 倍
-        boolean isHuman = false;
-        boolean isDemon = false;
-        for(Card c:card) {
-            switch (c.getRace()) {
-                case "elf":
-                    return; //return
-                case "beast":
-                    return; //return
-                case "god":
-                    return; //return
-                case "demon":
-                    isDemon = true;
-                    break;
-                case "dragon":
-                    return; //return
-                case "human":
-                    isHuman = true;
-                    break;
+        if(isOnly3Race(card,"human","demon",null)) {
+            if(battle.getCurrentHP() < battle.getMaxHP()){
+                raceAttackBonus(card,"human",3.5);
+                raceAttackBonus(card,"demon",3.5);
+            }
+            else {
+                raceAttackBonus(card,"human",2.5);
+                raceAttackBonus(card,"demon",2.5);
             }
         }
     }
-*/
+
 
 }

@@ -80,6 +80,10 @@ public class Computation {
             //calculate color suppression
             if(battle.isEnableSuppression())output *= colorSuppressionFactor;
 
+            //minus boss defence
+            if(output>battle.getBossDefence() ) output-=battle.getBossDefence();
+            else if(output > 1) output = 1.0;
+
             //save
             card[i].setCalculatedAttack(output);
         }

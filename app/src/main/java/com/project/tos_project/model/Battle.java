@@ -28,6 +28,9 @@ public class Battle implements Parcelable {
     private int numOfEnchantedPurple;
     private int numOfEnchantedPink;
 
+    //stone array
+    private int stoneArray[][];
+
     //leader skills
     private double eachComboFactor;
 
@@ -74,6 +77,7 @@ public class Battle implements Parcelable {
     private boolean enableCombo25;
 
     public Battle() {
+        stoneArray = new int[5][6];
         eachComboFactor = 0.25;
         enableSuppression = true;
         specialSuppressionFactor = 1.0;
