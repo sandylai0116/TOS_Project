@@ -620,4 +620,12 @@ public class Battle implements Parcelable {
     public void setEnableGreenPossessBlue(boolean enableGreenPossessBlue) {
         this.enableGreenPossessBlue = enableGreenPossessBlue;
     }
+
+    public int[][] getStoneArray() {
+        return stoneArray;
+    }
+
+    public void setStoneArray(int[][] stoneArray) {
+        this.stoneArray = stoneArray;
+    }
 }

@@ -1,5 +1,6 @@
 package com.project.tos_project;
 
+import com.project.tos_project.constant.StoneEnum;
 import com.project.tos_project.model.Battle;
 import com.project.tos_project.model.Card;
 
@@ -764,18 +765,21 @@ public class LeaderSkill {
                         no754(battle,card);
                         break;
                     case "no762":
+                        no762(battle,card);
                         break;
                     case "no764":
+                        no764(battle,card);
                         break;
                     case "no768":
                         break;
                     case "no790":
-                        break;
-                    case "no791":
+                        if(isOnly3Race(card,"god","dragon",null))attackBonus(card,2.5);
                         break;
                     case "no818":
+                        no818(battle,card);
                         break;
                     case "no824":
+                        no824(battle,card);
                         break;
                 }
              }
@@ -797,6 +801,14 @@ public class LeaderSkill {
     public static void recoveryBonus(Card[] card, Double factor){
         for(int i=0;i<6;i++) {
             card[i].setCalculatedRecovery(card[i].getCalculatedRecovery() * factor);
+        }
+    }
+
+    public static void colorAndRaceAttackBonus(Card[] card,String color,String race,Double factor){
+        for(int i=0;i<6;i++) {
+            if (card[i].getColor().equals(color) && card[i].getRace().equals(race)) {
+                card[i].setCalculatedAttack(card[i].getCalculatedAttack() * factor);
+            }
         }
     }
 
@@ -1294,5 +1306,81 @@ public class LeaderSkill {
         }
     }
 
+    public static void no762(Battle battle,Card[] card){
+      //光屬性攻擊力 2.5 倍；消除場上所有光符石時，光屬性人類攻擊力 4 倍 (只計算首批消除的符石)
+        int totalStone = 0;
+        for(int i=0;i<battle.getStoneArray().length;i++){
+            for(int j=0;j<battle.getStoneArray()[0].length;j++){
+                if(battle.getStoneArray()[i][j] == StoneEnum.Stone.YELLOW.getIndex() || battle.getStoneArray()[i][j] == StoneEnum.Stone.YELLOW_ENCHANTED.getIndex() )
+                    totalStone++;
+            }
+        }
+        int currentStone = 0;
+        for(int item:battle.getNumOfYellow()){
+            currentStone+=item;
+        }
 
+        if(totalStone == currentStone) {
+            for(int i=0;i<6;i++) {
+                if (card[i].getColor().equals("yellow") && card[i].getRace().equals("human"))
+                    card[i].setCalculatedAttack(card[i].getCalculatedAttack() * 4.0);
+                else if (card[i].getColor().equals("yellow"))
+                    card[i].setCalculatedAttack(card[i].getCalculatedAttack() * 2.5);
+            }
+        }
+        else {
+            for(int i=0;i<6;i++) {
+                if (card[i].getColor().equals("yellow"))
+                    card[i].setCalculatedAttack(card[i].getCalculatedAttack() * 2.5);
+            }
+        }
+    }
+
+    public static void no764(Battle battle,Card[] card){
+        //光和暗屬性攻擊力 2 倍；同時消除光符石及暗符石，光和暗屬性攻擊力額外提升 1.5 倍 (效果可以疊加)
+        boolean isYellow = false;
+        boolean isPurple = false;
+        if(battle.getNumOfYellow().size() >0 ) isYellow = true;
+        if(battle.getNumOfPurple().size() >0 ) isPurple = true;
+
+        if(isYellow && isPurple) {
+            colorAttackBonus(card,"yellow",3.5);
+            colorAttackBonus(card,"purple",3.5);
+        }
+        else {
+            colorAttackBonus(card,"yellow",2.0);
+            colorAttackBonus(card,"purple",2.0);
+        }
+    }
+
+    public static void no818(Battle battle, Card[] card){
+        //生命力愈低時，全隊攻擊力會愈高，最大 3 倍；同時消除光符石及暗符石，全隊攻擊力額外提升 1.5 倍 (效果可以疊加)
+        double extraBonus = 1.5;
+        boolean isYellow = false;
+        boolean isPurple = false;
+        if(battle.getNumOfYellow().size() >0 ) isYellow = true;
+        if(battle.getNumOfPurple().size() >0 ) isPurple = true;
+
+        if(isYellow && isPurple) {
+            double currentHPPercent = (double)battle.getCurrentHP()/battle.getMaxHP();
+            double detainedHPPercent = 1.0 - currentHPPercent;
+            if(currentHPPercent > 50) attackBonus(card, 1 + detainedHPPercent * 2 + extraBonus);
+            else if(currentHPPercent <20) attackBonus(card,3.0 + extraBonus);
+            else attackBonus(card,detainedHPPercent*4 + extraBonus);
+        }
+        else attack3WhenLowHP(battle,card);
+    }
+    
+    public static void no824(Battle battle, Card[] card){
+        //當進行單體攻擊時，攻擊力 2.5 倍，若同時消除火、木及暗符石，攻擊力提升至 4 倍。適用於所有成員
+        boolean isRed = false;
+        boolean isGreen = false;
+        boolean isPurple = false;
+        if(battle.getNumOfRed().size() >0 ) isRed = true;
+        if(battle.getNumOfGreen().size() >0 ) isGreen = true;
+        if(battle.getNumOfPurple().size() >0 ) isPurple = true;
+
+        if(isRed && isGreen && isPurple) singleAttack(battle,card,4.0);
+        else singleAttack(battle,card,2.5);
+    }
 }

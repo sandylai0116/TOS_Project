@@ -800,7 +800,7 @@ public class CardData {
         DBHelper.insertCardToDB(db, 788, "green", "god", 99, 1399, 607, 141, 2771, 1122, 321, null, "greenAttack2");
         DBHelper.insertCardToDB(db, 789, "green", "god", 99, 1546, 671, 156, 3063, 1241, 355, null, "greenAttack2.5");
         DBHelper.insertCardToDB(db, 790, "blue", "dragon", 50, 1068, 406, 18, 2095, 660, 20, null, "no790");
-        DBHelper.insertCardToDB(db, 791, "blue", "dragon", 99, 1912, 728, 36, 3853, 1210, 40, null, "no791");
+        DBHelper.insertCardToDB(db, 791, "blue", "dragon", 99, 1912, 728, 36, 3853, 1210, 40, null, "no790");
         DBHelper.insertCardToDB(db, 792, "red", "dragon", 50, 1125, 434, 16, 2204, 706, 18, null, "attack3WhenOnlyDemonDragon");
         DBHelper.insertCardToDB(db, 793, "red", "dragon", 99, 2011, 779, 32, 4053, 1294, 36, null, "attack3WhenOnlyDemonDragon");
         DBHelper.insertCardToDB(db, 794, "green", "dragon", 50, 1236, 373, 17, 2422, 608, 19, null, "attack2.5WhenOnlyGodDragon");
