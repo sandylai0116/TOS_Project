@@ -5,6 +5,7 @@
 
     <RelativeLayout android:orientation="horizontal"  android:id="@+id/monsterArea"
         android:layout_width="fill_parent" android:layout_height="0dp"
+        android:background="@drawable/select_card_filiter_bg"
         android:layout_weight="10">
 
 
@@ -17,12 +18,12 @@
 
         <ImageButton android:layout_weight="1"
             android:id="@+id/searchCard"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="fill_parent"
             android:adjustViewBounds="true"
             android:layout_alignParentRight="true"
             android:background="@null"
-            android:src="@drawable/search_icon"
+            android:src="@drawable/setting"
             android:padding="0dp"
             android:scaleType="fitCenter" />
 

@@ -13,13 +13,18 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.project.tos_project.model.Battle;
@@ -37,22 +42,75 @@ public class SelectCardActivity extends ActionBarActivity{
     Bitmap bitmap;
     DBHelper dbHelper;
     Battle battle;
+    GridView gridview;
     int[] card, cardLVSel, disbaleCard;
     List<String> mThumbIds = new ArrayList<String>();
+    ArrayList<String> color = new ArrayList<String>();
+    ArrayList<String> race = new ArrayList<String>();
+    final int[] filterColorBtn = {R.id.blue_icon , R.id.red_icon, R.id.green_icon, R.id.yellow_icon, R.id.purple_icon};
+    final int[] filterRaceBtn = {R.id.god_icon, R.id.fiend_icon, R.id.human_icon, R.id.beast_icon, R.id.dragon_icon, R.id.elf_icon, R.id.evolve_icon, R.id.level_up_icon};
+    final int[] filterColorImage = {R.drawable.blue_icon , R.drawable.red_icon, R.drawable.green_icon, R.drawable.yellow_icon, R.drawable.purple_icon};
+    final int[] filterRaceImage = {R.drawable.god_icon, R.drawable.fiend_icon, R.drawable.human_icon, R.drawable.beast_icon, R.drawable.dragon_icon, R.drawable.elf_icon, R.drawable.evolve_icon, R.drawable.level_up_icon};
+    final int[] darkFilterColorImage = {R.drawable.dark_blue_icon , R.drawable.dark_red_icon, R.drawable.dark_green_icon, R.drawable.dark_yellow_icon, R.drawable.dark_purple_icon};
+    final int[] darkFilterRaceImage = {R.drawable.dark_god_icon, R.drawable.dark_fiend_icon, R.drawable.dark_human_icon, R.drawable.dark_beast_icon, R.drawable.dark_dragon_icon, R.drawable.dark_elf_icon, R.drawable.dark_evolve_icon, R.drawable.dark_level_up_icon};
+    final String[] colorFilter = {"blue", "red", "green", "yellow", "purple"};
+    final String[] raceFilter = {"god", "demon", "human", "beast", "dragon", "elf", "evolveElements", "levelUpElements"};
     Cursor cursor;
     Home h = new Home();
-    int lastButton;
     Integer[] combinCard = h.combinCard;
     int fiveInOne = h.fiveInOne;
     public final static int RESULT_CODE  = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_card);
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview = (GridView) findViewById(R.id.gridview);
+        final ImageButton ib = (ImageButton) findViewById(R.id.searchCard);
         card = getIntent().getIntArrayExtra("cardSelData");
         cardLVSel = getIntent().getIntArrayExtra("cardLVData");
         disbaleCard = getIntent().getIntArrayExtra("disableData");
+
+        ib.setOnClickListener(new ImageView.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                LayoutInflater layoutInflater
+                            = (LayoutInflater) getBaseContext()
+                            .getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = layoutInflater.inflate(R.layout.activity_card_filter, null);
+                final PopupWindow popupWindow = new PopupWindow(
+                            popupView,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setFocusable(true);
+
+                    final Button okbtn = (Button) popupView.findViewById(R.id.OK);
+
+                    for (int i = 0; i < filterColorBtn.length; i++) {
+                        final ImageView b = (ImageView) popupView.findViewById(filterColorBtn[i]);
+                        b.setOnClickListener(new MyListener(b, i, "color"));
+                    }
+
+                    for (int i = 0; i < filterRaceBtn.length; i++) {
+                        final ImageView b = (ImageView) popupView.findViewById(filterRaceBtn[i]);
+                        b.setOnClickListener(new MyListener(b, i, "race"));
+                    }
+
+                    okbtn.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Auto-generated method stub
+                            popupWindow.dismiss();
+                        }
+                    });
+
+                    popupWindow.showAsDropDown(ib, 50, -30);
+
+            }});
+
 
         // cancel card
         mThumbIds.add("card/card-0.png");
@@ -84,10 +142,9 @@ public class SelectCardActivity extends ActionBarActivity{
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Toast.makeText(SelectCardActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-                if(position > 0) {
+                if (position > 0) {
                     createCardLevelDialogBox(mThumbIds.get(position));
-                }
-                else{
+                } else {
                     int btnNo = getIntent().getIntExtra("btnNo", 0);
                     Intent data = new Intent();
                     data.putExtra("card", card);
@@ -101,6 +158,129 @@ public class SelectCardActivity extends ActionBarActivity{
 
             }
         });
+    }
+
+    private class MyListener implements ImageView.OnClickListener {
+        int pos;
+        String element;
+        String[] elementArr;
+        ImageView b;
+        int[] filterImage, darkFiliterImage;
+        ArrayList<String> filterArr;
+        public MyListener (ImageView b, int position, String element) {
+            this.pos = position;
+            this.element = element;
+            this.b = b;
+        }
+        @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            if(element.equals("color")){
+                elementArr = colorFilter;
+                filterArr = color;
+                filterImage = filterColorImage;
+                darkFiliterImage = darkFilterColorImage;
+            }
+            else{
+                elementArr = raceFilter;
+                filterArr = race;
+                filterImage = filterRaceImage;
+                darkFiliterImage = darkFilterRaceImage;
+            }
+
+            if (filterArr.contains(elementArr[pos])) {
+                filterArr.remove(elementArr[pos]);
+                b.setImageResource(darkFiliterImage[pos]);
+                cardFilter(color, race);
+            }
+            else{
+                filterArr.add(elementArr[pos]);
+                b.setImageResource(filterImage[pos]);
+                cardFilter(color, race);
+            }
+            //        popupWindow.dismiss();
+        }
+    }
+
+    public void cardFilter(ArrayList<String>color, ArrayList<String>race){
+
+        mThumbIds.clear();
+        mThumbIds.add("card/card-0.png");
+        String sql = "";
+        String[] args;
+        if(color.size() == 0 && race.size() == 0){
+            args = new String[0];
+            sql = "";
+        }
+        else {
+            String[] colorArr = new String[color.size()];
+            String[] raceArr = new String[race.size()];
+
+            for (int i = 0; i < color.size(); i++) {
+                colorArr[i] = color.get(i);
+            }
+
+            for (int i = 0; i < race.size(); i++) {
+                raceArr[i] = race.get(i);
+            }
+            boolean hasColor = false;
+
+            for (int i = 0; i < colorArr.length; i++) {
+                if (i == 0) {
+                    hasColor = true;
+                    sql += " WHERE ( COLOR = ? ";
+                } else {
+                    sql += " OR COLOR = ? ";
+                }
+            }
+
+            if (hasColor && raceArr.length > 0) sql += " )";
+
+            for (int i = 0; i < raceArr.length; i++) {
+                if (i == 0) {
+                    if (hasColor) {
+                        sql += " AND ( RACE =  ? ";
+                    } else {
+                        sql += " WHERE ( RACE =  ? ";
+                    }
+                } else {
+                    sql += " OR RACE = ? ";
+                }
+            }
+
+            sql += " )";
+            args = new String[colorArr.length + raceArr.length];
+            if (raceArr.length > 0 && colorArr.length > 0) {
+                System.arraycopy(colorArr, 0, args, 0, colorArr.length);
+                System.arraycopy(raceArr, 0, args, colorArr.length, raceArr.length);
+            } else if( colorArr.length > 0){
+                args = colorArr;
+            } else{
+                args = raceArr;
+            }
+        }
+        try {
+            // eg. 1 - RawQuery
+            dbHelper = new DBHelper(SelectCardActivity.this);
+            db = dbHelper.getWritableDatabase();
+            cursor = dbHelper.query(db, "SELECT CARD_ID as cardNo FROM CARD "+sql, args);
+            while (cursor.moveToNext()) {
+                String cardNo = cursor.getString(cursor.getColumnIndex("cardNo"));
+                String imagPathOpen = "card-";
+                for(int i=0; i<combinCard.length; i++){
+                    if(combinCard[i] == Integer.parseInt(cardNo)) {
+                        imagPathOpen = "cardMin-";
+                        break;
+                    }
+                }
+                mThumbIds.add("card/"+ imagPathOpen + cardNo + ".png");
+            }
+        } catch (SQLiteException e) {
+            Toast.makeText(getApplicationContext(), "SQL Error ", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+
+        gridview.setAdapter(new ImageAdapter(SelectCardActivity.this, mThumbIds));
     }
 
     public void createCardLevelDialogBox(String cN) {

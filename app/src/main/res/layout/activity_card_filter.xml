@@ -1,0 +1,169 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#90000000"
+    >
+
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+       >
+
+        <RelativeLayout android:orientation="horizontal"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="顯示特定屬性"
+                android:textColor="#ffffffff"
+               />
+
+        </RelativeLayout>
+
+        <LinearLayout android:orientation="horizontal"  android:id="@+id/element" android:weightSum="5"
+            android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <ImageView android:weightSum="1"
+                android:id="@+id/blue_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/dark_blue_icon"
+                android:layout_margin="3dip"
+                android:background="#80C0C0C0" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/red_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:src="@drawable/dark_red_icon"
+                android:background="#80C0C0C0"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/green_icon"
+                android:layout_width="wrap_content"
+                android:background="#80C0C0C0"
+                android:src="@drawable/dark_green_icon"
+                android:layout_height="fill_parent"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/yellow_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="#80C0C0C0"
+                android:src="@drawable/dark_yellow_icon"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/purple_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="#80C0C0C0"
+                android:src="@drawable/dark_purple_icon"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
+        <RelativeLayout android:orientation="horizontal"  android:id="@+id/mo234nsterArea"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="顯示特定種族"
+                android:textColor="#ffffffff"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout android:orientation="horizontal"  android:id="@+id/race" android:weightSum="5"
+            android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <ImageView android:weightSum="1"
+                android:id="@+id/god_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/dark_god_icon"
+                android:layout_margin="3dip"
+                android:background="#80C0C0C0" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/fiend_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:src="@drawable/dark_fiend_icon"
+                android:background="#80C0C0C0"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/human_icon"
+                android:layout_width="wrap_content"
+                android:background="#80C0C0C0"
+                android:src="@drawable/dark_human_icon"
+                android:layout_height="fill_parent"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/beast_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="#80C0C0C0"
+                android:src="@drawable/dark_beast_icon"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/dragon_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="#80C0C0C0"
+                android:src="@drawable/dark_dragon_icon"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal"  android:id="@+id/race2" android:weightSum="5"
+            android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <ImageView android:weightSum="1"
+                android:id="@+id/elf_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/dark_elf_icon"
+                android:layout_margin="3dip"
+                android:background="#80C0C0C0" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/evolve_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:src="@drawable/dark_evolve_icon"
+                android:background="#80C0C0C0"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+            <ImageView android:weightSum="1"
+                android:id="@+id/level_up_icon"
+                android:layout_width="wrap_content"
+                android:background="#80C0C0C0"
+                android:src="@drawable/dark_level_up_icon"
+                android:layout_height="fill_parent"
+                android:layout_margin="3dip"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout android:orientation="horizontal"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        >
+        <Button android:text="確定" android:id="@+id/OK"
+            android:layout_width="wrap_content" android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:background="#FFFFFF"
+            android:textSize="20sp"
+            >
+        </Button>
+
+    </RelativeLayout>
+
+</LinearLayout>
+
