@@ -107,7 +107,35 @@ public class Battle implements Parcelable {
     }
 
     public Battle (Parcel parcel) {
+        this.bossColor = parcel.readString();
+        this.bossDefence = parcel.readInt();
+        this.maxHP = parcel.readInt();
+        this.currentHP = parcel.readInt();
+        this.numOfCombo = parcel.readInt();
+        this.numOfRed = parcel.readArrayList(null);
+        this.numOfBlue = parcel.readArrayList(null);
+        this.numOfGreen = parcel.readArrayList(null);
+        this.numOfYellow = parcel.readArrayList(null);
+        this.numOfPurple = parcel.readArrayList(null);
+        this.numOfPink = parcel.readArrayList(null);
+        this.numOfEnchantedRed = parcel.readInt();
+        this.numOfEnchantedBlue = parcel.readInt();
+        this.numOfEnchantedGreen = parcel.readInt();
+        this.numOfEnchantedYellow = parcel.readInt();
+        this.numOfEnchantedPurple = parcel.readInt();
+        this.numOfEnchantedPink = parcel.readInt();
+
+
+        //stone array
+        stoneArray = new int[5][6];
+        for(int i=0;i<stoneArray.length;i++)
+            parcel.readIntArray(this.stoneArray[i]);
+
+
+        //leader skills
         this.eachComboFactor = parcel.readDouble();
+
+        this.enableSuppression = (boolean) parcel.readValue(null);
         this.specialSuppressionFactor = parcel.readDouble();
         this.blueSuppressRedFactor = parcel.readDouble();
         this.redSuppressGreenFactor = parcel.readDouble();
@@ -119,12 +147,32 @@ public class Battle implements Parcelable {
         this.greenSuppressYellowFactor = parcel.readDouble();
         this.yellowSuppressRedFactor = parcel.readDouble();
         this.purpleSuppressGreenFactor = parcel.readDouble();
-        this.numOfRed = parcel.readArrayList(null);
-        this.numOfBlue = parcel.readArrayList(null);
-        this.numOfGreen = parcel.readArrayList(null);
-        this.numOfYellow = parcel.readArrayList(null);
-        this.numOfPurple = parcel.readArrayList(null);
-        this.bossColor = parcel.readString();
+
+        this.enablePinkPossessBlue = (boolean) parcel.readValue(null);
+        this.enablePinkPossessRed = (boolean) parcel.readValue(null);
+        this.enablePinkPossessGreen = (boolean) parcel.readValue(null);
+        this.enablePinkPossessYellow = (boolean) parcel.readValue(null);
+        this.enablePinkPossessPurple = (boolean) parcel.readValue(null);
+        this.enableYellowPossessPurple = (boolean) parcel.readValue(null);
+        this.enablePurplePossessYellow = (boolean) parcel.readValue(null);
+        this.enableRedPossessBlue = (boolean) parcel.readValue(null);
+        this.enableGreenPossessBlue = (boolean) parcel.readValue(null);
+
+        this.blueForPossession = parcel.readArrayList(null);
+        this.redForPossession = parcel.readArrayList(null);
+        this.greenForPossession = parcel.readArrayList(null);
+        this.yellowForPossession = parcel.readArrayList(null);
+        this.purpleForPossession = parcel.readArrayList(null);
+
+        this.blueForPossessFactor = parcel.readArrayList(null);
+        this.redForPossessFactor = parcel.readArrayList(null);
+        this.greenForPossessFactor = parcel.readArrayList(null);
+        this.yellowForPossessFactor = parcel.readArrayList(null);
+        this.purpleForPossessFactor = parcel.readArrayList(null);
+
+        this.enable2Red = (boolean) parcel.readValue(null);
+        this.enable2Green = (boolean) parcel.readValue(null);
+        this.enable2Pink = (boolean) parcel.readValue(null);
     }
 
     public static final Parcelable.Creator<Battle> CREATOR = new Creator<Battle>() {
@@ -140,7 +188,32 @@ public class Battle implements Parcelable {
         return 0;
     }
     public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(bossColor);
+        parcel.writeInt(bossDefence);
+        parcel.writeInt(maxHP);
+        parcel.writeInt(currentHP);
+        parcel.writeInt(numOfCombo);
+        parcel.writeList(numOfRed);
+        parcel.writeList(numOfBlue);
+        parcel.writeList(numOfGreen);
+        parcel.writeList(numOfYellow);
+        parcel.writeList(numOfPurple);
+        parcel.writeList(numOfPink);
+        parcel.writeInt(numOfEnchantedRed);
+        parcel.writeInt(numOfEnchantedBlue);
+        parcel.writeInt(numOfEnchantedGreen);
+        parcel.writeInt(numOfEnchantedYellow);
+        parcel.writeInt(numOfEnchantedPurple);
+        parcel.writeInt(numOfEnchantedPink);
+
+        //stone array
+        for(int i=0;i<stoneArray.length;i++)
+            parcel.writeIntArray(stoneArray[i]);
+
+        //leader skills
         parcel.writeDouble(eachComboFactor);
+
+        parcel.writeValue(enableSuppression);
         parcel.writeDouble(specialSuppressionFactor);
         parcel.writeDouble(blueSuppressRedFactor);
         parcel.writeDouble(redSuppressGreenFactor);
@@ -152,12 +225,32 @@ public class Battle implements Parcelable {
         parcel.writeDouble(greenSuppressYellowFactor);
         parcel.writeDouble(yellowSuppressRedFactor);
         parcel.writeDouble(purpleSuppressGreenFactor);
-        parcel.writeList(numOfRed);
-        parcel.writeList(numOfBlue);
-        parcel.writeList(numOfGreen);
-        parcel.writeList(numOfYellow);
-        parcel.writeList(numOfPurple);
-        parcel.writeString(bossColor);
+
+        parcel.writeValue(enablePinkPossessBlue);
+        parcel.writeValue(enablePinkPossessRed);
+        parcel.writeValue(enablePinkPossessGreen);
+        parcel.writeValue(enablePinkPossessYellow);
+        parcel.writeValue(enablePinkPossessPurple);
+        parcel.writeValue(enableYellowPossessPurple);
+        parcel.writeValue(enablePurplePossessYellow);
+        parcel.writeValue(enableRedPossessBlue);
+        parcel.writeValue(enableGreenPossessBlue);
+
+        parcel.writeList(blueForPossession);
+        parcel.writeList(redForPossession);
+        parcel.writeList(greenForPossession);
+        parcel.writeList(yellowForPossession);
+        parcel.writeList(purpleForPossession);
+
+        parcel.writeList(blueForPossessFactor);
+        parcel.writeList(redForPossessFactor);
+        parcel.writeList(greenForPossessFactor);
+        parcel.writeList(yellowForPossessFactor);
+        parcel.writeList(purpleForPossessFactor);
+
+        parcel.writeValue(enable2Red);
+        parcel.writeValue(enable2Green);
+        parcel.writeValue(enable2Pink);
     }
 
     public int getCurrentHP() {
