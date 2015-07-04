@@ -57,10 +57,6 @@ public class Card{
         this.levelMaxRecovery = levelMaxRecovery;
         this.skill = skill;
         this.leaderSkill = leaderSkill;
-        color = "";
-        race = "";
-        skill = "";
-        leaderSkill = "";
     }
 
     public int getId() {
