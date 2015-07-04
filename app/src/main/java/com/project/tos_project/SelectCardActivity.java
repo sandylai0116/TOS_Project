@@ -55,6 +55,8 @@ public class SelectCardActivity extends ActionBarActivity{
     final int[] darkFilterRaceImage = {R.drawable.dark_god_icon, R.drawable.dark_fiend_icon, R.drawable.dark_human_icon, R.drawable.dark_beast_icon, R.drawable.dark_dragon_icon, R.drawable.dark_elf_icon, R.drawable.dark_evolve_icon, R.drawable.dark_level_up_icon};
     final String[] colorFilter = {"blue", "red", "green", "yellow", "purple"};
     final String[] raceFilter = {"god", "demon", "human", "beast", "dragon", "elf", "evolveElements", "levelUpElements"};
+    final int[] tempCol = {-1, -1, -1, -1, -1};
+    final int[] tempRace = {-1, -1, -1, -1, -1, -1, -1, -1};
     Cursor cursor;
     Home h = new Home();
     Integer[] combinCard = h.combinCard;
@@ -92,11 +94,17 @@ public class SelectCardActivity extends ActionBarActivity{
                     for (int i = 0; i < filterColorBtn.length; i++) {
                         final ImageView b = (ImageView) popupView.findViewById(filterColorBtn[i]);
                         b.setOnClickListener(new MyListener(b, i, "color"));
+                        if(tempCol[i] == 0){
+                            b.setImageResource(filterColorImage[i]);
+                        }
                     }
 
                     for (int i = 0; i < filterRaceBtn.length; i++) {
                         final ImageView b = (ImageView) popupView.findViewById(filterRaceBtn[i]);
                         b.setOnClickListener(new MyListener(b, i, "race"));
+                        if(tempRace[i] == 0){
+                            b.setImageResource(filterRaceImage[i]);
+                        }
                     }
 
                     okbtn.setOnClickListener(new Button.OnClickListener() {
@@ -166,6 +174,7 @@ public class SelectCardActivity extends ActionBarActivity{
         String[] elementArr;
         ImageView b;
         int[] filterImage, darkFiliterImage;
+        boolean isColor = false;
         ArrayList<String> filterArr;
         public MyListener (ImageView b, int position, String element) {
             this.pos = position;
@@ -180,22 +189,36 @@ public class SelectCardActivity extends ActionBarActivity{
                 filterArr = color;
                 filterImage = filterColorImage;
                 darkFiliterImage = darkFilterColorImage;
+                isColor = true;
             }
             else{
                 elementArr = raceFilter;
                 filterArr = race;
                 filterImage = filterRaceImage;
                 darkFiliterImage = darkFilterRaceImage;
+                isColor = false;
             }
 
             if (filterArr.contains(elementArr[pos])) {
                 filterArr.remove(elementArr[pos]);
                 b.setImageResource(darkFiliterImage[pos]);
+                if(isColor){
+                    tempCol[pos] = -1;
+                }
+                else{
+                    tempRace[pos] = -1;
+                }
                 cardFilter(color, race);
             }
             else{
                 filterArr.add(elementArr[pos]);
                 b.setImageResource(filterImage[pos]);
+                if(isColor){
+                    tempCol[pos] = 0;
+                }
+                else{
+                    tempRace[pos] = 0;
+                }
                 cardFilter(color, race);
             }
             //        popupWindow.dismiss();
