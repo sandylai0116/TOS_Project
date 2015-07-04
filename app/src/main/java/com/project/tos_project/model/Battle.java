@@ -73,9 +73,6 @@ public class Battle implements Parcelable {
     private boolean enable2Green;
     private boolean enable2Pink;
 
-    //passive skills
-    private boolean enableCombo25;
-
     public Battle() {
         stoneArray = new int[5][6];
         eachComboFactor = 0.25;
@@ -507,14 +504,6 @@ public class Battle implements Parcelable {
 
     public boolean isEnable2Pink() {
         return enable2Pink;
-    }
-
-    public boolean isEnableCombo25() {
-        return enableCombo25;
-    }
-
-    public void setEnableCombo25(boolean enableCombo25) {
-        this.enableCombo25 = enableCombo25;
     }
 
     public List<Integer> getBlueForPossession() {
