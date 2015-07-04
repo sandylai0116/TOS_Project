@@ -1370,7 +1370,7 @@ public class LeaderSkill {
         }
         else attack3WhenLowHP(battle,card);
     }
-    
+
     public static void no824(Battle battle, Card[] card){
         //當進行單體攻擊時，攻擊力 2.5 倍，若同時消除火、木及暗符石，攻擊力提升至 4 倍。適用於所有成員
         boolean isRed = false;

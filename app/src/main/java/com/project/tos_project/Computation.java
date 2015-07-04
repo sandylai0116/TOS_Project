@@ -19,60 +19,89 @@ public class Computation {
 
         //other calculation
         for(int i=0;i<6;i++) {
-            List<Integer> numOfStones;
+            List<Integer> stoneList;
+            List<Integer> extraStoneList;
+            List<Double> extraStonesFactorList;
             int numOfEnchantedStone = 0;
 
             double colorSuppressionFactor = battle.getSpecialSuppressionFactor();
 
             switch (card[i].getColor()) {
                 case "red":
-                    numOfStones = battle.getNumOfRed();
+                    stoneList = battle.getNumOfRed();
                     numOfEnchantedStone = battle.getNumOfEnchantedRed();
+                    //Possession
+                    extraStoneList = battle.getRedForPossession();
+                    extraStonesFactorList = battle.getRedForPossessFactor();
                     //Suppression
                     if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getRedSuppressRedFactor();
                     else if(battle.getBossColor().equals("green")) colorSuppressionFactor = battle.getRedSuppressGreenFactor();
                     break;
                 case "blue":
-                    numOfStones = battle.getNumOfBlue();
+                    stoneList = battle.getNumOfBlue();
                     numOfEnchantedStone = battle.getNumOfEnchantedBlue();
+                    //Possession
+                    extraStoneList = battle.getBlueForPossession();
+                    extraStonesFactorList = battle.getBlueForPossessFactor();
                     //Suppression
                     if(battle.getBossColor().equals("purple")) colorSuppressionFactor = battle.getBlueSuppressPurpleFactor();
                     else if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getBlueSuppressRedFactor();
                     break;
                 case "green":
-                    numOfStones = battle.getNumOfGreen();
+                    stoneList = battle.getNumOfGreen();
                     numOfEnchantedStone = battle.getNumOfEnchantedGreen();
+                    //Possession
+                    extraStoneList = battle.getGreenForPossession();
+                    extraStonesFactorList = battle.getGreenForPossessFactor();
                     //Suppression
                     if(battle.getBossColor().equals("yellow")) colorSuppressionFactor = battle.getGreenSuppressYellowFactor();
                     else if(battle.getBossColor().equals("blue")) colorSuppressionFactor = battle.getGreenSuppressBlueFactor();
                     break;
                 case "yellow":
-                    numOfStones = battle.getNumOfYellow();
+                    stoneList = battle.getNumOfYellow();
                     numOfEnchantedStone = battle.getNumOfEnchantedYellow();
+                    //Possession
+                    extraStoneList = battle.getYellowForPossession();
+                    extraStonesFactorList = battle.getYellowForPossessFactor();
                     //Suppression
                     if(battle.getBossColor().equals("red")) colorSuppressionFactor = battle.getYellowSuppressRedFactor();
                     else if(battle.getBossColor().equals("purple")) colorSuppressionFactor = battle.getYellowSuppressPurpleFactor();
                     break;
                 case "purple":
-                    numOfStones = battle.getNumOfPurple();
+                    stoneList = battle.getNumOfPurple();
                     numOfEnchantedStone = battle.getNumOfEnchantedPurple();
+                    //Possession
+                    extraStoneList = battle.getPurpleForPossession();
+                    extraStonesFactorList = battle.getPurpleForPossessFactor();
                     //Suppression
                     if(battle.getBossColor().equals("green")) colorSuppressionFactor = battle.getPurpleSuppressGreenFactor();
                     else if(battle.getBossColor().equals("yellow")) colorSuppressionFactor = battle.getPurpleSuppressYellowFactor();
                     break;
                 default:
-                    numOfStones = new ArrayList<>();
+                    stoneList = new ArrayList<>();
+                    extraStoneList = new ArrayList<>();
+                    extraStonesFactorList = new ArrayList<>();
                     break;
             }
             int totalStone = 0;
-            for (Integer s : numOfStones) {
+            for (Integer s : stoneList) {
                 totalStone += s;
             }
+            
+            //for possession
+            double possessionFactor = 0.0;
+            for (int j=0;j<extraStoneList.size();j++) {
+                //(同屬消除次數＋符石總數)*extraStonesFactor
+                possessionFactor += (1+extraStoneList.get(j))*extraStonesFactorList.get(j);
+            }
+
+
+            //傷害 = {基數〔(同屬消除次數＋符石總數+possessionFactor＋ 0.6強化）ｘ25％　ｘ（１＋Ｃombo加成）〕ｘ 主動／隊長技能｝
             //get the base attack
             double output = card[i].getCalculatedAttack();
 
             //calculate the same color of stones
-            output *= (numOfStones.size() + totalStone + 0.6 * numOfEnchantedStone) * 0.25;
+            output *= (stoneList.size() + totalStone + possessionFactor + 0.6 * numOfEnchantedStone) * 0.25;
 
             //calculate combo bonus
             output *= 1 + (battle.getNumOfCombo() - 1) * battle.getEachComboFactor();
@@ -96,21 +125,21 @@ public class Computation {
 
     public static void testPreSetBattle(Battle battle){
         //test only
-        List<Integer> numOfStones = new ArrayList<>();
-        numOfStones.add(3); //set dissolve stone
-        battle.setNumOfBlue(numOfStones);
-        numOfStones.clear();
-        numOfStones.add(3); //set dissolve stone
-        battle.setNumOfRed(numOfStones);
-        numOfStones.clear();
-        numOfStones.add(3); //set dissolve stone
-        battle.setNumOfGreen(numOfStones);
-        numOfStones.clear();
-        numOfStones.add(3); //set dissolve stone
-        battle.setNumOfYellow(numOfStones);
-        numOfStones.clear();
-        numOfStones.add(3); //set dissolve stone
-        battle.setNumOfPurple(numOfStones);
+        List<Integer> stoneList = new ArrayList<>();
+        stoneList.add(3); //set dissolve stone
+        battle.setNumOfBlue(stoneList);
+        stoneList.clear();
+        stoneList.add(3); //set dissolve stone
+        battle.setNumOfRed(stoneList);
+        stoneList.clear();
+        stoneList.add(3); //set dissolve stone
+        battle.setNumOfGreen(stoneList);
+        stoneList.clear();
+        stoneList.add(3); //set dissolve stone
+        battle.setNumOfYellow(stoneList);
+        stoneList.clear();
+        stoneList.add(3); //set dissolve stone
+        battle.setNumOfPurple(stoneList);
         battle.setNumOfEnchantedBlue(0); //set enchanted stone
         battle.setNumOfEnchantedRed(0); //set enchanted stone
         battle.setNumOfEnchantedGreen(0); //set enchanted stone
@@ -121,20 +150,20 @@ public class Computation {
     
     public static void testFinalAttack(DBHelper db){
         Battle battle = new Battle();
-        List<Integer> numOfStones = new ArrayList<>();
-        numOfStones.add(4); //set dissolve stone
-        battle.setNumOfBlue(numOfStones);
-        numOfStones.clear();
-        battle.setNumOfRed(numOfStones);
-        numOfStones.clear();
-        numOfStones.add(3); //set dissolve stone
-        battle.setNumOfGreen(numOfStones);
-        numOfStones.clear();
-        numOfStones.add(4); //set dissolve stone
-        battle.setNumOfYellow(numOfStones);
-        numOfStones.clear();
-        numOfStones.add(3); //set dissolve stone
-        battle.setNumOfPurple(numOfStones);
+        List<Integer> stoneList = new ArrayList<>();
+        stoneList.add(4); //set dissolve stone
+        battle.setNumOfBlue(stoneList);
+        stoneList.clear();
+        battle.setNumOfRed(stoneList);
+        stoneList.clear();
+        stoneList.add(3); //set dissolve stone
+        battle.setNumOfGreen(stoneList);
+        stoneList.clear();
+        stoneList.add(4); //set dissolve stone
+        battle.setNumOfYellow(stoneList);
+        stoneList.clear();
+        stoneList.add(3); //set dissolve stone
+        battle.setNumOfPurple(stoneList);
         battle.setNumOfEnchantedBlue(1); //set enchanted stone
         battle.setNumOfEnchantedRed(0); //set enchanted stone
         battle.setNumOfEnchantedGreen(0); //set enchanted stone
