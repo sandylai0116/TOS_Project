@@ -38,6 +38,9 @@ public class PassiveSkill {
         //Ethereal Dragons2
         etherealDragons2(battle,card);
 
+        //Saruman + Gnomes
+        sarumanGnomes(card);
+
         //妲己
         if(card[0].getId() == 595 && card[5].getId() == 595) battle.setEachComboFactor(battle.getEachComboFactor()+0.25);
 
@@ -214,6 +217,31 @@ public class PassiveSkill {
         for (Card c:card) {
             if(c.getId() >= 571 && c.getId() <= 575)
                 c.setCalculatedAttack(c.getCalculatedAttack() * currentFactor);
+        }
+    }
+
+    public static void sarumanGnomes(Card[] card){
+        int count = 0;
+        if(card[0].getId() == 286 || card[0].getId() == 674){
+            for(int i=1;i<5;i++){
+                if(card[i].getId() == 57 || card[i].getId() == 59 || card[i].getId() == 61 || card[i].getId() == 63 || card[i].getId() == 65)
+                    count++;
+            }
+            if(count == 4) {
+                for(int i=1;i<5;i++){
+                    card[i].setCalculatedAttack(card[i].getCalculatedAttack() * 5);
+                }
+            }
+            count = 0;
+            for(int i=1;i<5;i++){
+                if(card[i].getId() >= 451 && card[i].getId() <= 455)
+                    count++;
+            }
+            if(count == 4) {
+                for(int i=1;i<5;i++){
+                    card[i].setCalculatedAttack(card[i].getCalculatedAttack() * 5);
+                }
+            }
         }
     }
 }
