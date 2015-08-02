@@ -20,14 +20,13 @@ public class Card{
     String skill;
     String leaderSkill;
     int currentLevel;
-    int currentHP;
-    int currentAttack;
-    int currentRecovery;
+    int baseHP;
+    int baseAttack;
+    int baseRecovery;
     Boolean enableSkill;
-    Boolean enableLeaderSkill;
-    double calculatedHP;
-    double calculatedAttack;
-    double calculatedRecovery;
+    double currentHP;
+    double currentAttack;
+    double currentRecovery;
 
     public Card(){
         color = "";
@@ -163,37 +162,37 @@ public class Card{
         if(currentLevel>maxLevel) currentLevel=maxLevel;
         this.currentLevel = currentLevel;
 
-        setCurrentHP(Computation.calculateCurrentLevelAbility(race, maxLevel, currentLevel, level1HP, levelMaxHP));
-        setCurrentAttack(Computation.calculateCurrentLevelAbility(race,maxLevel,currentLevel,level1Attack,levelMaxAttack));
-        setCurrentRecovery(Computation.calculateCurrentLevelAbility(race,maxLevel,currentLevel,level1Recovery,levelMaxRecovery));
+        setBaseHP(Computation.calculateCurrentLevelAbility(race, maxLevel, currentLevel, level1HP, levelMaxHP));
+        setBaseAttack(Computation.calculateCurrentLevelAbility(race,maxLevel,currentLevel,level1Attack,levelMaxAttack));
+        setBaseRecovery(Computation.calculateCurrentLevelAbility(race,maxLevel,currentLevel,level1Recovery,levelMaxRecovery));
 
-        setCalculatedHP(getCurrentHP());
-        setCalculatedAttack(getCurrentAttack());
-        setCalculatedRecovery(getCurrentRecovery());
+        setCurrentHP(getBaseHP());
+        setCurrentAttack(getBaseAttack());
+        setCurrentRecovery(getBaseRecovery());
     }
 
-    public int getCurrentHP() {
-        return currentHP;
+    public int getBaseHP() {
+        return baseHP;
     }
 
-    public int getCurrentAttack() {
-        return currentAttack;
+    public int getBaseAttack() {
+        return baseAttack;
     }
 
-    public int getCurrentRecovery() {
-        return currentRecovery;
+    public int getBaseRecovery() {
+        return baseRecovery;
     }
 
-    public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
+    public void setBaseHP(int baseHP) {
+        this.baseHP = baseHP;
     }
 
-    public void setCurrentAttack(int currentAttack) {
-        this.currentAttack = currentAttack;
+    public void setBaseAttack(int baseAttack) {
+        this.baseAttack = baseAttack;
     }
 
-    public void setCurrentRecovery(int currentRecovery) {
-        this.currentRecovery = currentRecovery;
+    public void setBaseRecovery(int baseRecovery) {
+        this.baseRecovery = baseRecovery;
     }
 
     public Boolean getEnableSkill() {
@@ -203,36 +202,28 @@ public class Card{
     public void setEnableSkill(Boolean enableSkill) {
         this.enableSkill = enableSkill;
     }
-
-    public Boolean getEnableLeaderSkill() {
-        return enableLeaderSkill;
+    
+    public double getCurrentHP() {
+        return currentHP;
     }
 
-    public void setEnableLeaderSkill(Boolean enableLeaderSkill) {
-        this.enableLeaderSkill = enableLeaderSkill;
+    public void setCurrentHP(double currentHP) {
+        this.currentHP = currentHP;
     }
 
-    public double getCalculatedHP() {
-        return calculatedHP;
+    public double getCurrentAttack() {
+        return currentAttack;
     }
 
-    public void setCalculatedHP(double calculatedHP) {
-        this.calculatedHP = calculatedHP;
+    public void setCurrentAttack(double currentAttack) {
+        this.currentAttack = currentAttack;
     }
 
-    public double getCalculatedAttack() {
-        return calculatedAttack;
+    public double getCurrentRecovery() {
+        return currentRecovery;
     }
 
-    public void setCalculatedAttack(double calculatedAttack) {
-        this.calculatedAttack = calculatedAttack;
-    }
-
-    public double getCalculatedRecovery() {
-        return calculatedRecovery;
-    }
-
-    public void setCalculatedRecovery(double calculatedRecovery) {
-        this.calculatedRecovery = calculatedRecovery;
+    public void setCurrentRecovery(double currentRecovery) {
+        this.currentRecovery = currentRecovery;
     }
 }

@@ -98,7 +98,7 @@ public class Computation {
 
             //傷害 = {基數〔(同屬消除次數＋符石總數+possessionFactor＋ 0.6強化）ｘ25％　ｘ（１＋Ｃombo加成）〕ｘ 主動／隊長技能｝
             //get the base attack
-            double output = card[i].getCalculatedAttack();
+            double output = card[i].getCurrentAttack();
 
             //calculate the same color of stones
             output *= (stoneList.size() + totalStone + possessionFactor + 0.6 * numOfEnchantedStone) * 0.25;
@@ -114,13 +114,13 @@ public class Computation {
             else if(output > 1) output = 1.0;
 
             //save
-            card[i].setCalculatedAttack(output);
+            card[i].setCurrentAttack(output);
         }
 
         //get card
         // the line should be deleted after some works are done
-        System.out.println(card[0].getCalculatedAttack() + "," + card[1].getCalculatedAttack() + "," + card[2].getCalculatedAttack() + ","
-                + card[3].getCalculatedAttack() + "," + card[4].getCalculatedAttack() + "," + card[5].getCalculatedAttack());
+        System.out.println(card[0].getCurrentAttack() + "," + card[1].getCurrentAttack() + "," + card[2].getCurrentAttack() + ","
+                + card[3].getCurrentAttack() + "," + card[4].getCurrentAttack() + "," + card[5].getCurrentAttack());
     }
 
     public static void testPreSetBattle(Battle battle){
@@ -191,12 +191,12 @@ public class Computation {
         //calculate final attack
         int finalAttack = 0;
         for(int i=0;i<6;i++) {
-            finalAttack += card[i].getCalculatedAttack();
+            finalAttack += card[i].getCurrentAttack();
         }
 
         //get card
-        System.out.println(card[0].getCalculatedAttack() + "," + card[1].getCalculatedAttack() + "," + card[2].getCalculatedAttack() + ","
-                + card[3].getCalculatedAttack() + "," + card[4].getCalculatedAttack() + "," + card[5].getCalculatedAttack());
+        System.out.println(card[0].getCurrentAttack() + "," + card[1].getCurrentAttack() + "," + card[2].getCurrentAttack() + ","
+                + card[3].getCurrentAttack() + "," + card[4].getCurrentAttack() + "," + card[5].getCurrentAttack());
         System.out.println(finalAttack);
         
     }

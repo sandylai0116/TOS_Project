@@ -58,7 +58,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if(c.getId() >= 1 && c.getId() <= 20)
-                c.setCalculatedRecovery(c.getCalculatedRecovery() * factor);
+                c.setCurrentRecovery(c.getCurrentRecovery() * factor);
         }
     }
 
@@ -74,7 +74,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if(c.getId() >= 408 && c.getId() <= 412)
-                c.setCalculatedRecovery(c.getCalculatedRecovery() * factor);
+                c.setCurrentRecovery(c.getCurrentRecovery() * factor);
         }
     }
 
@@ -90,7 +90,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if(c.getId() >= 41 && c.getId() <= 55)
-                c.setCalculatedAttack(c.getCalculatedAttack() * factor);
+                c.setCurrentAttack(c.getCurrentAttack() * factor);
         }
     }
 
@@ -106,7 +106,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if((c.getId() >= 66 && c.getId() <= 75) || (c.getId() >= 334 && c.getId() <= 338))
-                c.setCalculatedHP(c.getCalculatedHP() * factor);
+                c.setCurrentHP(c.getCurrentHP() * factor);
         }
     }
 
@@ -122,7 +122,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if((c.getId() >= 86 && c.getId() <= 95) || (c.getId() >= 456 && c.getId() <= 460))
-                c.setCalculatedRecovery(c.getCalculatedRecovery() * factor);
+                c.setCurrentRecovery(c.getCurrentRecovery() * factor);
         }
     }
 
@@ -138,7 +138,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if((c.getId() >= 96 && c.getId() <= 105) || (c.getId() >= 329 && c.getId() <= 333))
-                c.setCalculatedAttack(c.getCalculatedAttack() * factor);
+                c.setCurrentAttack(c.getCurrentAttack() * factor);
         }
     }
 
@@ -154,7 +154,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if(c.getId() >= 116 && c.getId() <= 130)
-                c.setCalculatedAttack(c.getCalculatedAttack() * factor);
+                c.setCurrentAttack(c.getCurrentAttack() * factor);
         }
     }
 
@@ -170,7 +170,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if(c.getId() >= 481 && c.getId() <= 485)
-                c.setCalculatedAttack(c.getCalculatedAttack() * factor);
+                c.setCurrentAttack(c.getCurrentAttack() * factor);
         }
     }
 
@@ -193,7 +193,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if(c.getId() >= 309 && c.getId() <= 318)
-                c.setCalculatedAttack(c.getCalculatedAttack() * currentFactor);
+                c.setCurrentAttack(c.getCurrentAttack() * currentFactor);
         }
     }
 
@@ -216,7 +216,7 @@ public class PassiveSkill {
 
         for (Card c:card) {
             if(c.getId() >= 571 && c.getId() <= 575)
-                c.setCalculatedAttack(c.getCalculatedAttack() * currentFactor);
+                c.setCurrentAttack(c.getCurrentAttack() * currentFactor);
         }
     }
 
@@ -229,7 +229,7 @@ public class PassiveSkill {
             }
             if(count == 4) {
                 for(int i=1;i<5;i++){
-                    card[i].setCalculatedAttack(card[i].getCalculatedAttack() * 5);
+                    card[i].setCurrentAttack(card[i].getCurrentAttack() * 5);
                 }
             }
             count = 0;
@@ -239,7 +239,7 @@ public class PassiveSkill {
             }
             if(count == 4) {
                 for(int i=1;i<5;i++){
-                    card[i].setCalculatedAttack(card[i].getCalculatedAttack() * 5);
+                    card[i].setCurrentAttack(card[i].getCurrentAttack() * 5);
                 }
             }
         }
