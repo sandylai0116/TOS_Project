@@ -3,6 +3,9 @@ package com.project.tos_project;
 import com.project.tos_project.model.Battle;
 import com.project.tos_project.model.Card;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by LAI on 2015/6/18.
  */
@@ -40,6 +43,22 @@ public class PassiveSkill {
 
         //Saruman + Gnomes
         sarumanGnomes(card);
+
+        //Dragon Spiritors + Ethereal Dragons
+        dragonSpiritorsEtherealDragons(card);
+
+        //Dragon Spiritors + Ethereal Dragons (2)
+        dragonSpiritorsEtherealDragons2(card);
+
+        //Sirius Team (1)
+        siriusTeam1(card);
+
+        //Sirius Team (2)
+        siriusTeam2(card);
+
+        //Zeus + Greek Gods
+        //TODO: need to modify if active skill is added
+        zeusGreekGods(card);
 
         //妲己
         if(card[0].getId() == 595 && card[5].getId() == 595) battle.setEachComboFactor(battle.getEachComboFactor()+0.25);
@@ -240,6 +259,85 @@ public class PassiveSkill {
             if(count == 4) {
                 for(int i=1;i<5;i++){
                     card[i].setCurrentAttack(card[i].getCurrentAttack() * 5);
+                }
+            }
+        }
+    }
+
+    public static void dragonSpiritorsEtherealDragons(Card[] card){
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(414,310);
+        map.put(416,312);
+        map.put(418,314);
+        map.put(420,316);
+        map.put(422,318);
+
+        boolean cardAttackBonus[] = new boolean[6];
+        for(int i=0;i<6;i++) cardAttackBonus[i] = false;
+        int dragonTargetID = -1;
+        for(int i=0;i<6;i=i+5){
+            if(map.containsKey(card[i].getId()))
+                dragonTargetID = map.get(card[i].getId()).intValue();
+            for(int j=1;j<5;j++){
+                if(card[j].getId() == dragonTargetID){
+                    cardAttackBonus[i] = true;
+                    cardAttackBonus[j] = true;
+                }
+            }
+        }
+        for(int i=0;i<6;i++){
+            if(cardAttackBonus[i]) card[i].setCurrentAttack(card[i].getCurrentAttack() * 1.3);
+        }
+    }
+
+    public static void dragonSpiritorsEtherealDragons2(Card[] card){
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(414,571);
+        map.put(416,572);
+        map.put(418,573);
+        map.put(420,574);
+        map.put(422,575);
+
+        boolean cardAttackBonus[] = new boolean[6];
+        for(int i=0;i<6;i++) cardAttackBonus[i] = false;
+        int dragonTargetID = -1;
+        for(int i=0;i<6;i++){
+            if(map.containsKey(card[i].getId()))
+                dragonTargetID = map.get(card[i].getId()).intValue();
+            for(int j=0;j<6;j++){
+                if(card[j].getId() == dragonTargetID){
+                    cardAttackBonus[i] = true;
+                    cardAttackBonus[j] = true;
+                }
+            }
+        }
+        for(int i=0;i<6;i++){
+            if(cardAttackBonus[i]) card[i].setCurrentAttack(card[i].getCurrentAttack() * 1.3);
+        }
+    }
+
+    public static void siriusTeam1(Card[] card){
+        if(card[0].getId() == 288 && card[5].getId() == 289) LeaderSkill.attackBonus(card,1.5);
+        else if(card[0].getId() == 289 && card[5].getId() == 288) LeaderSkill.attackBonus(card,1.5);
+    }
+
+    public static void siriusTeam2(Card[] card){
+        if(card[0].getId() == 703 && card[5].getId() == 704) LeaderSkill.attackBonus(card,2.0);
+        else if(card[0].getId() == 704 && card[5].getId() == 703) LeaderSkill.attackBonus(card,2.0);
+    }
+
+    public static void zeusGreekGods(Card[] card){
+        Map<Integer, String> map = new HashMap<>();
+        map.put(192,"blue");
+        map.put(194,"red");
+        map.put(196,"green");
+        map.put(198,"yellow");
+        map.put(200,"purple");
+        if(card[0].getId() == card[5].getId()){
+            String changeColor = map.get(card[0].getId());
+            if(changeColor != null){
+                for(Card c:card){
+                    if(c.getId() == 579) c.setColor(changeColor);
                 }
             }
         }

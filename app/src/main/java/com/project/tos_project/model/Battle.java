@@ -33,6 +33,7 @@ public class Battle implements Parcelable {
 
     //leader skills
     private double eachComboFactor;
+    private double enchantedStoneFactor;
 
     private boolean enableSuppression;
     private double specialSuppressionFactor;
@@ -76,6 +77,7 @@ public class Battle implements Parcelable {
     public Battle() {
         stoneArray = new int[5][6];
         eachComboFactor = 0.25;
+        enchantedStoneFactor = 0.15;
         enableSuppression = true;
         specialSuppressionFactor = 1.0;
         blueSuppressRedFactor = 1.5;
@@ -134,6 +136,7 @@ public class Battle implements Parcelable {
 
         //leader skills
         this.eachComboFactor = parcel.readDouble();
+        this.enchantedStoneFactor = parcel.readDouble();
 
         this.enableSuppression = (boolean) parcel.readValue(null);
         this.specialSuppressionFactor = parcel.readDouble();
@@ -212,7 +215,7 @@ public class Battle implements Parcelable {
 
         //leader skills
         parcel.writeDouble(eachComboFactor);
-
+        parcel.writeDouble(enchantedStoneFactor);
         parcel.writeValue(enableSuppression);
         parcel.writeDouble(specialSuppressionFactor);
         parcel.writeDouble(blueSuppressRedFactor);
@@ -709,5 +712,13 @@ public class Battle implements Parcelable {
 
     public void setStoneArray(int[][] stoneArray) {
         this.stoneArray = stoneArray;
+    }
+
+    public double getEnchantedStoneFactor() {
+        return enchantedStoneFactor;
+    }
+
+    public void setEnchantedStoneFactor(double enchantedStoneFactor) {
+        this.enchantedStoneFactor = enchantedStoneFactor;
     }
 }

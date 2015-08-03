@@ -92,7 +92,7 @@ public class Computation {
             double possessionFactor = 0.0;
             for (int j=0;j<extraStoneList.size();j++) {
                 //(同屬消除次數＋符石總數)*extraStonesFactor
-                possessionFactor += (1+extraStoneList.get(j))*extraStonesFactorList.get(j);
+                possessionFactor += (1+extraStoneList.get(j).intValue())*extraStonesFactorList.get(j).doubleValue();
             }
 
 
@@ -101,7 +101,7 @@ public class Computation {
             double output = card[i].getCurrentAttack();
 
             //calculate the same color of stones
-            output *= (stoneList.size() + totalStone + possessionFactor + 0.6 * numOfEnchantedStone) * 0.25;
+            output *= (stoneList.size() + totalStone + possessionFactor + battle.getEnchantedStoneFactor()/0.25 * numOfEnchantedStone) * 0.25;
 
             //calculate combo bonus
             output *= 1 + (battle.getNumOfCombo() - 1) * battle.getEachComboFactor();
