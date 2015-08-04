@@ -3,7 +3,9 @@ package com.project.tos_project;
 import com.project.tos_project.model.Battle;
 import com.project.tos_project.model.Card;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,8 +62,14 @@ public class PassiveSkill {
         //TODO: need to modify if active skill is added
         zeusGreekGods(card);
 
-        //妲己
-        if(card[0].getId() == 595 && card[5].getId() == 595) battle.setEachComboFactor(battle.getEachComboFactor()+0.25);
+        //Norse Gods + Odin + Norse Gods
+        norseGodsAndOdinNorseGods(battle, card);
+
+        //Michael Lucifer + Luna
+        michaelLuciferLuna(card);
+
+        //The Stunning Power
+        if(card[0].getId() == 595 || card[5].getId() == 595) battle.setEachComboFactor(battle.getEachComboFactor()+0.25);
 
     }
 
@@ -270,7 +278,7 @@ public class PassiveSkill {
         map.put(416,312);
         map.put(418,314);
         map.put(420,316);
-        map.put(422,318);
+        map.put(422, 318);
 
         boolean cardAttackBonus[] = new boolean[6];
         for(int i=0;i<6;i++) cardAttackBonus[i] = false;
@@ -327,19 +335,79 @@ public class PassiveSkill {
     }
 
     public static void zeusGreekGods(Card[] card){
-        Map<Integer, String> map = new HashMap<>();
-        map.put(192,"blue");
-        map.put(194,"red");
-        map.put(196,"green");
-        map.put(198,"yellow");
-        map.put(200,"purple");
-        if(card[0].getId() == card[5].getId()){
-            String changeColor = map.get(card[0].getId());
-            if(changeColor != null){
-                for(Card c:card){
-                    if(c.getId() == 579) c.setColor(changeColor);
+        List<Integer> idList = new ArrayList<>();
+        idList.add(192);
+        idList.add(194);
+        idList.add(196);
+        idList.add(198);
+        idList.add(200);
+
+        if(card[0].getId() == card[5].getId() && idList.contains(card[0].getId())){
+            for(Card c:card)
+                if(c.getId() == 579) c.setColor(card[0].getColor());
+        }
+    }
+
+    public static void norseGodsAndOdinNorseGods(Battle battle,Card[] card){
+        boolean star6Leader = false;
+        boolean star6Ally = false;
+        boolean star7Leader = false;
+        boolean star7Ally = false;
+        List<Integer> star6List = new ArrayList<>();
+        star6List.add(202);
+        star6List.add(204);
+        star6List.add(206);
+        star6List.add(208);
+        star6List.add(210);
+        List<Integer> star7List = new ArrayList<>();
+        star6List.add(506);
+        star6List.add(507);
+        star6List.add(508);
+        star6List.add(509);
+        star6List.add(510);
+        //check 6 star
+        if( star6List.contains(card[0].getId()) ) star6Leader = true;
+        if( star6List.contains(card[5].getId()) ) star6Ally = true;
+        if(star6Leader && star6Ally) {
+            battle.setEnchantedStoneFactor(0.25);
+        }
+        //check 7 star
+        if( star7List.contains(card[0].getId()) ) star7Leader = true;
+        if( star7List.contains(card[5].getId()) ) star7Ally = true;
+        if(star7Leader && star7Ally) {
+            battle.setEnchantedStoneFactor(0.25);
+        }
+        //Odin + Norse Gods Part
+        if(star6Leader && star6Ally && card[0].getId() == card[5].getId()) {
+            for(Card c:card){
+                if(c.getId() == 287 || c.getId() == 739) c.setColor(card[0].getColor());
+            }
+        }
+        if(star7Leader) {
+            for(Card c:card){
+                if(c.getId() == 287 || c.getId() == 739) c.setColor(card[0].getColor());
+            }
+        }
+    }
+
+    public static void michaelLuciferLuna(Card[] card){
+        double attack = -1.0;
+        for(Card c:card){
+            if(c.getId() == 293) {
+                attack = c.getCurrentAttack();
+                break;
+            }
+        }
+        if(attack > 0) {
+            for(Card c:card){
+                if(c.getId() == 368 || c.getId() == 822) {
+                    c.setCurrentAttack(attack);
+                    break;
                 }
             }
         }
     }
+
+
+
 }
