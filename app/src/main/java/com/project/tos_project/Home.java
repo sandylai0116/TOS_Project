@@ -1,31 +1,30 @@
 package com.project.tos_project;
 
 
+import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.*;
 import android.view.View;
 
 import com.project.tos_project.model.Battle;
 import com.project.tos_project.model.Card;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class Home extends ActionBarActivity{
+public class Home extends Activity implements View.OnDragListener{
 
     // Database Helper
     DBHelper db;
@@ -43,7 +42,20 @@ public class Home extends ActionBarActivity{
     int[] disableCard = {-1,-1,-1,-1,-1,-1};
     Integer[] combinCard ={656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
     int fiveInOne = 620;
-  //  int[] combinCard = {620, 656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
+    GridView gridview;
+    private int draggedIndex = -1;
+    private BaseAdapter adapter;
+    ArrayList<Integer> mThumbIds = new ArrayList<Integer>();
+    int col = 0;
+    int row = 0;
+    int prevCol = 0;
+    int prevRow = 0;
+    int prevItem;
+    LinearLayout topArea;
+    LinearLayout homeArea;
+
+
+    //  int[] combinCard = {620, 656, 657, 658, 659, 660, 666, 667, 668, 669, 670, 721, 722, 723, 724, 725};
     public final static String SER_KEY = "com.project.tos_project.model.ser";
 
     @Override
@@ -52,13 +64,28 @@ public class Home extends ActionBarActivity{
         outState.putIntArray("selectedCard", selectedCard);
         outState.putIntArray("cardLevel", cardLevel);
         outState.putParcelable("battle", battle);
-//        outState.putIntArray("disbaleCard", disableCard);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
+        mThumbIds.add(R.drawable.enemy1); mThumbIds.add(R.drawable.enemy2);
 
        tv = (EditText) findViewById(R.id.monsterDefense);
 
@@ -67,7 +94,8 @@ public class Home extends ActionBarActivity{
         battle = new Battle();
         Computation.testPreSetBattle(battle); // the line should be deleted after some works are done
 
-        LinearLayout cardArea = (LinearLayout)findViewById(R.id.cardArea);
+        topArea = (LinearLayout)findViewById(R.id.topArea);
+        homeArea = (LinearLayout)findViewById(R.id.homeArea);
 
         cardButton[0] =(ImageView) findViewById(R.id.card1);
         cardButton[1] =(ImageView) findViewById(R.id.card2);
@@ -76,7 +104,63 @@ public class Home extends ActionBarActivity{
         cardButton[4] =(ImageView) findViewById(R.id.card5);
         cardButton[5] =(ImageView) findViewById(R.id.card6);
 
-        calBtn =(Button)findViewById(R.id.calculateBtn);
+
+        gridview = (GridView) findViewById(R.id.gridviewElement);
+        gridview.setOnItemLongClickListener(new GridView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView gridView, View view,
+                                           int position, long row) {
+                ClipData.Item item = new ClipData.Item((String) view.getTag());
+                ClipData clipData = new ClipData((CharSequence) view.getTag(),
+                        new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN}, item);
+                view.startDrag(clipData, new View.DragShadowBuilder(view), null, 0);
+
+                //        trashCan.setVisibility(View.VISIBLE);
+                gridView.setOnDragListener(Home.this);
+
+                draggedIndex = position;
+                return true;
+            }
+        });
+      //  gridview.setAdapter(new ImageAdapter(this));
+        gridview.setAdapter(adapter = new BaseAdapter() {
+
+            public int getCount() {
+                return mThumbIds.size();
+            }
+            public Object getItem(int position) {
+                return mThumbIds.get(position);
+            }
+            public long getItemId(int position) {
+                return position;
+            }
+
+            // create a new ImageView for each item referenced by the Adapter
+            public View getView(int position, View convertView, ViewGroup parent) {
+                ImageView imageView;
+
+                Resources r = Resources.getSystem();
+                float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, r.getDisplayMetrics());
+
+                if (convertView == null) {  //if it's not recycled, initialize some 				attributes
+                    imageView = new ImageView(Home.this);
+                    imageView.setLayoutParams(new
+                            GridView.LayoutParams((int) px, (int) px));
+                    imageView.setScaleType(
+                            ImageView.ScaleType.CENTER_CROP);
+                    imageView.setPadding(5, 5, 5, 5);
+                } else {
+                    imageView = (ImageView) convertView;
+                }
+
+                imageView.setImageResource(mThumbIds.get(position));
+                imageView.setTag(String.valueOf(position));
+
+                return imageView;
+            }
+        });
+
+        //    calBtn =(Button)findViewById(R.id.calculateBtn);
+
 
         for(int i=0; i<card.length; i++){
             if(card[i] == null){
@@ -93,7 +177,7 @@ public class Home extends ActionBarActivity{
         }
 
         printButton();
-
+/*
         calBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 for (int i = 0; i < card.length; i++) {
@@ -104,7 +188,7 @@ public class Home extends ActionBarActivity{
                 Computation.finalAttack(battle, card);
             }
         });
-
+*/
         cardButton[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +234,7 @@ public class Home extends ActionBarActivity{
         //close db
         db.closeDB();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -203,6 +288,159 @@ public class Home extends ActionBarActivity{
     }
 
     @Override
+    public boolean onDrag(View view, DragEvent dragEvent) {
+
+        int yCoordinate = homeArea.getHeight() - topArea.getHeight();
+
+        switch (dragEvent.getAction()) {
+            case DragEvent.ACTION_DRAG_STARTED:
+                // Drag has started
+                // If called for trash resize the view and return true
+   //             Log.v("test", "Start: "+String.valueOf(row));
+
+                break;
+
+            case DragEvent.ACTION_DRAG_ENTERED:
+                Log.v("test", "Enter"+String.valueOf(dragEvent.getY()));
+
+                int viewHeight = view.getHeight() / 5;
+                int viewWidth = view.getWidth() / 6;
+
+                if(dragEvent.getX() <= viewWidth){
+                    col = 0;
+                }else if(dragEvent.getX() <= viewWidth * 2){
+                    col = 1;
+                }else if(dragEvent.getX() <= viewWidth * 3){
+                    col = 2;
+                }else if(dragEvent.getX() <= viewWidth * 4){
+                    col = 3;
+                }else if(dragEvent.getX() <= viewWidth * 5){
+                    col = 4;
+                }else if(dragEvent.getX() <= viewWidth * 6){
+                    col = 5;
+                }
+
+                if(dragEvent.getY() <=  viewHeight){
+                    row = 0;
+                }else if(dragEvent.getY() <= viewHeight * 2){
+                    row = 1;
+                }else if(dragEvent.getY() <= viewHeight * 3){
+                    row = 2;
+                }else if(dragEvent.getY() <= viewHeight * 4){
+                    row = 3;
+                }else if(dragEvent.getY() <= viewHeight * 5){
+                    row = 4;
+                }
+
+
+                break;
+            case DragEvent.ACTION_DRAG_LOCATION:
+              Log.v("test", String.valueOf(dragEvent.getY()));
+
+                int viewHeight1 = view.getHeight() / 5;
+                int viewWidth1 = view.getWidth() / 6;
+
+                Log.v("height", String.valueOf(viewHeight1));
+                Log.v("width", String.valueOf(viewWidth1));
+
+                prevCol = col;
+                prevRow = row;
+                prevItem = mThumbIds.get(draggedIndex);
+
+                if(dragEvent.getX() <= viewWidth1){
+                    col = 0;
+                }else if(dragEvent.getX() <= viewWidth1 * 2){
+                    col = 1;
+                }else if(dragEvent.getX() <= viewWidth1 * 3){
+                    col = 2;
+                }else if(dragEvent.getX() <= viewWidth1 * 4){
+                    col = 3;
+                }else if(dragEvent.getX() <= viewWidth1 * 5){
+                    col = 4;
+                }else if(dragEvent.getX() <= viewWidth1 * 6){
+                    col = 5;
+                }
+
+                if(dragEvent.getY() <=  viewHeight1){
+                    row = 0;
+                }else if(dragEvent.getY() <= viewHeight1 * 2){
+                    row = 1;
+                }else if(dragEvent.getY() <= viewHeight1 * 3){
+                    row = 2;
+                }else if(dragEvent.getY() <= viewHeight1 * 4){
+                    row = 3;
+                }else if(dragEvent.getY() <= viewHeight1 * 5){
+                    row = 4;
+                }
+
+                if(col > prevCol){
+                    mThumbIds.set(draggedIndex, (mThumbIds.get(draggedIndex+1)));
+                    mThumbIds.set(draggedIndex+1, prevItem);
+                    draggedIndex = draggedIndex+1;
+                }
+                else if(col < prevCol){
+                    mThumbIds.set(draggedIndex, (mThumbIds.get(draggedIndex-1)));
+                    mThumbIds.set(draggedIndex-1, prevItem);
+                    draggedIndex = draggedIndex-1;
+                }
+
+                if(row > prevRow){
+                    mThumbIds.set(draggedIndex, (mThumbIds.get(draggedIndex+6)));
+                    mThumbIds.set(draggedIndex+6, prevItem);
+                    draggedIndex = draggedIndex+6;
+                }
+                else if(row < prevRow){
+                    mThumbIds.set(draggedIndex, (mThumbIds.get(draggedIndex-6)));
+                    mThumbIds.set(draggedIndex-6, prevItem);
+                    draggedIndex = draggedIndex-6;
+                }
+
+    //            Log.v("test", String.valueOf(row+" "+prevRow));
+    //           Log.v("test", String.valueOf(draggedIndex));
+
+
+       //         if(dragEvent.getX() >= view.getWidth() / 6)
+      //          if(!(view.getTag().toString().equals(draggedIndex))){
+      //              mThumbIds.set(draggedIndex, (mThumbIds.get(Integer.valueOf(view.getTag().toString()))));
+      //              draggedIndex = Integer.valueOf(view.getTag().toString());
+      //          }
+                adapter.notifyDataSetChanged();
+      //          view.invalidate();
+
+      //          Log.v("test", String.valueOf(view.getX()));
+                return true;
+            case DragEvent.ACTION_DROP:
+    //            Log.v("test", "");
+         //       Log.v("test", view.getTag().toString()+" "+draggedIndex);
+         //       mThumbIds.set(draggedIndex, (mThumbIds.get(1)));
+                //  }
+        //        adapter.notifyDataSetChanged();
+        //        view.invalidate();
+                return true;
+            case DragEvent.ACTION_DRAG_EXITED:
+      //          Log.v("test", "Exit");
+    //            mThumbIds.set(draggedIndex, (mThumbIds.get(Integer.valueOf(view.getTag().toString()))));
+    //            draggedIndex = Integer.valueOf(view.getTag().toString());
+    //                    //  }
+    ///            adapter.notifyDataSetChanged();
+    //            view.invalidate();
+                return true;
+            case DragEvent.ACTION_DRAG_ENDED:
+
+
+                Log.v("test", "Exit");
+                row = -1;
+                col = -1;
+                // Hide the trash can
+                view.setOnDragListener(null);
+        //        return true;
+                return true;
+        }
+        return true;
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -216,6 +454,50 @@ public class Home extends ActionBarActivity{
 
         return super.onOptionsItemSelected(item);
     }
+
+    /*
+    public class ImageAdapter extends BaseAdapter {
+        private Context mContext;
+
+        public ImageAdapter(Context c) {
+            mContext = c;
+        }
+        public int getCount() {
+            return mThumbIds.length;
+        }
+        public Object getItem(int position) {
+            return null;
+        }
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        // create a new ImageView for each item referenced by the Adapter
+        public View getView(int position, View convertView, ViewGroup parent) {
+        ImageView imageView;
+
+        Resources r = Resources.getSystem();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, r.getDisplayMetrics());
+
+        if (convertView == null) {  //if it's not recycled, initialize some 				attributes
+            imageView = new ImageView(mContext);
+            imageView.setLayoutParams(new
+                    GridView.LayoutParams((int) px, (int) px));
+            imageView.setScaleType(
+                    ImageView.ScaleType.CENTER_CROP);
+            imageView.setPadding(5, 5, 5, 5);
+        } else {
+            imageView = (ImageView) convertView;
+        }
+
+        imageView.setImageResource(mThumbIds[position]);
+        imageView.setTag(String.valueOf(position));
+
+        return imageView;
+    }
+}
+*/
+
 
     public void printButton(){
 
