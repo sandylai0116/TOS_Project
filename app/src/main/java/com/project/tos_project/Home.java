@@ -410,6 +410,7 @@ public class Home extends Activity implements View.OnDragListener{
       //          Log.v("test", String.valueOf(view.getX()));
                 return true;
             case DragEvent.ACTION_DROP:
+                view.setOnDragListener(null);
     //            Log.v("test", "");
          //       Log.v("test", view.getTag().toString()+" "+draggedIndex);
          //       mThumbIds.set(draggedIndex, (mThumbIds.get(1)));
@@ -418,11 +419,13 @@ public class Home extends Activity implements View.OnDragListener{
         //        view.invalidate();
                 return true;
             case DragEvent.ACTION_DRAG_EXITED:
-      //          Log.v("test", "Exit");
+                Log.v("test", "Exit123");
     //            mThumbIds.set(draggedIndex, (mThumbIds.get(Integer.valueOf(view.getTag().toString()))));
     //            draggedIndex = Integer.valueOf(view.getTag().toString());
     //                    //  }
     ///            adapter.notifyDataSetChanged();
+                view.setOnDragListener(null);
+                gridview.setOnItemLongClickListener(null);
     //            view.invalidate();
                 return true;
             case DragEvent.ACTION_DRAG_ENDED:
