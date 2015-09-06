@@ -71,6 +71,36 @@ public class PassiveSkill {
         //The Stunning Power
         if(card[0].getId() == 595 || card[5].getId() == 595) battle.setEachComboFactor(battle.getEachComboFactor()+0.25);
 
+        //Moonlight Immortal Changxi + The Norns
+        moonlightImmortalChangxiTheNorns(battle, card);
+
+        //Regulator - Deus Ex Machina + BIGBANG
+        regulatorDeusExMachinaBIGBANG(card);
+
+        //Xuan-Yuan Sword (1)
+        xuanYuanSword1(card);
+
+        //Xuan-Yuan Sword (2)
+        xuanYuanSword2(card);
+
+        //Xuan-Yuan Sword (3)
+        if(card[0].getId()==763) {
+            for(Card c:card) if(c.getId()==780)c.setColor("yellow");
+        }
+
+        //Xuan-Yuan Sword (4)
+        for(int i=0;i<5;i++){
+            if((card[i].getId()==755 && card[i+1].getId()==781) || (card[i].getId()==781 && card[i+1].getId()==755)) {
+                card[i].setCurrentAttack(card[i].getCurrentAttack()*1.5);
+                card[i+1].setCurrentAttack(card[i+1].getCurrentAttack()*1.5);
+            }
+        }
+
+        //Dragon from Sepulchre (WFE)
+        dragonFromSepulchreWFE(battle,card);
+
+        //Giemsa + Diva of the Stars (WFE)
+        goddessOfOrderGiemsa(battle,card);
     }
 
     public static void protagonists1(Card[] card){
@@ -408,6 +438,108 @@ public class PassiveSkill {
         }
     }
 
+    public static void moonlightImmortalChangxiTheNorns(Battle battle, Card[] card){
+        if(card[0].getId() == 618){
+            int star5Count = 0;
+            int star6Count = 0;
+            double bonus = 0;
 
+            List<Integer> star5List = new ArrayList<>();
+            star5List.add(118);
+            star5List.add(121);
+            star5List.add(124);
+            star5List.add(127);
+            star5List.add(130);
+            List<Integer> star6List = new ArrayList<>();
+            star6List.add(481);
+            star6List.add(482);
+            star6List.add(483);
+            star6List.add(484);
+            star6List.add(485);
 
+            for(int i=1;i<6;i++){
+                if(star5List.contains(card[i].getId()))star5Count++;
+                if(star6List.contains(card[i].getId()))star6Count++;
+            }
+
+            if(star5Count>1 || star6Count>1){
+                bonus = (star5Count+star6Count)*0.1;
+                LeaderSkill.possessionFunction(battle, "pink", "blue", bonus);
+                LeaderSkill.possessionFunction(battle, "pink", "red", bonus);
+                LeaderSkill.possessionFunction(battle, "pink", "green", bonus);
+                LeaderSkill.possessionFunction(battle, "pink", "yellow", bonus);
+                LeaderSkill.possessionFunction(battle, "pink", "purple", bonus);
+            }
+        }
+    }
+
+    public static void regulatorDeusExMachinaBIGBANG(Card[] card){
+        List<Integer> star7List = new ArrayList<>();
+        star7List.add(677);
+        star7List.add(679);
+        star7List.add(681);
+        star7List.add(683);
+        star7List.add(685);
+
+        if(card[0].getId() == 616) {
+            for(int i=1;i<6;i++){
+                if (star7List.contains(card[i].getId()))card[i].setCurrentAttack(card[i].getCurrentAttack()*2.0);
+            }
+        }
+    }
+
+    public static void xuanYuanSword1(Card[] card){
+        int star6Count = 0;
+        for(Card c:card) if(c.getId()==747 || c.getId()==749 || c.getId()==751) star6Count++;
+        if(star6Count>1){
+            for(Card c:card) if(c.getId()==747 || c.getId()==749 || c.getId()==751) {
+                c.setCurrentAttack(c.getCurrentAttack()*1.3);
+                c.setCurrentHP(c.getCurrentHP() *1.3);
+                c.setCurrentRecovery(c.getCurrentRecovery()*1.3);
+            }
+        }
+    }
+
+    public static void xuanYuanSword2(Card[] card){
+        boolean has759card = false;
+        boolean has761card = false;
+        if(card[0].getId()==759 || card[5].getId()==759 ) has759card = true;
+        if(card[0].getId()==761 || card[5].getId()==761 ) has761card = true;
+
+        if(has759card && has761card){
+            for(Card c:card) {
+                c.setCurrentAttack(c.getCurrentAttack()*6.0);
+                if(c.getId()==759 || c.getId()==761 )
+                    c.setCurrentAttack(c.getCurrentAttack()*2.0);
+            }
+        }
+    }
+
+    public static void dragonFromSepulchreWFE(Battle battle,Card[] card){
+        if(card[0].getId()==card[5].getId()){
+            if(card[0].getId()==791) LeaderSkill.possessionFunction(battle, "pink", "blue", 0.5);
+            if(card[0].getId()==793) LeaderSkill.possessionFunction(battle, "pink", "red", 0.5);
+            if(card[0].getId()==795) LeaderSkill.possessionFunction(battle, "pink", "green", 0.5);
+        }
+    }
+
+    public static void goddessOfOrderGiemsa(Battle battle,Card[] card){
+        if(card[0].getId()==450){
+            if(card[5].getId()==785) {
+                card[0].setColor(card[5].getColor());
+                LeaderSkill.possessionFunction(battle, "red", "blue", 1.0);
+                LeaderSkill.possessionFunction(battle, "green", "blue", 1.0);
+            }
+            else if(card[5].getId()==787) {
+                card[0].setColor(card[5].getColor());
+                LeaderSkill.possessionFunction(battle, "blue", "red", 1.0);
+                LeaderSkill.possessionFunction(battle, "green", "red", 1.0);
+            }
+            else if(card[5].getId()==789) {
+                card[0].setColor(card[5].getColor());
+                LeaderSkill.possessionFunction(battle, "blue", "green", 1.0);
+                LeaderSkill.possessionFunction(battle, "red", "green", 1.0);
+            }
+        }
+    }
 }

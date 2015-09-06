@@ -1078,21 +1078,31 @@ public class LeaderSkill {
     public static void possessionFunction(Battle battle, String color1, String color2, Double factor){
         //color1 part
         List<Integer> color1List = new ArrayList<>();
+        int numOfEnchantedStone = 0;
         switch(color1){
             case "blue":
                 color1List.addAll(battle.getNumOfBlue());
+                numOfEnchantedStone = battle.getNumOfEnchantedBlue();
                 break;
             case "red":
                 color1List.addAll(battle.getNumOfRed());
+                numOfEnchantedStone = battle.getNumOfEnchantedRed();
                 break;
             case "green":
                 color1List.addAll(battle.getNumOfGreen());
+                numOfEnchantedStone = battle.getNumOfEnchantedGreen();
                 break;
             case "yellow":
                 color1List.addAll(battle.getNumOfYellow());
+                numOfEnchantedStone = battle.getNumOfEnchantedYellow();
                 break;
             case "purple":
                 color1List.addAll(battle.getNumOfPurple());
+                numOfEnchantedStone = battle.getNumOfEnchantedPurple();
+                break;
+            case "pink":
+                color1List.addAll(battle.getNumOfPink());
+                numOfEnchantedStone = battle.getNumOfEnchantedPink();
                 break;
         }
         //factor part
@@ -1100,26 +1110,31 @@ public class LeaderSkill {
         int sizeofColor1List = color1List.size();
         for(int i=0;i<sizeofColor1List;i++) factorList.add(factor);
         //color2 and factor part
-        switch(color2){
+        switch(color2) {
             case "blue":
                 battle.setBlueForPossession(color1List);
                 battle.setBlueForPossessFactor(factorList);
+                battle.setNumOfEnchantedBlue(battle.getNumOfEnchantedBlue() + numOfEnchantedStone);
                 break;
             case "red":
                 battle.setRedForPossession(color1List);
                 battle.setRedForPossessFactor(factorList);
+                battle.setNumOfEnchantedRed(battle.getNumOfEnchantedRed() + numOfEnchantedStone);
                 break;
             case "green":
                 battle.setGreenForPossession(color1List);
                 battle.setGreenForPossessFactor(factorList);
+                battle.setNumOfEnchantedGreen(battle.getNumOfEnchantedGreen() + numOfEnchantedStone);
                 break;
             case "yellow":
                 battle.setYellowForPossession(color1List);
                 battle.setYellowForPossessFactor(factorList);
+                battle.setNumOfEnchantedYellow(battle.getNumOfEnchantedYellow() + numOfEnchantedStone);
                 break;
             case "purple":
                 battle.setPurpleForPossession(color1List);
                 battle.setPurpleForPossessFactor(factorList);
+                battle.setNumOfEnchantedPurple(battle.getNumOfEnchantedPurple() + numOfEnchantedStone);
                 break;
         }
     }
