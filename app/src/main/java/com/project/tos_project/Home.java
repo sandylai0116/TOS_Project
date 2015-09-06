@@ -153,6 +153,12 @@ public class Home extends Activity implements View.OnDragListener{
                 }
 
                 imageView.setImageResource(mThumbIds.get(position));
+                if(position == draggedIndex){
+                    imageView.setAlpha(100);
+                }
+                else{
+                    imageView.setAlpha(255);
+                }
                 imageView.setTag(String.valueOf(position));
 
                 return imageView;
@@ -301,7 +307,7 @@ public class Home extends Activity implements View.OnDragListener{
                 break;
 
             case DragEvent.ACTION_DRAG_ENTERED:
-                Log.v("test", "Enter"+String.valueOf(dragEvent.getY()));
+                Log.v("Enter", "Enter"+String.valueOf(dragEvent.getY()));
 
                 int viewHeight = view.getHeight() / 5;
                 int viewWidth = view.getWidth() / 6;
@@ -333,15 +339,16 @@ public class Home extends Activity implements View.OnDragListener{
                 }
 
 
+
                 break;
             case DragEvent.ACTION_DRAG_LOCATION:
-              Log.v("test", String.valueOf(dragEvent.getY()));
+        //      Log.v("test", String.valueOf(dragEvent.getY()));
 
                 int viewHeight1 = view.getHeight() / 5;
                 int viewWidth1 = view.getWidth() / 6;
 
-                Log.v("height", String.valueOf(viewHeight1));
-                Log.v("width", String.valueOf(viewWidth1));
+      //          Log.v("height", String.valueOf(viewHeight1));
+      //          Log.v("width", String.valueOf(viewWidth1));
 
                 prevCol = col;
                 prevRow = row;
@@ -408,36 +415,29 @@ public class Home extends Activity implements View.OnDragListener{
       //          view.invalidate();
 
       //          Log.v("test", String.valueOf(view.getX()));
-                return true;
+                break;
             case DragEvent.ACTION_DROP:
-                view.setOnDragListener(null);
-    //            Log.v("test", "");
-         //       Log.v("test", view.getTag().toString()+" "+draggedIndex);
-         //       mThumbIds.set(draggedIndex, (mThumbIds.get(1)));
-                //  }
-        //        adapter.notifyDataSetChanged();
-        //        view.invalidate();
-                return true;
+
+                break;
             case DragEvent.ACTION_DRAG_EXITED:
-                Log.v("test", "Exit123");
-    //            mThumbIds.set(draggedIndex, (mThumbIds.get(Integer.valueOf(view.getTag().toString()))));
-    //            draggedIndex = Integer.valueOf(view.getTag().toString());
-    //                    //  }
-    ///            adapter.notifyDataSetChanged();
+
                 view.setOnDragListener(null);
-                gridview.setOnItemLongClickListener(null);
+
     //            view.invalidate();
-                return true;
+                break;
             case DragEvent.ACTION_DRAG_ENDED:
 
 
                 Log.v("test", "Exit");
                 row = -1;
                 col = -1;
+                draggedIndex = -1;
+                adapter.notifyDataSetChanged();
+                Computation.finalAttack(battle, card);
                 // Hide the trash can
                 view.setOnDragListener(null);
         //        return true;
-                return true;
+                break;
         }
         return true;
     }
@@ -457,49 +457,6 @@ public class Home extends Activity implements View.OnDragListener{
 
         return super.onOptionsItemSelected(item);
     }
-
-    /*
-    public class ImageAdapter extends BaseAdapter {
-        private Context mContext;
-
-        public ImageAdapter(Context c) {
-            mContext = c;
-        }
-        public int getCount() {
-            return mThumbIds.length;
-        }
-        public Object getItem(int position) {
-            return null;
-        }
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        // create a new ImageView for each item referenced by the Adapter
-        public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-
-        Resources r = Resources.getSystem();
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 55, r.getDisplayMetrics());
-
-        if (convertView == null) {  //if it's not recycled, initialize some 				attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new
-                    GridView.LayoutParams((int) px, (int) px));
-            imageView.setScaleType(
-                    ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(5, 5, 5, 5);
-        } else {
-            imageView = (ImageView) convertView;
-        }
-
-        imageView.setImageResource(mThumbIds[position]);
-        imageView.setTag(String.valueOf(position));
-
-        return imageView;
-    }
-}
-*/
 
 
     public void printButton(){
