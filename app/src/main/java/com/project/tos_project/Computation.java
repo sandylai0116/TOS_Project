@@ -10,7 +10,7 @@ import java.util.List;
  * Created by LAI on 2015/6/9.
  */
 public class Computation {
-    public static void finalAttack(Battle battle, Card card[]){
+    public static double[] finalAttack(Battle battle, Card card[]){
         //calculate passive skill
         PassiveSkill.processPassiveSkill(battle,card);
 
@@ -121,6 +121,13 @@ public class Computation {
         // the line should be deleted after some works are done
         System.out.println(card[0].getCurrentAttack() + "," + card[1].getCurrentAttack() + "," + card[2].getCurrentAttack() + ","
                 + card[3].getCurrentAttack() + "," + card[4].getCurrentAttack() + "," + card[5].getCurrentAttack());
+
+
+        double[] arr = new double[6];
+        for(int i=0; i<arr.length; i++){
+            arr[i] = card[i].getCurrentAttack();
+        }
+        return arr;
     }
 
     public static void testPreSetBattle(Battle battle){

@@ -304,7 +304,7 @@ public class Home extends Activity implements View.OnDragListener{
                 break;
 
             case DragEvent.ACTION_DRAG_ENTERED:
-                Log.v("Enter", "Enter"+String.valueOf(dragEvent.getY()));
+           //     Log.v("Enter", "Enter"+String.valueOf(dragEvent.getY()));
 
                 int viewHeight = view.getHeight() / 5;
                 int viewWidth = view.getWidth() / 6;
@@ -337,8 +337,8 @@ public class Home extends Activity implements View.OnDragListener{
 
                 break;
             case DragEvent.ACTION_DRAG_LOCATION:
-             Log.v("test", String.valueOf(dragEvent.getY()));
-                Log.v("test", String.valueOf(dragEvent.getX()));
+         //    Log.v("test", String.valueOf(dragEvent.getY()));
+         //       Log.v("test", String.valueOf(dragEvent.getX()));
 
                 int viewHeight1 = view.getHeight() / 5;
                 int viewWidth1 = view.getWidth() / 6;
@@ -411,13 +411,17 @@ public class Home extends Activity implements View.OnDragListener{
                 break;
             case DragEvent.ACTION_DRAG_ENDED:
 
-
-                Log.v("test", "Exit");
+      //          Log.v("test", "Exit");
                 row = -1;
                 col = -1;
                 draggedIndex = -1;
                 adapter.notifyDataSetChanged();
-                Computation.finalAttack(battle, card);
+                for(int i=0; i<card.length; i++) {
+                    card[i] = db.getCard(selectedCard[i]);
+                    card[i].setCurrentLevel(cardLevel[i]);
+                }
+                    Computation.finalAttack(battle, card);
+                Toast.makeText(getApplicationContext(),  String.valueOf(Computation.finalAttack(battle, card)[0] +","+ Computation.finalAttack(battle, card)[1]+","+Computation.finalAttack(battle, card)[2]+","+Computation.finalAttack(battle, card)[3]+","+Computation.finalAttack(battle, card)[4]+","+Computation.finalAttack(battle, card)[5]), Toast.LENGTH_SHORT).show();
                 // Hide the trash can
                 view.setOnDragListener(null);
         //        return true;
