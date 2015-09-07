@@ -183,18 +183,7 @@ public class Home extends Activity implements View.OnDragListener{
         }
 
         printButton();
-/*
-        calBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                for (int i = 0; i < card.length; i++) {
-                    card[i] = db.getCard(selectedCard[i]);
-                    card[i].setCurrentLevel(cardLevel[i]);
-                }
-                //      tv.setText(Integer.toString(0));
-                Computation.finalAttack(battle, card);
-            }
-        });
-*/
+
         cardButton[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -293,6 +282,16 @@ public class Home extends Activity implements View.OnDragListener{
         return true;
     }
 
+    public void countCombo(GridView gv){
+         int water = R.drawable.enemy1;
+         int fire = R.drawable.enemy2;
+
+        for(int i=0; i<mThumbIds.size(); i++){
+
+        }
+
+    }
+
     @Override
     public boolean onDrag(View view, DragEvent dragEvent) {
 
@@ -302,8 +301,6 @@ public class Home extends Activity implements View.OnDragListener{
             case DragEvent.ACTION_DRAG_STARTED:
                 // Drag has started
                 // If called for trash resize the view and return true
-   //             Log.v("test", "Start: "+String.valueOf(row));
-
                 break;
 
             case DragEvent.ACTION_DRAG_ENTERED:
@@ -338,20 +335,16 @@ public class Home extends Activity implements View.OnDragListener{
                     row = 4;
                 }
 
-
-
                 break;
             case DragEvent.ACTION_DRAG_LOCATION:
-        //      Log.v("test", String.valueOf(dragEvent.getY()));
+             Log.v("test", String.valueOf(dragEvent.getY()));
+                Log.v("test", String.valueOf(dragEvent.getX()));
 
                 int viewHeight1 = view.getHeight() / 5;
                 int viewWidth1 = view.getWidth() / 6;
 
-      //          Log.v("height", String.valueOf(viewHeight1));
-      //          Log.v("width", String.valueOf(viewWidth1));
-
-                prevCol = col;
-                prevRow = row;
+          //      prevCol = col;
+          //      prevRow = row;
                 prevItem = mThumbIds.get(draggedIndex);
 
                 if(dragEvent.getX() <= viewWidth1){
@@ -380,15 +373,15 @@ public class Home extends Activity implements View.OnDragListener{
                     row = 4;
                 }
 
-                if(col > prevCol){
-                    mThumbIds.set(draggedIndex, (mThumbIds.get(draggedIndex+1)));
-                    mThumbIds.set(draggedIndex+1, prevItem);
-                    draggedIndex = draggedIndex+1;
-                }
+        //        if(col > prevCol){
+                    mThumbIds.set(draggedIndex, (mThumbIds.get(6*row + col)));
+                   mThumbIds.set(6*row + col , prevItem);
+                    draggedIndex = 6*row + col;
+      /*          }
                 else if(col < prevCol){
                     mThumbIds.set(draggedIndex, (mThumbIds.get(draggedIndex-1)));
-                    mThumbIds.set(draggedIndex-1, prevItem);
-                    draggedIndex = draggedIndex-1;
+                    mThumbIds.set(draggedIndex--, prevItem);
+                    draggedIndex = draggedIndex--;
                 }
 
                 if(row > prevRow){
@@ -401,25 +394,16 @@ public class Home extends Activity implements View.OnDragListener{
                     mThumbIds.set(draggedIndex-6, prevItem);
                     draggedIndex = draggedIndex-6;
                 }
-
-    //            Log.v("test", String.valueOf(row+" "+prevRow));
-    //           Log.v("test", String.valueOf(draggedIndex));
-
-
-       //         if(dragEvent.getX() >= view.getWidth() / 6)
-      //          if(!(view.getTag().toString().equals(draggedIndex))){
-      //              mThumbIds.set(draggedIndex, (mThumbIds.get(Integer.valueOf(view.getTag().toString()))));
-      //              draggedIndex = Integer.valueOf(view.getTag().toString());
-      //          }
+*/
                 adapter.notifyDataSetChanged();
-      //          view.invalidate();
 
-      //          Log.v("test", String.valueOf(view.getX()));
                 break;
             case DragEvent.ACTION_DROP:
 
                 break;
             case DragEvent.ACTION_DRAG_EXITED:
+                draggedIndex = -1;
+                adapter.notifyDataSetChanged();
 
                 view.setOnDragListener(null);
 
